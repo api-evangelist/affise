@@ -1,0 +1,87 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "affise": "https://affise.com/vocab/",
+    "aid": "affise:aid",
+    "offer": "affise:offer",
+    "publisher": "affise:publisher",
+    "advertiser": "affise:advertiser",
+    "conversion": "affise:conversion",
+    "payout": "affise:payout",
+    "affiliate": "affise:affiliate",
+    "campaign": "affise:campaign",
+    "attribution": "affise:attribution",
+    "impression": "affise:impression",
+    "click": "affise:click",
+    "install": "affise:install",
+    "postback": "affise:postback",
+    "smartlink": "affise:smartlink",
+    "cap": "affise:cap",
+    "goal": "affise:goal",
+    "trafficSource": "affise:trafficSource",
+    "subId": "affise:subId",
+    "billingType": "affise:billingType",
+    "paymentType": "affise:paymentType",
+    "holdPeriod": "affise:holdPeriod",
+    "kpi": "affise:kpi",
+    "fraudScore": "affise:fraudScore",
+    "geoTargeting": "affise:geoTargeting",
+    "deviceTargeting": "affise:deviceTargeting",
+    "offerUrl": "affise:offerUrl",
+    "landingPage": "affise:landingPage",
+    "creativeAsset": "affise:creativeAsset",
+    "epc": "affise:epc",
+    "cr": "affise:cr",
+    "ecpa": "affise:ecpa",
+    "PerformanceAPI": {
+      "@id": "affise:PerformanceAPI",
+      "@type": "@id"
+    },
+    "MMPApi": {
+      "@id": "affise:MMPApi",
+      "@type": "@id"
+    },
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "documentation": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
+    "softwareVersion": "schema:softwareVersion",
+    "dateModified": "schema:dateModified",
+    "keywords": "schema:keywords"
+  },
+  "@type": "WebAPI",
+  "name": "Affise API",
+  "description": "Affise is a performance marketing platform with a REST API for managing affiliate offers, publishers, conversions, payouts, and accessing detailed campaign analytics. The API supports both admin and affiliate panel operations using API key authentication.",
+  "url": "https://affise.com/api/",
+  "provider": {
+    "@type": "Organization",
+    "name": "Affise",
+    "url": "https://affise.com/",
+    "sameAs": [
+      "https://twitter.com/GetAffise",
+      "https://www.linkedin.com/company/affise-com/",
+      "https://github.com/affise"
+    ]
+  },
+  "documentation": "https://help-center.affise.com/en/articles/6492567-api-3-1-documentation-overview-admins",
+  "keywords": [
+    "affiliate marketing",
+    "performance marketing",
+    "conversions",
+    "publishers",
+    "analytics",
+    "attribution",
+    "mobile measurement",
+    "offers",
+    "payouts",
+    "billing"
+  ],
+  "dateModified": "2026-06-13"
+}

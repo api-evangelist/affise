@@ -101,6 +101,12 @@ common:
     url: rate-limits/affise-rate-limits.yml
   - type: FinOps
     url: finops/affise-finops.yml
+  - type: BlogRSS
+    url: https://affise.com/blog/feed/
+  - type: Blogs
+    url: blogs/blogs.json
+  - type: JSONLDContext
+    url: json-ld/affise-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
