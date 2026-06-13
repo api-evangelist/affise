@@ -1,0 +1,106 @@
+aid: affise
+name: Affise
+description: >-
+  Affise is a performance marketing platform with a REST API for managing
+  affiliate offers, publishers, conversions, payouts, and accessing detailed
+  campaign analytics. The API supports both admin and affiliate panel operations
+  using API key authentication with GET and POST methods across statistics,
+  conversions, offers, partners, and billing endpoints.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/affise/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Affiliate Marketing
+  - Performance Marketing
+  - Conversions
+  - Publishers
+  - Analytics
+  - Attribution
+apis:
+  - aid: affise:affise-performance-api
+    name: Affise Performance API
+    description: >-
+      REST API for the Affise Performance platform enabling admins and affiliates
+      to manage offers, track conversions, retrieve statistics, handle publisher
+      payouts, and automate billing operations programmatically.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://affise.com/api/
+    baseURL: https://api.affise.com
+    tags:
+      - Affiliate Marketing
+      - Offers
+      - Conversions
+      - Statistics
+      - Payouts
+    properties:
+      - type: Documentation
+        url: https://help-center.affise.com/en/articles/6492567-api-3-1-documentation-overview-admins
+      - type: Documentation
+        url: https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+      - type: PostmanCollection
+        url: https://github.com/affise/affise-postman-api-collection
+    contact:
+      - FN: Affise Support
+        url: https://affise.com/contact-us/
+  - aid: affise:affise-mmp-api
+    name: Affise MMP API
+    description: >-
+      Mobile Measurement Partner API enabling mobile app attribution tracking,
+      install measurement, event tracking, and audience analytics for iOS,
+      Android, and cross-platform mobile applications.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://intercom.help/affise-mmp/en
+    baseURL: https://api.affise.com
+    tags:
+      - Mobile Attribution
+      - App Installs
+      - Events
+      - Analytics
+      - Mobile Marketing
+    properties:
+      - type: Documentation
+        url: https://intercom.help/affise-mmp/en
+      - type: SDKAndroid
+        url: https://github.com/affise/affise-mmp-sdk-android
+      - type: SDKiOS
+        url: https://github.com/affise/affise-mmp-sdk-ios
+      - type: SDKReact
+        url: https://github.com/affise/affise-mmp-sdk-react
+      - type: SDKFlutter
+        url: https://github.com/affise/affise-mmp-sdk-flutter
+      - type: SDKUnity
+        url: https://github.com/affise/affise-mmp-sdk-unity
+      - type: SDKWeb
+        url: https://github.com/affise/affise-mmp-sdk-web
+    contact:
+      - FN: Affise Support
+        url: https://affise.com/contact-us/
+common:
+  - type: Website
+    url: https://affise.com/
+  - type: Documentation
+    url: https://help-center.affise.com/en/
+  - type: GitHubOrg
+    url: https://github.com/affise
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/affise-com/
+  - type: Blog
+    url: https://affise.com/blog/
+  - type: Pricing
+    url: https://affise.com/pricing/
+  - type: StatusPage
+    url: https://status.affise.com/
+  - type: X
+    url: https://twitter.com/GetAffise
+  - type: Plans
+    url: plans/affise-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/affise-rate-limits.yml
+  - type: FinOps
+    url: finops/affise-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,61 @@
+name: Affise API Rate Limits
+description: >-
+  Affise API rate limits govern request frequency for the Performance REST API.
+  Specific numeric rate limits are not publicly documented; limits vary by
+  plan tier and are enforced per API key. Contact Affise support for
+  enterprise-level rate limit accommodations.
+specificationVersion: '0.1'
+url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+rateLimits:
+  - name: Admin API Rate Limit
+    description: >-
+      Rate limit applied to admin panel API requests authenticated with
+      an admin API key. Requests that exceed the limit return HTTP 429.
+    scope: per-api-key
+    limit: unspecified
+    period: unspecified
+    unit: requests
+    target: Admin API endpoints
+    notes: >-
+      Affise does not publicly document specific numeric rate limits.
+      Limits are enforced per API key and may vary by subscription plan.
+      Contact Affise support for specific thresholds.
+  - name: Affiliate API Rate Limit
+    description: >-
+      Rate limit applied to affiliate panel API requests authenticated with
+      an affiliate API key obtained from the affiliate panel Settings > Security.
+    scope: per-api-key
+    limit: unspecified
+    period: unspecified
+    unit: requests
+    target: Affiliate API endpoints
+    notes: >-
+      Limits are enforced per API key and vary by plan tier. Higher-tier
+      plans receive increased rate limit allocations.
+  - name: Statistics API Rate Limit
+    description: >-
+      Rate limit for statistics and reporting endpoints including custom
+      stats, conversions, clicks, and other analytics queries.
+    scope: per-api-key
+    limit: unspecified
+    period: unspecified
+    unit: requests
+    target: /3.0/stats/* endpoints
+    notes: >-
+      Statistics endpoints may have stricter limits due to computational
+      load. Query optimizations such as date range filtering are recommended.
+authentication:
+  - type: api-key
+    description: API key passed as API-Key header or API-Key query parameter
+    location:
+      - header
+      - query-parameter
+    parameterName: API-Key
+headers:
+  - name: API-Key
+    description: API key for authenticating all API requests
+    required: true
+errorCodes:
+  - code: 429
+    description: Too Many Requests - rate limit exceeded
+    action: Reduce request frequency and retry after a delay

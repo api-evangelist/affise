@@ -1,0 +1,153 @@
+name: Affise FinOps Framework
+description: >-
+  FinOps framework for managing Affise platform costs across Performance,
+  MMP, and Reach product lines. Affise uses flat-rate subscription pricing
+  with conversion and impression volume limits as the primary cost drivers.
+  Cost optimization focuses on right-sizing plan selection against actual
+  conversion volumes and annual billing discounts.
+specificationVersion: '1.0'
+url: https://affise.com/pricing/
+framework: FOCUS
+version: '1.0'
+currency: USD
+products:
+  - name: Affise Performance
+    description: Performance marketing platform for affiliate networks and agencies
+    url: https://affise.com/
+    costDrivers:
+      - name: Monthly Conversions
+        description: >-
+          Number of tracked conversions per month. Primary billing metric
+          with hard limits per plan tier (7K/40K/50K/custom).
+        unit: conversions
+        pricingImpact: high
+        optimization: >-
+          Monitor actual conversion volumes; downgrade if consistently
+          below plan threshold or upgrade to avoid overage.
+      - name: Monthly Impressions
+        description: >-
+          Number of ad impressions tracked per month (5M/15M/20M/custom
+          depending on plan tier).
+        unit: impressions
+        pricingImpact: medium
+        optimization: >-
+          Track impression usage through analytics; high impression campaigns
+          may require plan upgrades.
+      - name: Custom Tracking Domains
+        description: >-
+          Number of custom branded tracking domains (0/2/5/custom per tier).
+          Higher domain counts require higher plan tiers.
+        unit: domains
+        pricingImpact: medium
+        optimization: >-
+          Consolidate tracking domains where possible to stay within lower
+          tier allocations.
+      - name: Billing Cycle
+        description: >-
+          Monthly vs annual billing. Annual billing saves 20% on average
+          versus monthly pricing.
+        unit: billing-cycle
+        pricingImpact: high
+        optimization: >-
+          Switch to annual billing for established programs to capture
+          approximately 20% cost savings across all plan tiers.
+    plans:
+      - name: Beginner
+        monthlyPrice: 625.00
+        annualMonthlyPrice: 499.00
+        annualSavings: 1512.00
+        limits:
+          conversions: 7000
+          impressions: 5000000
+          domains: 0
+          offers: 50
+      - name: Core
+        monthlyPrice: 888.00
+        annualMonthlyPrice: 699.00
+        annualSavings: 2268.00
+        limits:
+          conversions: 40000
+          impressions: 15000000
+          domains: 2
+          offers: unlimited
+      - name: Expand
+        monthlyPrice: 1239.00
+        annualMonthlyPrice: 999.00
+        annualSavings: 2880.00
+        limits:
+          conversions: 50000
+          impressions: 20000000
+          domains: 5
+          offers: unlimited
+      - name: Custom
+        monthlyPrice: 2499.00
+        annualMonthlyPrice: 1999.00
+        annualSavings: 6000.00
+        limits:
+          conversions: custom
+          impressions: custom
+          domains: custom
+          offers: unlimited
+  - name: Affise MMP
+    description: Mobile measurement and attribution platform
+    url: https://affise.com/pricing/
+    costDrivers:
+      - name: Monthly Installs
+        description: Number of app installs attributed per month (100K/250K/custom)
+        unit: installs
+        pricingImpact: high
+        optimization: >-
+          Monitor install volumes against plan limits; plan upgrades are
+          triggered by install volume growth.
+      - name: Monthly Active Users
+        description: Monthly active user count tracked (1M/3M/custom)
+        unit: MAU
+        pricingImpact: high
+        optimization: >-
+          Forecast MAU growth to avoid mid-period plan upgrades.
+      - name: Monthly Events
+        description: Number of in-app events tracked (10M/50M/custom)
+        unit: events
+        pricingImpact: medium
+        optimization: >-
+          Optimize event schema to reduce event volume while maintaining
+          measurement fidelity.
+    plans:
+      - name: Scale
+        monthlyPrice: 700.00
+        limits:
+          installs: 100000
+          MAU: 1000000
+          events: 10000000
+      - name: Enterprise
+        monthlyPrice: 1500.00
+        limits:
+          installs: 250000
+          MAU: 3000000
+          events: 50000000
+      - name: Custom
+        monthlyPrice: 0.00
+        limits:
+          installs: custom
+          MAU: custom
+          events: custom
+recommendations:
+  - name: Annual Billing
+    description: >-
+      Switch from monthly to annual billing to save approximately 20% across
+      all Affise Performance plan tiers.
+    estimatedSavings: 20%
+    effort: low
+  - name: Right-size Plan Selection
+    description: >-
+      Analyze actual conversion and impression volumes over 90 days to
+      ensure the selected plan tier aligns with actual usage, avoiding
+      over-provisioning.
+    estimatedSavings: variable
+    effort: medium
+  - name: Consolidate Products
+    description: >-
+      Evaluate whether separate Affise Performance and MMP subscriptions
+      are both necessary or if workflows can be consolidated.
+    estimatedSavings: variable
+    effort: high

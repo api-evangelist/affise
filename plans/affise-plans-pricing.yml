@@ -1,0 +1,157 @@
+name: Affise Plans and Pricing
+description: >-
+  Affise offers multiple product lines each with tiered pricing plans.
+  Affise Performance serves affiliate networks and agencies, Affise MMP
+  targets mobile measurement, and Affise Reach supports partner discovery.
+  All plans include a 14-day free trial for Performance.
+specificationVersion: '0.1'
+url: https://affise.com/pricing/
+plans:
+  - name: Affise Performance - Beginner
+    description: >-
+      Entry-level plan for small affiliate networks and agencies getting
+      started with performance marketing. Includes 7,000 conversions,
+      5M impressions, unlimited clicks, 50 offers, and unlimited partners.
+    url: https://affise.com/pricing/
+    price: 625.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: flat-rate
+    features:
+      - 7,000 conversions per month
+      - 5M impressions per month
+      - Unlimited clicks
+      - 50 offers
+      - Unlimited partners and users
+      - Affise Pay included
+      - 14-day free trial
+      - Email support
+    additionalPricing:
+      - price: 499.00
+        unit: month
+        currency: USD
+        billingCycle: yearly
+        description: Annual billing discount
+  - name: Affise Performance - Core
+    description: >-
+      Mid-tier plan for growing affiliate networks requiring higher conversion
+      volumes, multiple tracking domains, and enhanced support options.
+    url: https://affise.com/pricing/
+    price: 888.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: flat-rate
+    features:
+      - 40,000 conversions per month
+      - 15M impressions per month
+      - 2 custom tracking domains
+      - Unlimited offers, partners, and users
+      - Affise Pay included
+      - Email and chat support
+      - Dedicated onboarding manager
+    additionalPricing:
+      - price: 699.00
+        unit: month
+        currency: USD
+        billingCycle: yearly
+        description: Annual billing discount
+  - name: Affise Performance - Expand
+    description: >-
+      Advanced plan for established networks requiring higher capacity,
+      more tracking domains, and dedicated success management.
+    url: https://affise.com/pricing/
+    price: 1239.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: flat-rate
+    features:
+      - 50,000 conversions per month
+      - 20M impressions per month
+      - 5 custom tracking domains
+      - Unlimited offers, partners, and users
+      - Affise Pay included
+      - Email and chat support
+      - Dedicated success manager
+    additionalPricing:
+      - price: 999.00
+        unit: month
+        currency: USD
+        billingCycle: yearly
+        description: Annual billing discount
+  - name: Affise Performance - Custom
+    description: >-
+      Enterprise plan with tailored conversion volumes, custom domains, and
+      premium support including training sessions and dedicated account team.
+    url: https://affise.com/pricing/
+    price: 2499.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: custom
+    features:
+      - Custom conversions and impressions
+      - Custom domain allocation
+      - Unlimited offers, partners, and users
+      - Affise Pay included
+      - Premium chat support
+      - Training sessions
+      - Dedicated account team
+    additionalPricing:
+      - price: 1999.00
+        unit: month
+        currency: USD
+        billingCycle: yearly
+        description: Annual billing discount
+  - name: Affise MMP - Scale
+    description: >-
+      Mobile measurement plan for mid-size app publishers needing accurate
+      attribution, fraud prevention, and reporting.
+    url: https://affise.com/pricing/
+    price: 700.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: flat-rate
+    features:
+      - 100,000 installs per month
+      - 1M monthly active users
+      - 10M events per month
+      - Email support
+      - Report system
+      - Migration assistance
+  - name: Affise MMP - Enterprise
+    description: >-
+      Enterprise mobile measurement plan for large-scale app publishers
+      requiring custom development, antifraud, and dedicated management.
+    url: https://affise.com/pricing/
+    price: 1500.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: flat-rate
+    features:
+      - 250,000 installs per month
+      - 3M monthly active users
+      - 50M events per month
+      - Personal manager
+      - Custom development
+      - Antifraud protection
+  - name: Affise MMP - Custom
+    description: >-
+      Fully custom mobile measurement plan for high-volume publishers
+      with all enterprise features and personalized support.
+    url: https://affise.com/pricing/
+    price: 0.00
+    unit: month
+    currency: USD
+    billingCycle: monthly
+    pricingModel: custom
+    features:
+      - Custom install and MAU limits
+      - Custom event volumes
+      - All enterprise features
+      - Personalized support
+      - Contact for pricing
