@@ -1,7 +1,7 @@
 {
   "url": "https://affise.com/blog/",
   "rss": "https://affise.com/blog/feed/",
-  "fetched": "2026-06-13",
+  "fetched": "2026-06-14T20:42:17Z",
   "posts": [
     {
       "title": "Best Marketing Automation Tools for Ecommerce in 2026",
@@ -61,7 +61,22 @@
       "title": "Accelerate Your Affiliate Manager's Routine with the Affise MCP Server",
       "url": "https://affise.com/blog/accelerate-your-affiliate-managers-routine-with-affise-mcp-server/",
       "published": "2026-03-20",
-      "description": "Stop switching tabs. Stop copy-pasting reports. Connect Claude directly to Affise and let your AI assistant do the heavy lifting — from campaign analysis to conversion diagnostics."
+      "description": "Stop switching tabs. Stop copy-pasting reports. Connect Claude directly to Affise and let your AI assistant do the heavy lifting \u2014 from campaign analysis to conversion diagnostics."
     }
-  ]
+  ],
+  "repo": "affise",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/affise-com/",
+      "error": "HTTPError"
+    },
+    {
+      "source": "https://affise.com/blog/feed/",
+      "feed_url": "https://affise.com/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    }
+  ],
+  "post_count": 0
 }
