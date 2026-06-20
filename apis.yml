@@ -7,7 +7,7 @@ description: >-
   using API key authentication with GET and POST methods across statistics,
   conversions, offers, partners, and billing endpoints.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/affise/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -26,7 +26,7 @@ apis:
       REST API for the Affise Performance platform enabling admins and affiliates
       to manage offers, track conversions, retrieve statistics, handle publisher
       payouts, and automate billing operations programmatically.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://affise.com/api/
     baseURL: https://api.affise.com
     tags:
@@ -51,7 +51,7 @@ apis:
       Mobile Measurement Partner API enabling mobile app attribution tracking,
       install measurement, event tracking, and audience analytics for iOS,
       Android, and cross-platform mobile applications.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://intercom.help/affise-mmp/en
     baseURL: https://api.affise.com
     tags:
