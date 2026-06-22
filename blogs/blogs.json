@@ -1,82 +1,13 @@
 {
-  "url": "https://affise.com/blog/",
-  "rss": "https://affise.com/blog/feed/",
-  "fetched": "2026-06-14T20:42:17Z",
-  "posts": [
-    {
-      "title": "Best Marketing Automation Tools for Ecommerce in 2026",
-      "url": "https://affise.com/blog/best-marketing-automation-tools-for-ecommerce-in-2026/",
-      "published": "2026-05-27",
-      "description": "Marketers are constantly seeking ways to streamline operations, engage customers effectively, and maximize revenue. Today's shoppers expect relevant interactions across multiple channels, which means manual processes can no longer keep up."
-    },
-    {
-      "title": "Why Ecommerce Brands Need Marketing Automation to Scale Faster",
-      "url": "https://affise.com/blog/why-ecommerce-brands-need-marketing-automation-to-scale-faster/",
-      "published": "2026-05-15",
-      "description": "Scaling an ecommerce business today is no longer just about launching ads or expanding product catalogs. As competition intensifies and customer journeys become more complex, brands must manage multiple channels, partnerships, and campaigns simultaneously."
-    },
-    {
-      "title": "Referral Marketing Platform vs. Affiliate Marketing Software",
-      "url": "https://affise.com/blog/referral-marketing-platform-vs-affiliate-marketing-software/",
-      "published": "2026-05-10",
-      "description": "As businesses increasingly focus on partnership-driven growth, tools that support performance-based customer acquisition are becoming more important. Two solutions often mentioned together are affiliate marketing software and a referral marketing platform."
-    },
-    {
-      "title": "Affiliate Marketing for Ecommerce: Best Practices for 2026",
-      "url": "https://affise.com/blog/affiliate-marketing-for-ecommerce-best-practices-for-2026/",
-      "published": "2026-05-07",
-      "description": "Affiliate marketing continues to be one of the most effective strategies for ecommerce businesses looking to drive sales, expand their reach, and maximize ROI. Unlike traditional advertising, affiliate marketing is performance-based."
-    },
-    {
-      "title": "Best Affiliate Marketing Software for Ecommerce in 2026: How to Choose the Right Platform",
-      "url": "https://affise.com/blog/best-affiliate-marketing-software-for-ecommerce-in-2026-how-to-choose-the-right-platform/",
-      "published": "2026-04-27",
-      "description": "Ecommerce brands are fighting for attention in a crowded market where every click costs more than it did last year. To stay profitable and scalable, many businesses are turning to affiliate marketing as a performance-based growth channel."
-    },
-    {
-      "title": "Best Affiliate Marketing Platform: What to Look for Before You Buy",
-      "url": "https://affise.com/blog/best-affiliate-marketing-platform-what-to-look-for-before-you-buy/",
-      "published": "2026-04-20",
-      "description": "Affiliate marketing is one of the most effective strategies for businesses looking to grow their audience, increase sales, and build long-term partnerships. By leveraging a network of affiliates, companies can reach new customers in ways traditional advertising often cannot."
-    },
-    {
-      "title": "Marketing Automation for Ecommerce: Tools & Strategies That Convert",
-      "url": "https://affise.com/blog/marketing-automation-for-ecommerce-tools-strategies-that-convert/",
-      "published": "2026-04-13",
-      "description": "Brands are constantly looking for ways to optimize marketing, boost sales, and retain customers. With so many online stores competing for attention, success depends on delivering a seamless, personalized shopping experience."
-    },
-    {
-      "title": "Affiliate Management System Explained: From Tracking to Payouts",
-      "url": "https://affise.com/blog/affiliate-management-system-explained-from-tracking-to-payouts/",
-      "published": "2026-04-02",
-      "description": "As digital markets become more crowded, companies are turning to affiliates and strategic partnerships to expand their audience and boost revenue. An affiliate management system helps manage an affiliate program at scale."
-    },
-    {
-      "title": "How to Launch a Profitable E-Commerce Affiliate Marketing Program",
-      "url": "https://affise.com/blog/how-to-launch-a-profitable-e-commerce-affiliate-marketing-program/",
-      "published": "2026-03-27",
-      "description": "Ecommerce Affiliate Marketing has quickly become one of the most effective and scalable growth strategies for online retailers. Unlike traditional advertising, affiliate marketing allows brands to reward partners only when measurable outcomes are achieved."
-    },
-    {
-      "title": "Accelerate Your Affiliate Manager's Routine with the Affise MCP Server",
-      "url": "https://affise.com/blog/accelerate-your-affiliate-managers-routine-with-affise-mcp-server/",
-      "published": "2026-03-20",
-      "description": "Stop switching tabs. Stop copy-pasting reports. Connect Claude directly to Affise and let your AI assistant do the heavy lifting \u2014 from campaign analysis to conversion diagnostics."
-    }
-  ],
   "repo": "affise",
   "feeds": [
     {
-      "source": "https://www.linkedin.com/company/affise-com/",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://affise.com/blog/feed/",
       "feed_url": "https://affise.com/blog/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "title": "Affise Blog: Insights on Affiliate Marketing & Mobile Attribution",
+      "saved": 1
     }
   ],
-  "post_count": 0
+  "fetched": "2026-06-21T17:00:00Z",
+  "post_count": 1
 }
