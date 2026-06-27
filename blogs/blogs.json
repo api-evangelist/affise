@@ -4,10 +4,18 @@
     {
       "source": "https://affise.com/blog/feed/",
       "feed_url": "https://affise.com/blog/feed/",
-      "title": "Affise Blog: Insights on Affiliate Marketing & Mobile Attribution",
-      "saved": 1
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.linkedin.com/company/affise-com/",
+      "feed_url": "https://www.linkedin.com/company/affise-com/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-21T17:00:00Z",
+  "fetched": "2026-06-27T12:03:07Z",
   "post_count": 1
 }

@@ -103,7 +103,7 @@ common:
     url: finops/affise-finops.yml
   - type: BlogRSS
     url: https://affise.com/blog/feed/
-  - type: Blogs
+  - type: Blog
     url: blogs/blogs.json
   - type: JSONLDContext
     url: json-ld/affise-context.jsonld
