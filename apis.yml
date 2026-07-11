@@ -79,6 +79,8 @@ apis:
       - FN: Affise Support
         url: https://affise.com/contact-us/
 common:
+  - type: DomainSecurity
+    url: security/affise-domain-security.yml
   - type: Website
     url: https://affise.com/
   - type: Documentation
