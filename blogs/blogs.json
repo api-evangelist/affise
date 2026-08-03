@@ -2,17 +2,14 @@
   "repo": "affise",
   "feeds": [
     {
-      "source": "https://affise.com/blog/feed/",
-      "feed_url": "https://affise.com/blog/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "source": "https://www.linkedin.com/company/affise-com/",
+      "error": "HTTPError"
     },
     {
-      "source": "https://www.linkedin.com/company/affise-com/",
+      "source": "https://affise.com/blog/feed/",
       "error": "HTTPError"
     }
   ],
-  "fetched": "2026-07-11T11:50:51Z",
-  "post_count": 11
+  "fetched": "2026-08-01T15:49:00Z",
+  "post_count": 12
 }
