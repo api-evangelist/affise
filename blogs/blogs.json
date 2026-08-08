@@ -3,13 +3,19 @@
   "feeds": [
     {
       "source": "https://www.linkedin.com/company/affise-com/",
-      "error": "HTTPError"
+      "feed_url": "https://www.linkedin.com/company/affise-com/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     },
     {
       "source": "https://affise.com/blog/feed/",
-      "error": "HTTPError"
+      "feed_url": "https://affise.com/blog/feed/",
+      "title": "",
+      "saved": 1,
+      "method": "feed"
     }
   ],
-  "fetched": "2026-08-01T15:49:00Z",
-  "post_count": 12
+  "fetched": "2026-08-06T14:08:46Z",
+  "post_count": 13
 }
