@@ -22,7 +22,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/affise.png
 url: https://raw.githubusercontent.com/api-evangelist/affise/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 tags:
   - Affiliate Marketing
@@ -48,12 +48,28 @@ apis:
       - Statistics
       - Payouts
     properties:
+      - type: OpenAPI
+        url: openapi/affise-openapi.yml
+      - type: OpenAPI
+        url: openapi/_original/affise-openapi-original.yml
+      - type: Overlay
+        url: overlays/affise-openapi-overlay.yaml
+      - type: APIReference
+        url: https://api.affise.com/docs3.2/
       - type: Documentation
-        url: https://help-center.affise.com/en/articles/6492567-api-3-1-documentation-overview-admins
+        url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
       - type: Documentation
         url: https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+      - type: GettingStarted
+        url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
       - type: PostmanCollection
         url: https://github.com/affise/affise-postman-api-collection
+      - type: MCPServer
+        url: mcp/affise-mcp.yml
+      - type: ToolCrosswalk
+        url: mcp/affise-tool-crosswalk.yml
+      - type: DataModel
+        url: data-model/affise-data-model.yml
     contact:
       - FN: Affise Support
         url: https://affise.com/contact-us/
@@ -91,8 +107,56 @@ apis:
       - FN: Affise Support
         url: https://affise.com/contact-us/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/affise-vulnerability-disclosure.yml
+  - type: Security
+    url: https://srs.s4e.io/affise.com/report
+  - type: SecurityTxt
+    url: well-known/affise-security.txt
+  - type: WellKnown
+    url: well-known/affise-well-known.yml
   - type: DomainSecurity
     url: security/affise-domain-security.yml
+  - type: Authentication
+    url: authentication/affise-authentication.yml
+  - type: Conventions
+    url: conventions/affise-conventions.yml
+  - type: ErrorCatalog
+    url: errors/affise-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/affise-lifecycle.yml
+  - type: Conformance
+    url: conformance/affise-conformance.yml
+  - type: Compliance
+    url: https://affise.com/gdpr/
+  - type: Sandbox
+    url: sandbox/affise-sandbox.yml
+  - type: Webhooks
+    url: asyncapi/affise-postbacks-webhooks.yml
+  - type: Packages
+    url: packages/affise-packages.yml
+  - type: SDKs
+    url: packages/affise-packages.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/affise-llms.txt
+  - type: DeveloperPortal
+    url: https://affise.com/api/
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: Support
+    url: https://help-center.affise.com/en/
+  - type: Postman
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: TermsOfService
+    url: https://affise.com/terms/
+  - type: PrivacyPolicy
+    url: https://affise.com/privacy-policy/
+  - type: SignUp
+    url: https://affise.com/signup/
   - type: Website
     url: https://affise.com/
   - type: Documentation
@@ -124,3 +188,8 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1
