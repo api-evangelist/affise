@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: https://help-center.affise.com/en/articles/6576037-api-errors-admins
+sources:
+  - https://help-center.affise.com/en/articles/6576037-api-errors-admins
+  - https://help-center.affise.com/en/articles/6583335-api-errors-affiliates
+  - openapi/affise-openapi.yml
+format: proprietary
+rfc9457: false
+note: >-
+  Affise does NOT use RFC 9457 problem+json. Every response — success and failure alike —
+  is a flat JSON envelope carrying a numeric `status` field, where `1` means success and
+  `2` means error, plus a human-readable `message`. There is no machine-readable error
+  code, no error `type` URI, and no stable identifier an agent can branch on: two
+  entirely different failures both arrive as `{"status": 2, "message": "..."}` with only
+  English prose to tell them apart. Callers must switch on the HTTP status code and then
+  string-match the message. The five error shapes below are declared as reusable
+  components.responses in the spec and applied consistently: all 167 operations declare
+  401, 403 and 500; 53 declare 400 and 11 declare 404.
+envelope:
+  shape: '{"status": <int>, "message": "<string>"}'
+  success_value: 1
+  error_value: 2
+  content_type: application/json
+  note: >-
+    The same `status: 1` envelope is also the acknowledgement Affise returns to an
+    inbound postback — see asyncapi/affise-postbacks-webhooks.yml. The field is
+    overloaded across the request and the event surface.
+problems:
+  - status: 400
+    component: BadRequest
+    title: Bad Request
+    message: Bad Request
+    description: >-
+      The request was malformed or contained invalid parameters — commonly a JSON or XML
+      body error, a bad URL encoding, or a non-ASCII character in the query string.
+    remediation: >-
+      Recheck the URL for typing or syntax errors; URL-encode long query strings. If the
+      request uploads a file, try a smaller file.
+    operations_declaring: 53
+  - status: 401
+    component: Unauthorized
+    title: Token is necessary
+    message: Token is necessary
+    description: >-
+      The request requires authentication. The API key is missing or invalid, or the
+      request was aimed at the wrong data center / tenant host.
+    remediation: >-
+      Supply a valid API-Key header. Confirm the key belongs to a General manager or a
+      user with sufficient permissions, and that the base URL is your own tenant host.
+    operations_declaring: 167
+  - status: 403
+    component: Forbidden
+    title: Auth Denied
+    message: Auth Denied
+    description: Access denied — the key is valid but the role lacks permission for this resource.
+    remediation: Check that the user behind the key holds the permissions the request needs.
+    operations_declaring: 167
+  - status: 404
+    component: NotFound
+    title: Resource Not Found
+    message: Resource Not Found
+    description: >-
+      The resource does not exist on this host. Also returned by api.affise.com for any
+      unrouted path, as the JSON envelope `{"status":2,"error":"Page Not Found"}`.
+    remediation: Recheck the path and the resource id.
+    operations_declaring: 11
+  - status: 500
+    component: InternalServerError
+    title: Server error, Please contact your administrator
+    message: Server error, Please contact your administrator
+    description: A server-side failure.
+    remediation: Retry, recheck the URL, then contact Affise Customer Support.
+    operations_declaring: 167
+  - status: 502
+    component: null
+    title: Bad Gateway
+    description: >-
+      The server received an invalid response from an inbound server. Documented in the
+      help-center error reference but NOT declared on any operation in the OpenAPI.
+    remediation: Retry, then contact Affise Customer Support.
+    operations_declaring: 0
+    source: https://help-center.affise.com/en/articles/6576037-api-errors-admins
+gaps:
+  - no_error_codes: >-
+      No stable, documented error-code vocabulary. `message` is prose and is the only
+      discriminator between different failures at the same HTTP status.
+  - no_rfc9457: No application/problem+json representation.
+  - no_429: >-
+      No rate-limit / 429 response is declared on any operation and none is documented.
+      See rate-limits/affise-rate-limits.yml.
+  - status_field_overloaded: >-
+      `status: 2` is returned inside 4xx and 5xx bodies AND inside some 200 responses,
+      so an agent cannot rely on the HTTP status alone or the body alone.

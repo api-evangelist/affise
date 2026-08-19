@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.affise.com/docs3.2/bundled.yaml
+sources:
+  - https://api.affise.com/docs3.2/bundled.yaml
+  - https://github.com/affise/affise-postman-api-collection
+  - https://github.com/affise/mcp-affise
+note: >-
+  Affise runs a shared demo tenant at https://api-demo.affise.com and treats it as the
+  default target across three separate first-party surfaces: it is the single entry in
+  the OpenAPI `servers[]` block, the `baseUrl` in the published Postman Demo environment,
+  and the default AFFISE_BASE_URL in the MCP server. There is, however, no test-vs-live
+  MODE inside a tenant — no test key prefix, no sandbox flag, no way to run a
+  non-production request against your own instance. Testing against real data means
+  testing against production. Affise instead publishes third-party tracking-link testers
+  for validating offers and postbacks.
+test_environment:
+  present: true
+  kind: shared-demo-tenant
+  base_url: https://api-demo.affise.com
+  probed_http_status: 200
+  declared_in:
+    - 'openapi/affise-openapi.yml — servers[0], description "Demo Server"'
+    - 'affise-postman-api-collection/Demo.postman_environment.json — baseUrl'
+    - 'mcp-affise — AFFISE_BASE_URL default'
+  credentials_published: partial
+  note: >-
+    The OpenAPI declares an `api-key` server variable described as "Demo Test API Key"
+    with a default value baked into servers[0], and repeats a documentation API key in
+    the description, in cURL samples and in parameter examples. These are Affise's own
+    published demo credentials, carried verbatim in the harvested spec at
+    openapi/_original/affise-openapi-original.yml; they are bare hex strings with no
+    vendor prefix, so the network secret sanitizer correctly leaves them intact.
+    The Postman Demo environment ships every other variable X-masked
+    (admin_key, affiliate_api_key, offer_id, conversion_id, …), so a developer must
+    supply their own values before the collection runs.
+test_vs_live:
+  separation: none
+  key_prefixes: none
+  mode_flag: none
+  note: >-
+    Affise API keys carry no environment prefix (no live_/test_ convention) and no key
+    metadata distinguishes a demo key from a production key. The only separation is the
+    HOST: api-demo.affise.com versus your own api-<company>.affise.com.
+fixture_values:
+  - name: baseUrl
+    value: https://api-demo.affise.com
+    source: Demo.postman_environment.json
+  - name: tds_url
+    value: https://demo.g2afse.com
+    source: Demo.postman_environment.json
+    note: Demo tracking-domain host used for click and conversion link testing.
+  - name: affiliate_id
+    value: '8197'
+    source: Demo.postman_environment.json
+    note: The only non-masked entity id in the published Demo environment.
+  - name: masked_variables
+    value: 'admin_key, affiliate_api_key, offer_id, premoderation_offer_id, conversion_id, payment_id, advertiser_id, pixel_id, postback_id, news_id, smartlink_id, kpi_id, category_id, source_id, user_id'
+    source: Demo.postman_environment.json
+    note: Published as XXXXXXXXXXXXXXXXXXXXX placeholders — supply your own.
+test_tooling:
+  - name: S2S (postback) integration test with advertisers
+    kind: guided-test
+    docs: https://help-center.affise.com/en/articles/6475564-perform-an-s2s-integration-test-with-advertisers
+  - name: S2S integration test with affiliates
+    kind: guided-test
+    docs: https://help-center.affise.com/en/articles/6493360-perform-an-s2s-integration-test-with-affiliates
+  - name: Pixel (C2S) integration test with advertisers
+    kind: guided-test
+    docs: https://help-center.affise.com/en/articles/6492161-perform-a-pixel-integration-test-with-advertisers
+  - name: Affilitest
+    kind: third-party tracking-link tester
+    docs: https://help-center.affise.com/en/articles/4123373-affilitest
+    first_party: false
+  - name: Testmyoffers
+    kind: third-party tracking-link tester
+    docs: https://help-center.affise.com/en/articles/4123267-testmyoffers
+    first_party: false
+test_clock:
+  supported: false
+  note: No time simulation or test-clock facility is published.
+gaps:
+  - no_tenant_sandbox: >-
+      A customer cannot exercise their OWN data model in a non-production mode. Conversion
+      imports, payment generation and offer edits tested on the shared demo tenant do not
+      reflect the caller's configuration.
+  - no_test_credentials_self_service: >-
+      Access to a working demo key beyond the one embedded in the spec is not self-service;
+      the Postman environment ships masked.
+  - demo_key_in_spec: >-
+      Publishing a working demo API key as a default in servers[].variables means any
+      reader of the public OpenAPI holds a credential to the shared demo tenant.

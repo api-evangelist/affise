@@ -1,0 +1,101 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/affise-openapi.yml
+sources:
+  - openapi/affise-openapi.yml
+  - https://affise.com/blog/affise-successfully-completes-soc-2-type-ii-certification/
+  - https://affise.com/gdpr/
+  - https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+note: >-
+  Two different things are recorded here. The ORGANIZATIONAL compliance posture is real
+  and published: Affise completed a SOC 2 Type II certification and carries the AICPA SOC
+  II and GDPR badges in its own site footer, with a dedicated GDPR page describing IP
+  obfuscation, device-ID blanking, retention windows and access controls. The TECHNICAL
+  standards posture is thin: the contract is OpenAPI 3.1.1 and that is essentially the
+  whole list — no OAuth, no OIDC, no RFC 9457, no RFC 9116-current security.txt, no
+  standard rate-limit headers, no JSON:API, no idempotency convention.
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: 'openapi: 3.1.1 document served at https://api.affise.com/docs3.2/bundled.yaml; 154 paths, 167 operations, 14 component schemas.'
+  - id: openapi-operation-ids
+    conforms: false
+    evidence: 'Only 2 of 167 operations declare an operationId (addPartnerPixel, deleteInvoiceConversions).'
+  - id: openapi-security-schemes
+    conforms: false
+    evidence: 'components.securitySchemes is absent; auth is an ordinary api-key header parameter on 155 operations.'
+  - id: rest
+    conforms: partial
+    evidence: >-
+      Resource-oriented paths and JSON responses, but only GET/POST/DELETE are used —
+      POST covers both create and update, and write bodies are form-encoded.
+  - id: oauth2
+    conforms: false
+    evidence: 'No oauth2 securityScheme; /.well-known/oauth-authorization-server returns 404 on every host.'
+  - id: oidc
+    conforms: false
+    evidence: '/.well-known/openid-configuration returns 404 on affise.com and api.affise.com.'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors use a proprietary {"status": 2, "message": "..."} envelope; no application/problem+json anywhere in the spec.'
+  - id: rfc9116-security-txt
+    conforms: partial
+    evidence: >-
+      /.well-known/security.txt returns 200 with Contact and Expires, but Expires is
+      2025-01-16 — the document is expired, which RFC 9116 treats as stale. A second,
+      conflicting file sits at the non-canonical /security.txt.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: 'No Sunset or Deprecation header support and no deprecation policy is published.'
+  - id: rfc6585-rate-limit
+    conforms: false
+    evidence: 'No 429 response declared on any operation; no RateLimit-*/X-RateLimit-* headers documented or observed.'
+  - id: asyncapi
+    conforms: false
+    evidence: 'A documented webhook/postback event surface exists but no AsyncAPI document is published. See asyncapi/affise-postbacks-webhooks.yml.'
+  - id: webhook-signing
+    conforms: false
+    evidence: 'Outbound affiliate postbacks carry no HMAC signature or shared secret.'
+  - id: idempotency-key
+    conforms: false
+    evidence: 'No Idempotency-Key header or request-token de-duplication on any write operation.'
+  - id: json-api
+    conforms: false
+    evidence: 'Responses are a flat proprietary envelope, not JSON:API documents.'
+  - id: mcp
+    conforms: true
+    evidence: >-
+      First-party MCP server at github.com/affise/mcp-affise, @modelcontextprotocol/sdk
+      ^1.29.0, stdio transport, 23 tools and 6 prompts, published to npm as
+      @affise/mcp-server 2.1.0.
+  - id: llms-txt
+    conforms: true
+    evidence: 'https://affise.com/llms.txt returns 200 with a valid llms.txt structure (H1, blockquote summary, ## sections).'
+  - id: a2a-agent-card
+    conforms: false
+    evidence: '/.well-known/agent-card.json and /.well-known/agent.json return 404 on affise.com, api.affise.com and help-center.affise.com.'
+compliance:
+  published: true
+  page: https://affise.com/gdpr/
+  certifications:
+    - name: SOC 2 Type II
+      status: certified
+      evidence: https://affise.com/blog/affise-successfully-completes-soc-2-type-ii-certification/
+      note: 'AICPA SOC II badge is linked from the site-wide footer.'
+    - name: GDPR
+      status: 'compliance program published (Affise acts as data processor)'
+      evidence: https://affise.com/gdpr/
+      controls:
+        - 'Account-level opt-in IP obfuscation (last octet zeroed) for EU countries'
+        - 'Device-ID blanking for device_id, android_id, ref_android_id, ref_device_id, mac_address, ios_ifa, user_id, unid'
+        - 'Retention: 120-day rolling window on IPs and device IDs; 12-month rolling window on log-level reporting'
+        - 'Physical access control, transmission controls, separation of test and production, pseudonymization'
+    - name: ePrivacy
+      status: claimed
+      evidence: 'https://affise.com/why-affise/ — "SOC2 and ePrivacy" feature block'
+  trust_center: null
+  trust_center_note: >-
+    No dedicated trust center or security portal exists — probes of affise.com/trust/,
+    affise.com/security/ and affise.com/compliance/ all returned 404, and no
+    trust.affise.com responded. The compliance evidence is spread across a blog post, a
+    GDPR page and footer badges. No security/affise-trust-center.yml is emitted.

@@ -1,0 +1,170 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/affise-openapi.yml
+note: >-
+  Entity-relationship graph derived from the Affise OpenAPI 3.1.1 document: the 14
+  declared component schemas, their $ref links, and the id-reference fields
+  (offer_id, advertiser, pid, affiliate_id, manager_id, category_id …) that appear
+  across request parameters and response bodies. The spec's component layer is shallow —
+  only 14 schemas for 167 operations, and most response bodies are declared inline rather
+  than by $ref — so the entities marked `inline: true` below are real domain objects the
+  API returns and accepts, but they have no reusable schema an agent can bind to. That is
+  itself the most useful finding here: an integrator cannot generate a typed client for
+  advertisers, partners, users, conversions, invoices or statistics rows from this
+  contract, only for offers, payments and pixels.
+identifier_style:
+  numeric_ids: 'offers, affiliates (partners), users, goals, payments, pixels — plain integers'
+  mongo_ids: 'advertisers — the spec and the MCP tooling both describe the advertiser id as a MongoId hex string'
+  note: 'Ids are bare values with no type prefix, so an id alone does not identify its entity type.'
+entities:
+  - name: offer
+    schema: '#/components/schemas/offer'
+    inline: false
+    properties: 81
+    description: >-
+      The central object of the platform — a campaign an advertiser runs and affiliates
+      promote. Carries tracking URLs, targeting, payouts, caps, creatives, schedule and
+      privacy.
+    key_fields: [id, offer_id, advertiser, external_offer_id, bundle_id, title, url, trafficback_url]
+    operations: ['GET /3.0/offers', 'GET /3.0/offer/{id}', 'POST /3.0/admin/offer', 'POST /3.0/admin/offer/{id}', 'POST /3.0/admin/offer/delete', 'GET /3.0/offers/count']
+  - name: offer_affiliate
+    schema: '#/components/schemas/offer_affiliate'
+    inline: false
+    properties: 42
+    description: >-
+      The affiliate-facing projection of an offer — the same campaign with payment detail
+      hidden or reduced and performance metrics (cr, epc) added. A deliberate second view
+      of one entity rather than a separate object.
+    operations: ['GET /3.0/partner/offers', 'GET /3.0/partner/live-offers']
+  - name: advertiser
+    schema: null
+    inline: true
+    description: The brand whose campaigns are being promoted. Identified by a MongoId.
+    operations: ['GET /3.0/admin/advertisers', 'GET /3.0/admin/advertiser/{id}', 'POST /3.0/admin/advertiser', 'POST /3.0/admin/advertiser/{id}']
+  - name: affiliate
+    aliases: [partner]
+    schema: null
+    inline: true
+    description: >-
+      The publisher driving traffic. Called "partner" in every URL path and "affiliate" in
+      every summary and in the UI — the same entity under two names throughout the contract.
+    operations: ['GET /3.0/admin/partners', 'GET /3.0/admin/partner/{id}', 'POST /3.0/admin/partner', 'POST /3.0/admin/partner/{id}', 'GET /3.1/partner/me', 'GET /3.0/admin/partner/{id}/referrals']
+  - name: user
+    schema: null
+    inline: true
+    description: An admin-panel operator with a role (General manager, Affiliate manager, Account manager) and an API key.
+    operations: ['GET /3.0/admin/users', 'GET /3.0/admin/user/{id}', 'POST /3.0/admin/user', 'POST /3.0/admin/user/{id}', 'POST /3.0/admin/user/api_key/{id}', 'POST /3.1/user/{id}/permissions']
+  - name: conversion
+    schema: null
+    inline: true
+    description: >-
+      A recorded user action attributed to an affiliate and an offer, carrying a status
+      (approved/pending/declined/hold), a goal, a payout and the advertiser's transactionid.
+    operations: ['GET /3.0/stats/conversions', 'GET /3.0/stats/conversionsbyid', 'POST /3.0/admin/conversion/edit', 'POST /3.0/admin/conversion/import', 'POST /3.0/admin/conversions/import', 'POST /4.0/affiliate/conversion/import']
+  - name: payment
+    schema: '#/components/schemas/payment'
+    inline: false
+    properties: 19
+    description: A payout invoice to an affiliate, with a payment system, revenue, currency, status and corrections.
+    key_fields: [id, pid, manager_id, pay_sys, status, revenue, currency, cpa_actions]
+    operations: ['GET /3.1/payments', 'GET /3.1/payments/{id}', 'POST /3.1/payments/generate', 'POST /3.1/payments/create-for-affiliate', 'POST /3.1/payments/{id}/add-correction']
+  - name: advertiser_invoice
+    schema: null
+    inline: true
+    description: A billing invoice raised against an advertiser.
+    operations: ['GET /3.0/admin/advertiser-invoices', 'GET /3.0/admin/advertiser-invoice/{number}', 'POST /3.0/admin/advertiser-invoice']
+  - name: pixel
+    schema: '#/components/schemas/pixel'
+    inline: false
+    properties: 10
+    description: A client-side (C2S) conversion tracking snippet bound to an offer and an affiliate.
+    key_fields: [id, name, code, code_type, offer_id, pid, is_active, moderation_status]
+    operations: ['GET /3.0/partner/pixels', 'POST /3.0/partner/pixel', 'POST /3.0/partner/pixel/{id}', 'DELETE /3.0/partner/pixel/{id}/remove']
+  - name: postback
+    schema: null
+    inline: true
+    description: An affiliate's registered callback URL — global (per affiliate) or local (per affiliate per offer).
+    operations: ['GET /3.0/admin/postbacks', 'POST /3.0/partner/postback', 'POST /3.0/partner/postback/{id}', 'DELETE /3.0/partner/postback/{id}/remove']
+  - name: category
+    schema: null
+    inline: true
+    description: Offer vertical/category taxonomy.
+    operations: ['GET /3.0/offer/categories', 'POST /3.0/admin/category', 'POST /3.0/admin/category/{id}']
+  - name: goal
+    schema: null
+    inline: true
+    description: A billable action inside an offer; payouts and caps are set per goal.
+    operations: ['GET /3.0/goals']
+  - name: smartlink_category
+    schema: null
+    inline: true
+    description: A SmartLink category that routes traffic across a pool of offers.
+    operations: ['GET /3.0/admin/smartlink/categories', 'POST /3.0/admin/smartlink/category', 'GET /3.0/partner/smartlink/categories']
+  - name: ticket
+    schema: null
+    inline: true
+    description: An affiliate request to be connected to an offer or SmartLink, pending admin approval.
+    operations: ['GET /3.0/admin/tickets', 'GET /3.0/admin/ticket/{id}', 'POST /3.0/admin/ticket/{id}/offer', 'POST /3.0/admin/ticket/{id}/smartlink']
+  - name: kpi_automation
+    schema: null
+    inline: true
+    description: A rule that blocks or adjusts affiliate traffic when a KPI threshold is crossed.
+    operations: ['GET /3.1/automation/kpi', 'POST /3.1/automation/kpi', 'POST /3.1/automation/kpi/{id}', 'DELETE /3.1/automation/kpi/{id}']
+  - name: adcost
+    schema: null
+    inline: true
+    description: Externally-supplied media cost, joined to offers and affiliates by date and sub-id for ROI reporting.
+    operations: ['GET /3.1/adcosts', 'POST /3.1/adcosts', 'DELETE /3.1/adcosts']
+  - name: news
+    schema: null
+    inline: true
+    description: Announcements published to affiliates.
+    operations: ['GET /3.0/news', 'GET /3.0/news/{id}']
+value_objects:
+  - {name: offer_payment_structure, schema: '#/components/schemas/offer_payment_structure', properties: 36, parent: offer, description: 'A payout row — goal, countries, devices, revenue, currency, sub-id conditions.'}
+  - {name: offer_landing_structure, schema: '#/components/schemas/offer_landing_structure', properties: 5, parent: offer, description: 'A landing or prelanding page bound to the offer.'}
+  - {name: offer_caps_structure, schema: '#/components/schemas/offer_caps_structure', properties: 11, parent: offer, description: 'A volume cap by period, goal, affiliate, country or sub value.'}
+  - {name: offer_tier_structure, schema: '#/components/schemas/offer_tier_structure', properties: 12, parent: offer, description: 'A performance tier that modifies payout above a threshold.'}
+  - {name: offer_schedule_structure, schema: '#/components/schemas/offer_schedule_structure', properties: 5, parent: offer, description: 'Start/end dates, timezone and dayparting intervals.'}
+  - {name: offer_creative_html_structure, schema: '#/components/schemas/offer_creative_html_structure', properties: 5, parent: offer, description: 'An HTML creative with dimensions and asset mapping.'}
+  - {name: targeting_group_structure, schema: '#/components/schemas/targeting_group_structure', properties: 31, parent: offer, description: 'A targeting rule set — geo, os, isp, ip, device, browser, connection, proxy blocking.'}
+  - {name: targeting_os_structure, schema: '#/components/schemas/targeting_os_structure', properties: 3, parent: targeting_group_structure}
+  - {name: targeting_browser_version_structure, schema: '#/components/schemas/targeting_browser_version_structure', properties: 3, parent: targeting_group_structure}
+  - {name: targeting_url_weight, schema: '#/components/schemas/targeting_url_weight', properties: 2, parent: targeting_group_structure, description: 'Weighted URL rotation within a targeting group.'}
+relationships:
+  - {from: offer, to: advertiser, type: belongs_to, via: advertiser}
+  - {from: offer, to: category, type: has_many, via: categories}
+  - {from: offer, to: goal, type: has_many, via: goals}
+  - {from: offer, to: offer_payment_structure, type: has_many, via: payments}
+  - {from: offer, to: offer_landing_structure, type: has_many, via: landings}
+  - {from: offer, to: offer_caps_structure, type: has_many, via: caps}
+  - {from: offer, to: offer_tier_structure, type: has_many, via: tiers}
+  - {from: offer, to: offer_schedule_structure, type: has_one, via: schedule}
+  - {from: offer, to: targeting_group_structure, type: has_many, via: targeting}
+  - {from: offer, to: offer_creative_html_structure, type: has_many, via: creatives}
+  - {from: offer_affiliate, to: offer, type: projection_of, via: offer_id}
+  - {from: conversion, to: offer, type: belongs_to, via: offer_id}
+  - {from: conversion, to: affiliate, type: belongs_to, via: pid}
+  - {from: conversion, to: goal, type: belongs_to, via: goal}
+  - {from: payment, to: affiliate, type: belongs_to, via: pid}
+  - {from: payment, to: user, type: belongs_to, via: manager_id}
+  - {from: payment, to: conversion, type: has_many, via: cpa_actions}
+  - {from: advertiser_invoice, to: advertiser, type: belongs_to, via: advertiser}
+  - {from: advertiser_invoice, to: conversion, type: has_many, via: conversions}
+  - {from: pixel, to: offer, type: belongs_to, via: offer_id}
+  - {from: pixel, to: affiliate, type: belongs_to, via: pid}
+  - {from: postback, to: affiliate, type: belongs_to, via: pid}
+  - {from: postback, to: offer, type: belongs_to, via: offer_id, note: 'Local postbacks only; a global postback has no offer.'}
+  - {from: ticket, to: affiliate, type: belongs_to, via: pid}
+  - {from: ticket, to: offer, type: belongs_to, via: offer_id}
+  - {from: affiliate, to: user, type: belongs_to, via: manager_id, note: 'The affiliate manager who owns the relationship.'}
+  - {from: advertiser, to: user, type: belongs_to, via: advertiser_manager_id}
+  - {from: kpi_automation, to: offer, type: references, via: offer}
+  - {from: kpi_automation, to: affiliate, type: references, via: affiliate}
+  - {from: adcost, to: offer, type: references, via: offer_id}
+  - {from: adcost, to: affiliate, type: references, via: affiliate_id}
+  - {from: smartlink_category, to: offer, type: has_many, via: offers}
+gaps:
+  - shallow_components: '14 schemas for 167 operations; advertiser, affiliate, user, conversion, invoice and every statistics row are inline-only.'
+  - naming_split: 'partner (paths) vs affiliate (summaries) name the same entity — a client generator will produce both.'
+  - untyped_ids: 'No id prefixes or formats; advertiser MongoIds and numeric offer ids look alike in a payload.'

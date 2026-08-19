@@ -1,0 +1,181 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Registry metadata endpoints (registry.npmjs.org, pub.dev, proxy.golang.org,
+  search.maven.org, trunk.cocoapods.org, repo.packagist.org) plus the github.com/affise
+  organization repo listing.
+note: >-
+  Affise's first-party client libraries split cleanly in two. The Affise MMP
+  (Mobile Measurement Partner) attribution SDKs are actively released across six
+  platforms — all six shipped within the last ten days of this probe. The Affise
+  Performance REST API server-side SDKs (Go, PHP) are NOT maintained: the newest is
+  from May 2024 and the PHP client's only Packagist release is v0.1.1 from June 2021,
+  three major API revisions before the current 3.2 documentation. A consumer of the
+  Performance API should treat the Postman collection and the OpenAPI as the
+  supported integration path, not those SDKs.
+packages:
+  # --- Affise MMP attribution SDKs (actively maintained) ---
+  - language: kotlin
+    platform: android
+    registry: maven-central
+    name: com.affise:attribution
+    url: https://central.sonatype.com/artifact/com.affise/attribution
+    install: 'implementation("com.affise:attribution:1.6.59")'
+    official: true
+    version: 1.6.59
+    published: '2025-06-16'
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-android
+    note: >-
+      Core attribution artifact. The same coordinate group publishes twelve companion
+      modules on the same version — module-advertising, module-androidid,
+      module-appsflyer, module-huawei, module-link, module-meta, module-network,
+      module-phone, module-rustore, module-status, module-subscription and internal.
+      The GitHub repo is far fresher (pushed 2026-08-13) than the last Maven Central
+      release, so newer builds exist only as source.
+  - language: swift
+    platform: ios
+    registry: cocoapods
+    name: AffiseAttributionLib
+    url: https://cocoapods.org/pods/AffiseAttributionLib
+    install: "pod 'AffiseAttributionLib'"
+    official: true
+    version: 1.7.9
+    published: '2026-06-18'
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-ios
+    note: Also consumable via Swift Package Manager from the GitHub repo.
+  - language: dart
+    platform: flutter
+    registry: pub.dev
+    name: affise_attribution_lib
+    url: https://pub.dev/packages/affise_attribution_lib
+    install: 'flutter pub add affise_attribution_lib'
+    official: true
+    version: 1.7.11
+    published: '2026-08-04'
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-flutter
+  - language: javascript
+    platform: react-native
+    registry: npm
+    name: affise-attribution-lib
+    url: https://www.npmjs.com/package/affise-attribution-lib
+    install: npm install affise-attribution-lib
+    official: true
+    version: 1.7.11
+    published: '2026-08-04'
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-react
+    note: Published by the Affise GitHub Actions release pipeline.
+  - language: csharp
+    platform: unity
+    registry: null
+    name: affise-mmp-sdk-unity
+    url: https://github.com/affise/affise-mmp-sdk-unity
+    install: 'Import the .unitypackage from the GitHub releases page'
+    official: true
+    version: null
+    published: null
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-unity
+    note: >-
+      Distributed as a Unity package from GitHub releases only — no NuGet, npm or
+      OpenUPM registry entry answered for it, so there is no metadata endpoint to read
+      a version from. Repository last pushed 2026-08-04.
+  - language: javascript
+    platform: web
+    registry: null
+    name: affise-mmp-sdk-web
+    url: https://github.com/affise/affise-mmp-sdk-web
+    install: 'Build from source / vendor the bundle'
+    official: true
+    version: null
+    published: null
+    product: Affise MMP
+    source_code: https://github.com/affise/affise-mmp-sdk-web
+    note: >-
+      No npm entry exists for the web SDK (probed `@affise/web-sdk`,
+      `affise-web-sdk`, and the npm text search — all miss). Repository last pushed
+      2025-10-24. A companion Telegram Mini App SDK ships the same way at
+      github.com/affise/affise-mmp-sdk-telegram-mini-app.
+  # --- Agent / MCP tooling ---
+  - language: typescript
+    registry: npm
+    name: "@affise/mcp-server"
+    url: https://www.npmjs.com/package/@affise/mcp-server
+    install: npm install -g @affise/mcp-server
+    official: true
+    version: 2.1.0
+    published: '2026-08-04'
+    product: Affise MCP Server
+    source_code: https://github.com/affise/mcp-affise
+    note: >-
+      Published by the `affise` npm account. Local stdio MCP server wrapping the
+      Performance REST API — 23 tools, 6 analysis prompts. Also distributed as a
+      Docker image and as a Claude Desktop .dxt extension (manifest version 2.1.0).
+      See mcp/affise-mcp.yml.
+  # --- Affise Performance REST API server-side SDKs (stale) ---
+  - language: go
+    registry: go-modules
+    name: github.com/affise/go-sdk
+    url: https://pkg.go.dev/github.com/affise/go-sdk
+    install: go get github.com/affise/go-sdk
+    official: true
+    version: v1.0.0
+    published: '2024-05-23'
+    product: Affise Performance API
+    source_code: https://github.com/affise/go-sdk
+    note: Single tagged release; predates the current 3.2 API documentation.
+  - language: go
+    registry: go-modules
+    name: github.com/affise/go-tracking
+    url: https://pkg.go.dev/github.com/affise/go-tracking
+    install: go get github.com/affise/go-tracking
+    official: true
+    version: v1.0.1
+    published: '2024-02-14'
+    product: Affise tracking
+    source_code: https://github.com/affise/go-tracking
+  - language: php
+    registry: packagist
+    name: affise/php-sdk
+    url: https://packagist.org/packages/affise/php-sdk
+    install: composer require affise/php-sdk
+    official: true
+    version: v0.1.1
+    published: '2021-06-15'
+    product: Affise Performance API
+    source_code: https://github.com/affise/php-sdk
+    note: >-
+      Strongest abandonment signal in this set — last published five years before this
+      probe, and the source repository has not been pushed since February 2022, while
+      the REST API has moved from 3.0 to 3.2. Two third-party alternatives exist on
+      Packagist (bytelovers/affise-php-client, shilov/affise-rest-php); neither is
+      first-party.
+  - language: php
+    registry: null
+    name: affise/php-tracking
+    url: https://github.com/affise/php-tracking
+    install: 'Clone from GitHub — no Packagist release'
+    official: true
+    version: null
+    published: null
+    product: Affise tracking
+    source_code: https://github.com/affise/php-tracking
+    note: No Packagist entry answered; repository last pushed 2024-02-15.
+collections:
+  - kind: postman
+    name: Affise Public API
+    url: https://github.com/affise/affise-postman-api-collection
+    official: true
+    note: >-
+      First-party Postman collection covering every endpoint of the 3.2 documentation,
+      shipped with a Demo environment pinned to https://api-demo.affise.com. Distributed
+      as a repo download rather than a public Postman workspace. Environment file last
+      exported 2023-03-27; repository last pushed 2026-06-11.
+    docs: https://help-center.affise.com/en/articles/7731236-postman-api-collection
+counts:
+  official_packages: 12
+  registries: [maven-central, cocoapods, pub.dev, npm, go-modules, packagist]
+  unregistered_distributions: 4

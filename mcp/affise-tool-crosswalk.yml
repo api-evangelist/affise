@@ -1,0 +1,190 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/affise-mcp.yml + openapi/affise-openapi.yml
+note: >-
+  Binds each of the 23 tools published by the first-party Affise MCP server to the REST
+  operation(s) it actually calls. The bindings were read from the server's own source
+  (each file under src/tools/ in github.com/affise/mcp-affise names its path literally),
+  so confidence is high throughout — this is not a name-similarity guess.
+  IMPORTANT: the Affise OpenAPI declares operationId on only 2 of its 167 operations, so
+  every binding below is expressed as `METHOD path`, which is the only stable identifier
+  the spec actually offers. Restoring operationIds is the single highest-value fix
+  available to this contract; until then no tool can inherit a named operation.
+surfaces:
+  openapi:
+    file: openapi/affise-openapi.yml
+    source: https://api.affise.com/docs3.2/bundled.yaml
+    version: 3.1.1
+    api_version: '3.2'
+    operations: 167
+    operation_ids: 2
+    gated: false
+  mcp:
+    server: mcp/affise-mcp.yml
+    mode: local-stdio
+    url: null
+    gated: true
+    gate: >-
+      tools/list cannot be probed anonymously — the server is stdio-only and refuses to
+      register its tool set until AFFISE_BASE_URL and AFFISE_API_KEY resolve. Tool names,
+      descriptions and backing paths were therefore read from the published repository
+      source rather than from a live tools/list response. Per-tool inputSchema is
+      available in src/tools/*.ts but is not reproduced here.
+  graphql:
+    endpoint: null
+    note: 'No GraphQL surface. https://api.affise.com/graphql returns the API 404 envelope.'
+crosswalk:
+  - tool: affise_search_offers
+    category: offers
+    rest: ['GET /3.0/offers']
+    binding: rest
+    confidence: high
+  - tool: affise_smart_search
+    category: offers
+    rest: ['GET /3.0/offers', 'GET /3.0/offer/categories']
+    binding: rest
+    confidence: high
+    note: Composite — resolves a category/country name to an id first, then fans out to the offers list.
+  - tool: affise_offer_categories
+    category: offers
+    rest: ['GET /3.0/offer/categories']
+    binding: rest
+    confidence: high
+  - tool: affise_get_offer
+    category: offers
+    rest: ['GET /3.0/offer/{id}']
+    binding: rest
+    confidence: high
+  - tool: affise_offer_tracking_link
+    category: offers
+    rest: ['POST /3.0/admin/offer/{offerId}/tracking-link']
+    binding: rest
+    confidence: high
+    note: The only write operation exposed by the whole MCP tool set.
+  - tool: affise_stats
+    category: statistics
+    rest: ['GET /3.0/stats/custom']
+    binding: rest
+    confidence: high
+    note: Natural-language front end over the same operation as affise_stats_raw.
+  - tool: affise_stats_raw
+    category: statistics
+    rest: ['GET /3.0/stats/custom']
+    binding: rest
+    confidence: high
+  - tool: affise_conversions_raw
+    category: conversions
+    rest: ['GET /3.0/stats/conversions']
+    binding: rest
+    confidence: high
+  - tool: affise_get_conversion
+    category: conversions
+    rest: ['GET /3.0/stats/conversionsbyid']
+    binding: rest
+    confidence: high
+  - tool: affise_trafficback
+    category: statistics
+    rest: ['GET /3.0/stats/getbytrafficback']
+    binding: rest
+    confidence: high
+  - tool: affise_retention_rate
+    category: statistics
+    rest: ['GET /3.0/stats/retentionrate']
+    binding: rest
+    confidence: high
+  - tool: affise_time_to_action
+    category: statistics
+    rest: ['GET /3.0/stats/time-to-action']
+    binding: rest
+    confidence: high
+  - tool: affise_list_partners
+    category: partners
+    rest: ['GET /3.0/admin/partners']
+    binding: rest
+    confidence: high
+  - tool: affise_get_partner
+    category: partners
+    rest: ['GET /3.0/admin/partner/{id}']
+    binding: rest
+    confidence: high
+  - tool: affise_list_advertisers
+    category: advertisers
+    rest: ['GET /3.0/admin/advertisers']
+    binding: rest
+    confidence: high
+  - tool: affise_get_advertiser
+    category: advertisers
+    rest: ['GET /3.0/admin/advertiser/{id}']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_profile
+    category: partner-self
+    rest: ['GET /3.1/partner/me']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_balance
+    category: partner-self
+    rest: ['GET /3.0/balance']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_news
+    category: partner-self
+    rest: ['GET /3.0/news']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_offers
+    category: partner-self
+    rest: ['GET /3.0/partner/offers']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_live_offers
+    category: partner-self
+    rest: ['GET /3.0/partner/live-offers']
+    binding: rest
+    confidence: high
+  - tool: affise_partner_find_subs
+    category: partner-self
+    rest: ['GET /3.0/stats/find-subs']
+    binding: rest
+    confidence: high
+mcp_only:
+  - tool: affise_status
+    reason: >-
+      Local configuration/connectivity check. It touches GET /3.1/user/me only to prove a
+      key resolves; there is no REST operation whose purpose is "is my config valid".
+rest_only:
+  - capability: Offer lifecycle writes
+    operations: ['POST /3.0/admin/offer', 'POST /3.0/admin/offer/{id}', 'POST /3.0/admin/offer/delete', 'POST /3.0/admin/offer/mass-update', 'POST /3.0/admin/category', 'POST /3.0/admin/category/{id}']
+    note: Creating and editing offers is entirely absent from the tool set.
+  - capability: Affiliate management writes
+    operations: ['POST /3.0/admin/partner', 'POST /3.0/admin/partner/{id}', 'POST /3.0/admin/partners/mass-update', 'POST /3.0/admin/partner/password/{id}', 'POST /3.0/admin/partner/{id}/locale', 'GET /3.0/admin/partner/{id}/referrals']
+  - capability: Advertiser management writes
+    operations: ['POST /3.0/admin/advertiser', 'POST /3.0/admin/advertiser/{id}', 'POST /3.0/admin/advertiser/enable-affiliate', 'POST /3.0/admin/advertiser/disable-affiliate', 'POST /3.0/admin/advertiser/{id}/sendpass']
+  - capability: Billing and payments
+    operations: ['GET /3.0/admin/advertiser-invoices', 'GET /3.0/admin/advertiser-invoice/{number}', 'POST /3.0/admin/advertiser-invoice', 'POST /3.0/admin/advertiser-invoice/{number}', 'GET /3.1/payments', 'GET /3.1/payments/{id}', 'POST /3.1/payments/generate', 'POST /3.1/payments/create-for-affiliate', 'POST /3.1/payments/{id}', 'POST /3.1/payments/{id}/add-correction', 'DELETE /3.1/payments/delete/{id}', 'DELETE /3.1/payments/del-correction/{id}', 'POST /3.1/payments/bulk-delete', 'POST /3.1/payments/{invoice_id}/conversions/delete']
+    note: The entire money surface is unreachable from an agent — arguably correct, but undeclared.
+  - capability: Conversion imports and edits
+    operations: ['POST /3.0/admin/conversion/edit', 'POST /3.0/admin/conversion/edit-by-advertiser', 'POST /3.0/admin/conversion/import', 'POST /3.0/admin/conversions/import', 'POST /4.0/affiliate/conversion/import', 'POST /4.0/affiliate/conversions/import']
+  - capability: Postbacks and pixels
+    operations: ['GET /3.0/admin/postbacks', 'POST /3.0/partner/postback', 'POST /3.0/partner/postback/{id}', 'DELETE /3.0/partner/postback/{id}/remove', 'DELETE /3.0/partner/postbacks/by-offers', 'DELETE /3.0/partner/postbacks/by-affiliates', 'GET /3.0/partner/pixels', 'POST /3.0/partner/pixel', 'POST /3.0/partner/pixel/{id}', 'DELETE /3.0/partner/pixel/{id}/remove']
+  - capability: Statistics slices with no tool
+    operations: ['GET /3.0/stats/getbycountries', 'GET /3.0/stats/getbypartner', 'GET /3.0/stats/getbyprogram', 'GET /3.0/stats/getbydate', 'GET /3.0/stats/getbyhour', 'GET /3.0/stats/getbygoal', 'GET /3.0/stats/getbyos', 'GET /3.0/stats/getbydevices', 'GET /3.0/stats/getbybrowsers', 'GET /3.0/stats/getbycities', 'GET /3.0/stats/getbylanding', 'GET /3.0/stats/getbyprelanding', 'GET /3.0/stats/getbyadvertiser', 'GET /3.0/stats/getbysub', 'GET /3.0/stats/caps', 'GET /3.0/stats/affiliatepostbacks', 'GET /3.0/stats/serverpostbacks', 'GET /3.0/stats/getreferralpayments', 'GET /3.0/stats/getbyaccountmanager', 'GET /3.0/stats/getbyaffiliatemanager', 'GET /3.0/stats/getbyconnectiontype', 'GET /3.0/stats/getbydevicemodels', 'GET /3.0/stats/getbymobilecarrier', 'GET /3.0/stats/getbybrowsersversion', 'GET /3.0/stats/getbyversions', 'GET /3.0/stats/getbypartnerbydate', 'GET /3.0/appsflyer_stats/getbyslice']
+    note: >-
+      Mostly redundant — /3.0/stats/custom with a `slice` parameter covers these
+      dimensions, and that is the operation the MCP server calls.
+  - capability: Automation, presets, smartlinks, tickets, ad costs
+    operations: ['GET /3.1/automation/kpi', 'POST /3.1/automation/kpi', 'POST /3.1/automation/kpi/{id}', 'DELETE /3.1/automation/kpi/{id}', 'GET /3.1/presets', 'POST /3.1/presets', 'GET /3.0/admin/smartlink/categories', 'GET /3.0/admin/tickets', 'GET /3.1/adcosts', 'POST /3.1/adcosts', 'DELETE /3.1/adcosts']
+  - capability: Reference data
+    operations: ['GET /3.1/countries', 'GET /3.1/regions', 'GET /3.1/cities', 'GET /3.1/oses', 'GET /3.1/oses/{os}', 'GET /3.1/browsers', 'GET /3.1/devices', 'GET /3.1/vendors', 'GET /3.1/isp', 'GET /3.1/connection-types', 'GET /3.0/goals', 'GET /3.0/admin/currency', 'GET /3.0/admin/domains', 'GET /3.0/admin/custom_fields', 'GET /3.0/admin/payment_systems']
+    note: >-
+      The MCP server resolves country and category names internally instead of exposing
+      these lookups, so an agent cannot enumerate the vocabulary it is being matched against.
+coverage:
+  tools_named: 23
+  tools_bound_to_rest: 22
+  mcp_only: 1
+  rest_operations_total: 167
+  rest_operations_with_a_tool: 20
+  rest_operations_without_a_tool: 147
+  rest_coverage_percent: 12
+  read_write_split: '21 of 22 bound tools are reads; only affise_offer_tracking_link writes'

@@ -1,0 +1,102 @@
+generated: '2026-08-13'
+method: searched
+source: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+docs: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+spec_source: openapi/affise-openapi.yml
+note: >-
+  The Affise OpenAPI 3.1.1 document at https://api.affise.com/docs3.2/bundled.yaml
+  declares NO components.securitySchemes and NO top-level security. Authentication is
+  instead modelled as a plain `api-key` HEADER PARAMETER repeated on 155 of the 167
+  operations. This artifact is therefore SEARCHED from the provider's own auth
+  documentation rather than derived from the spec, and the missing securityScheme is
+  recorded below as a real contract gap. Scored auth checks that read securitySchemes
+  will read zero against this spec until Affise declares one.
+summary:
+  types:
+    - apiKey
+  api_key_in:
+    - header
+    - query
+  oauth2_flows: []
+  openid_connect: false
+  mutual_tls: false
+  scopes: none
+schemes:
+  - name: API-Key (header)
+    type: apiKey
+    in: header
+    parameter: API-Key
+    description: >-
+      Public API key passed in the API-Key request header. Affise documents this as
+      the preferred placement. The spec spells the same parameter `api-key`
+      (lowercase) as an operation-level header parameter; header names are
+      case-insensitive per RFC 9110.
+    sources:
+      - https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+      - openapi/affise-openapi.yml
+    example_form: 'curl --header "API-Key:<your-api-key>" https://api-<company>.affise.com/3.0/offers'
+  - name: API-Key (query parameter)
+    type: apiKey
+    in: query
+    parameter: API-Key
+    description: >-
+      The same key may be passed as an `API-Key` GET query parameter. Documented by
+      Affise but discouraged in practice: query strings are logged by proxies, CDNs
+      and browser history, so the header placement should be preferred.
+    sources:
+      - https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+    caveat: credential-in-url
+key_types:
+  - name: Admin panel API key
+    audience: admin
+    where_issued: 'Admin panel: Users > Add & Manage > select user'
+    notes: >-
+      Only a General manager can read an API key on the User edit page. Keys issued to
+      Affiliate managers and Account managers are implicitly scoped to the sections
+      that role can access, so the effective permission set is the platform role, not
+      an OAuth scope list.
+    rotation: 'POST /3.0/admin/user/api_key/{id} — Change user api key'
+  - name: Affiliate (partner) panel API key
+    audience: affiliate
+    where_issued: 'Affiliate panel: Settings > Security'
+    notes: >-
+      A partner-scoped key. Only the affiliate-tagged operations
+      (affiliate-profile, affiliate-offers, affiliate-stats, affiliate-postbacks,
+      affiliate-pixels, affiliate-news) accept it.
+    rotation: 'POST /3.1/partner/api-key — Change partner api key'
+  - name: Advertiser session
+    audience: advertiser
+    where_issued: 'POST /3.1/advertiser/login'
+    notes: >-
+      The advertiser surface exposes an explicit login/registration pair
+      (/3.1/advertiser/login, /3.1/advertiser/registration) alongside the key model.
+authorization_model:
+  style: role-based
+  description: >-
+    Affise has no OAuth 2.0 scope surface. Authorization is decided by the platform
+    role attached to the user the key belongs to (General manager, Affiliate manager,
+    Account manager, affiliate, advertiser) plus per-user permissions.
+  permissions_endpoint: 'POST /3.1/user/{id}/permissions — Update user permissions'
+  docs: https://help-center.affise.com/en/articles/6463226-user-permissions
+  verification_endpoint: 'GET /3.1/user/me — used by the first-party MCP server to validate a key'
+host_model:
+  style: per-tenant subdomain
+  pattern: https://api-<company>.affise.com
+  demo: https://api-demo.affise.com
+  note: >-
+    Every Affise customer gets its own API host. The base URL is read from
+    Settings > Settings > Tracking domains > Default URL, and a custom API domain can
+    be configured. https://api.affise.com serves the shared API reference; it is not a
+    tenant data host.
+  docs: https://help-center.affise.com/en/articles/6593074-set-up-a-custom-api-domain-a-domain-for-the-admin-panel-or-the-affiliate-panel
+failures:
+  - status: 401
+    meaning: Token is necessary — API key missing, invalid, or aimed at the wrong data center.
+  - status: 403
+    meaning: Auth Denied — key is valid but the role lacks permission for the resource.
+gaps:
+  - no_security_schemes_in_openapi: >-
+      components.securitySchemes is absent; add an apiKey scheme (in: header, name: API-Key)
+      and apply it with a top-level `security` block.
+  - no_oauth: No OAuth 2.0 / OIDC authorization-code surface is published.
+  - no_scopes: No delegated scope vocabulary; third-party access requires sharing a full user key.

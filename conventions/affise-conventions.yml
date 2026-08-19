@@ -1,0 +1,154 @@
+generated: '2026-08-13'
+method: searched
+source: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+sources:
+  - https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - https://help-center.affise.com/en/articles/6790455-start-with-api-affiliates
+  - https://api.affise.com/docs3.2/
+  - openapi/affise-openapi.yml
+note: >-
+  Cross-cutting request/response semantics for the Affise Performance API, read from the
+  provider's own getting-started documentation and confirmed against the 167-operation
+  OpenAPI. The headline finding for an agent integrator: Affise has NO idempotency
+  contract, NO request-id header, and NO rate-limit signalling, and its writes are
+  form-encoded POSTs rather than JSON. Retrying a failed conversion import or payment
+  generation is therefore unsafe by construction.
+base_url:
+  style: per-tenant subdomain
+  pattern: https://api-<company>.affise.com
+  demo: https://api-demo.affise.com
+  discovery: 'Admin panel: Settings > Settings > Tracking domains > Default URL'
+  custom_domain: supported
+  docs: https://help-center.affise.com/en/articles/6593074-set-up-a-custom-api-domain-a-domain-for-the-admin-panel-or-the-affiliate-panel
+  note: >-
+    There is no single shared production host. Every integration must be told the
+    tenant's own base URL; api.affise.com serves only the documentation.
+authentication:
+  style: api-key
+  header: API-Key
+  query_alternative: 'API-Key=<key>'
+  artifact: authentication/affise-authentication.yml
+  note: >-
+    Declared in the spec as an ordinary `api-key` header PARAMETER on 155 operations
+    rather than as a securityScheme, so tooling that reads securitySchemes sees an
+    unauthenticated API.
+methods:
+  supported: [GET, POST, DELETE]
+  semantics:
+    GET: read
+    POST: create AND update — there is no PUT or PATCH anywhere in the contract
+    DELETE: delete
+  note: >-
+    POST is overloaded for both creation and mutation (POST /3.0/admin/offer creates,
+    POST /3.0/admin/offer/{id} edits). An agent cannot infer create-vs-update from the
+    method; it must read the path shape.
+request_encoding:
+  content_type: application/x-www-form-urlencoded
+  multipart: 'multipart/form-data — used for logo and creative uploads'
+  json_bodies: false
+  note: >-
+    Explicitly documented: "Use the header content-type application/x-www-form-urlencoded".
+    Write payloads are form fields, not JSON, even though every response is JSON.
+  filter_syntax: 'Bracketed query parameters — filter[date_from], filter[country], filter[sub1] …'
+idempotency:
+  supported: false
+  header: null
+  retention: null
+  note: >-
+    No Idempotency-Key header, no client-supplied request token, and no documented
+    de-duplication on any write. This matters most on the conversion-import operations
+    (POST /3.0/admin/conversions/import, POST /4.0/affiliate/conversions/import) and the
+    payment-generation operations (POST /3.1/payments/generate,
+    POST /3.1/payments/create-for-affiliate), where a retried request after a timeout can
+    double-post revenue or a payout. The only adjacent de-duplication Affise documents is
+    on the INBOUND postback path — `{transactionid}`, the advertiser's own conversion
+    identifier — which is a tracking-side control, not an API idempotency key.
+pagination:
+  style: offset
+  params:
+    page: 'query — 1-based page number, on 51 operations'
+    limit: 'query — page size, on 52 operations'
+  response_fields:
+    pagination: '{"page": <int>, "limit": <int>, "total": <int>} — a sibling of the data array, present on 111 response schemas'
+  cursor: false
+  note: >-
+    Classic offset pagination. No cursor or continuation token, so deep result sets over
+    high-churn statistics are subject to page drift.
+filtering:
+  style: bracketed-query
+  common_filters:
+    - 'filter[date_from]'
+    - 'filter[date_to]'
+    - 'filter[offer]'
+    - 'filter[advertiser]'
+    - 'filter[partner]'
+    - 'filter[country]'
+    - 'filter[os]'
+    - 'filter[currency]'
+    - 'filter[sub1] … filter[sub5]'
+    - 'filter[offer_tag]'
+    - 'filter[affiliate_tag]'
+    - 'filter[advertiser_tag]'
+  ordering: 'order + orderType query parameters (asc/desc), on 27 operations'
+  timezone: 'timezone query parameter, on 29 operations — statistics are timezone-sensitive'
+  locale: 'locale query parameter, on 24 operations'
+field_expansion:
+  supported: false
+sparse_fields:
+  supported: partial
+  note: >-
+    /3.0/stats/custom accepts `slice[]` and `fields[]` to choose the dimensions and
+    measures returned. This is a reporting projection, not general sparse-fieldsets.
+metadata:
+  custom_fields: 'GET /3.0/admin/custom_fields lists tenant-defined custom fields'
+  sub_ids: >-
+    sub1–sub8 on every plan, sub9–sub30 on higher tiers, plus ext1–ext3 and
+    custom_field1–custom_field7 — the platform's general-purpose pass-through metadata.
+request_tracing:
+  request_id_header: null
+  correlation_id: null
+  supported: false
+  note: No request-id or trace header is returned. A failed call cannot be quoted to support by id.
+response_envelope:
+  shape: '{"status": <int>, ...data...}'
+  status_field:
+    '1': success
+    '2': error
+  error_message_field: message
+  artifact: errors/affise-problem-types.yml
+  note: >-
+    The numeric `status` field is the primary success signal and it is returned on both
+    2xx and 4xx/5xx responses. It is also the acknowledgement value Affise writes back on
+    an inbound postback.
+versioning:
+  style: uri-path
+  artifact: lifecycle/affise-lifecycle.yml
+  note: 'Multiple path versions (/3.0/, /3.1/, /4.0/) are live inside one 3.2 document.'
+rate_limiting:
+  documented: false
+  headers: []
+  status_on_exhaustion: null
+  artifact: rate-limits/affise-rate-limits.yml
+  note: >-
+    No published limits, no X-RateLimit-*/RateLimit-* headers, no Retry-After, and no 429
+    response declared on any of the 167 operations. An agent has no runtime signal to
+    back off on.
+retries:
+  api: 'Not specified for client calls.'
+  postbacks: >-
+    Affise retries OUTBOUND affiliate postbacks five times with an incremental +2 second
+    delay on any 4xx/5xx from the affiliate's endpoint.
+  docs: https://help-center.affise.com/en/articles/6535165-http-codes-in-affiliates-postbacks
+asynchrony:
+  postback_processing: >-
+    Inbound conversions/postbacks are queued, not processed synchronously. Affise
+    acknowledges with `status 1` on receipt and processes afterwards, so a 200 means
+    ACCEPTED, not APPLIED — a conversion may still be rejected after the response.
+  docs: https://help-center.affise.com/en/articles/7241212-postback-and-conversion-processing-on-affise
+cross_links:
+  authentication: authentication/affise-authentication.yml
+  errors: errors/affise-problem-types.yml
+  lifecycle: lifecycle/affise-lifecycle.yml
+  rate_limits: rate-limits/affise-rate-limits.yml
+  webhooks: asyncapi/affise-postbacks-webhooks.yml
+  sandbox: sandbox/affise-sandbox.yml

@@ -1,3 +1,19 @@
+generated: '2026-08-13'
+method: searched
+source: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+limit_count: 0
+limit_note: >-
+  Affise publishes NO numeric rate limits. This was re-verified in this pass against the
+  full 167-operation OpenAPI at https://api.affise.com/docs3.2/bundled.yaml and against the
+  help-center article index: the strings "rate limit", "throttl" and "429" do not appear
+  anywhere in the specification, no article in the help center's own llms.txt index is
+  about limits or quotas, no operation declares a 429 response, and no RateLimit-*,
+  X-RateLimit-* or Retry-After header appears in any response definition. An agent
+  calling this API therefore has no runtime
+  backoff signal at all — it cannot learn it is being throttled except by a request
+  failing. The three entries below record the surfaces limits would apply to and are
+  marked `limit: unspecified`; they are not evidence that a documented limit exists.
+  Honest zero: limit_count is 0.
 name: Affise API Rate Limits
 description: >-
   Affise API rate limits govern request frequency for the Performance REST API.

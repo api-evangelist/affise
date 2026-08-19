@@ -1,0 +1,133 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Affise Performance API
+  version: 1.0.0
+extends: openapi/affise-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Enhancements derived from the harvested contract at
+  https://api.affise.com/docs3.2/bundled.yaml plus the provider's own documentation.
+  This overlay never mutates the harvested spec; apply it to produce the enriched view.
+x-note: >-
+  Three classes of enhancement. (1) Declare the authentication that the contract already
+  requires but never models — Affise applies an `api-key` header PARAMETER to 155
+  operations instead of a securityScheme, so every generator and scanner reads this API as
+  unauthenticated. (2) Correct the identity of the document: info.title is the generic
+  "API Documentation" and info.description opens with "API 3.1 documentation" while the
+  document is version 3.2. (3) Record the production host, which servers[] omits — it
+  names only the shared demo tenant.
+actions:
+  - target: $.info
+    description: Name the API, its owner and its real contact points.
+    update:
+      title: Affise Performance API
+      summary: >-
+        REST API for the Affise performance-marketing platform — offers, affiliates,
+        advertisers, conversions, statistics, payouts and billing.
+      contact:
+        name: Affise Customer Support
+        email: support@affise.com
+        url: https://help-center.affise.com/en/
+      x-apievangelist-slug: affise
+      x-apievangelist-reviewed: '2026-08-13'
+      x-logo:
+        url: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/affise.png
+        altText: Affise
+
+  - target: $.servers
+    description: >-
+      Add the per-tenant production host alongside the demo server. Affise gives every
+      customer its own subdomain; the harvested spec lists only api-demo.affise.com, so a
+      generated client points at the shared demo tenant by default.
+    update:
+      - url: https://api-{company}.affise.com
+        description: Production tenant host
+        variables:
+          company:
+            default: demo
+            description: >-
+              Your Affise instance identifier. Read the real value from
+              Settings > Settings > Tracking domains > Default URL. A custom API domain
+              can be configured instead.
+
+  - target: $.components
+    description: >-
+      Declare the API-Key scheme the platform actually enforces. Affise documents this in
+      "Start with API" but never expresses it in the contract.
+    update:
+      securitySchemes:
+        ApiKeyHeader:
+          type: apiKey
+          in: header
+          name: API-Key
+          description: >-
+            Public API key issued per user. Admin keys come from Users > Add & Manage;
+            affiliate keys from the affiliate panel Settings > Security. The key inherits
+            the platform role of its owner — there is no scope vocabulary.
+        ApiKeyQuery:
+          type: apiKey
+          in: query
+          name: API-Key
+          description: >-
+            The same key passed as a query parameter. Documented by Affise but discouraged:
+            credentials in a URL are logged by proxies, CDNs and browser history.
+
+  - target: $
+    description: Apply the API-Key requirement document-wide.
+    update:
+      security:
+        - ApiKeyHeader: []
+        - ApiKeyQuery: []
+
+  - target: $.info
+    description: >-
+      Record the runtime semantics the contract does not express, so an agent reading the
+      enriched spec learns the retry and pagination rules before it calls anything.
+    update:
+      x-conventions:
+        artifact: conventions/affise-conventions.yml
+        request_encoding: application/x-www-form-urlencoded
+        methods: [GET, POST, DELETE]
+        pagination:
+          style: offset
+          params: [page, limit]
+          response: '{page, limit, total}'
+        response_envelope: '{"status": 1|2, ...}'
+        idempotency:
+          supported: false
+          warning: >-
+            No idempotency key. Retrying POST /3.0/admin/conversions/import or
+            POST /3.1/payments/generate after a timeout can double-post revenue or a payout.
+        rate_limits:
+          documented: false
+          headers: []
+        request_id: null
+      x-error-catalog: errors/affise-problem-types.yml
+      x-webhooks: asyncapi/affise-postbacks-webhooks.yml
+      x-mcp-server: mcp/affise-mcp.yml
+      x-agent-skills: skills/_index.yml
+
+  - target: $.tags
+    description: Group the 27 tags by the panel that can call them, which the flat tag list does not convey.
+    update:
+      - name: admin-stats
+        x-panel: admin
+        x-agent-safe: true
+      - name: admin-payments
+        x-panel: admin
+        x-agent-safe: false
+        x-note: Money-moving operations; keep behind human approval.
+      - name: admin-billing
+        x-panel: admin
+        x-agent-safe: false
+      - name: admin-conversions
+        x-panel: admin
+        x-agent-safe: false
+        x-note: Conversion import has no idempotency key.
+      - name: affiliate-profile
+        x-panel: affiliate
+        x-agent-safe: true
+      - name: advertiser-auth
+        x-panel: advertiser
+        x-agent-safe: false

@@ -1,0 +1,5 @@
+# affise.com Vulnerability Disclosure
+Contact: https://srs.s4e.io/affise.com/report
+Acknowledgments: https://srs.s4e.io/affise.com
+Preferred-Languages: en
+#s4e-verify-token: 89c0db7fd825f3c4d5c2eeb641603e4f

@@ -1,0 +1,168 @@
+generated: '2026-08-13'
+method: searched
+source: https://help-center.affise.com/en/articles/6466563-postback-integration-s2s-admins
+sources:
+  - https://help-center.affise.com/en/articles/6466563-postback-integration-s2s-admins
+  - https://help-center.affise.com/en/articles/6483741-affiliate-postback-url-macros
+  - https://help-center.affise.com/en/articles/6483859-affiliate-postback-sending-logic
+  - https://help-center.affise.com/en/articles/6535165-http-codes-in-affiliates-postbacks
+  - https://help-center.affise.com/en/articles/7241212-postback-and-conversion-processing-on-affise
+  - openapi/affise-openapi.yml
+spec_type: Webhooks
+asyncapi_published: false
+note: >-
+  Affise publishes NO AsyncAPI document, but it has a substantial, fully documented event
+  surface built on server-to-server postbacks — and it runs in BOTH directions. Inbound,
+  an advertiser fires a postback URL to notify Affise of a conversion. Outbound, Affise
+  fires the affiliate's postback URL to notify them of that same conversion. The outbound
+  leg is a webhook by every functional definition: a provider-initiated HTTP callback to
+  a subscriber-registered URL, with a documented payload vocabulary, documented delivery
+  semantics, documented retry behaviour, and CRUD API operations for managing the
+  subscriptions. It is modelled as URL-template macros in a GET query string rather than
+  as a signed JSON POST body, which is why it is captured as a webhook catalog rather
+  than as an AsyncAPI channel set. NEVER fabricated: every macro, status value, retry
+  rule and operation below is quoted from the provider's own reference.
+transport:
+  style: url-template-macros
+  method: GET
+  payload_format: query-string
+  body: none
+  note: >-
+    The subscriber registers a URL containing Affise macros in braces
+    (e.g. https://partner.example/pb?cid={sub1}&payout={sum}&status={status}); Affise
+    substitutes values at fire time. There is no JSON body and no content-type negotiation.
+security:
+  signature: none
+  hmac: none
+  shared_secret: none
+  ip_allowlist: not documented
+  replay_protection: none
+  note: >-
+    The most consequential gap on this surface. Outbound postbacks carry no signature or
+    shared secret, so a receiving affiliate cannot cryptographically verify that a
+    conversion notification came from Affise. Anyone who learns a postback URL shape can
+    forge one. Inbound advertiser postbacks are likewise authenticated only by possession
+    of the generated URL.
+delivery:
+  ordering: not guaranteed
+  processing: asynchronous
+  acknowledgement: 'Affise responds to an inbound postback with the `status 1` envelope on RECEIPT'
+  at_least_once: true
+  note: >-
+    Inbound requests are queued rather than processed synchronously — "Upon receiving a
+    request, Affise server responds with status 1 response" and validation happens
+    afterwards. A 200 therefore means ACCEPTED, not APPLIED: a conversion can still be
+    rejected after Affise has already answered success.
+retries:
+  attempts: 5
+  backoff: 'incremental, +2 seconds between attempts'
+  triggers: 'any 4xx or 5xx response from the affiliate endpoint (e.g. 404, 500)'
+  docs: https://help-center.affise.com/en/articles/6535165-http-codes-in-affiliates-postbacks
+  dead_letter: 'none — delivery outcomes are visible in the Affiliates postbacks statistics slice (Http code column)'
+events:
+  - name: conversion
+    direction: outbound
+    description: >-
+      Fired to an affiliate's postback URL when a conversion is recorded or its status
+      changes. This is the only event type; everything else is a variation of it, selected
+      by conversion status, integration type and goal.
+    filters:
+      conversion_status:
+        - value: 1
+          name: Approved
+        - value: 2
+          name: Pending
+        - value: 3
+          name: Declined
+        - value: 5
+          name: Approved and put on Hold
+      integration_type: [all, default, 'Probabilistic Attribution']
+      goal: 'all offer goal values, or specific goals (local postbacks only)'
+    scopes:
+      - name: global postback
+        description: Configured per affiliate; fires for any offer.
+      - name: local postback
+        description: Configured per affiliate per offer; can additionally filter on goal value.
+      - name: consider global postback
+        description: >-
+          Fallback flag — when a conversion does not match the local postback's status,
+          integration type or goal, the system re-checks the global postback configuration.
+    docs: https://help-center.affise.com/en/articles/6483859-affiliate-postback-sending-logic
+  - name: advertiser conversion notification
+    direction: inbound
+    description: >-
+      The advertiser's server calls an Affise-generated postback URL to report that a user
+      completed the action. Configured per offer under Offers > offer > Postbacks.
+    docs: https://help-center.affise.com/en/articles/6474604-set-up-s2s-integration-with-advertisers
+  - name: cross-postback
+    direction: outbound
+    description: Forwards conversion data between Affise instances or to an external network.
+    docs: https://help-center.affise.com/en/articles/6593779-cross-postback-link
+payload_vocabulary:
+  description: Affiliate postback URL macros — the full documented field set.
+  docs: https://help-center.affise.com/en/articles/6483741-affiliate-postback-url-macros
+  fields:
+    - {macro: '{status}', description: 'Conversion status: 1 Approved, 2 Pending, 3 Declined, 5 Approved and on Hold'}
+    - {macro: '{offerid}', description: Offer identifier in the system}
+    - {macro: '{offer_name}', description: Offer title}
+    - {macro: '{goal}', description: Goal}
+    - {macro: '{sum}', description: Conversion payout}
+    - {macro: '{currency}', description: Currency}
+    - {macro: '{order_sum}', description: "Conversion's price"}
+    - {macro: '{order_currency}', description: "Conversion's currency"}
+    - {macro: '{transactionid}', description: "Conversion identifier supplied by the advertiser — the de-duplication key"}
+    - {macro: '{date}', description: 'Conversion timestamp, y-m-d h:i:s'}
+    - {macro: '{date_only}', description: 'Conversion date, Y-m-d'}
+    - {macro: '{time}', description: 'Conversion time, H:i:s'}
+    - {macro: '{timestamp}', description: Unix timestamp of conversion creation}
+    - {macro: '{click_date}', description: 'Click timestamp, y-m-d h:i:s'}
+    - {macro: '{geo}', description: Country}
+    - {macro: '{city}', description: City}
+    - {macro: '{ip}', description: User IP address}
+    - {macro: '{uagent}', description: User agent}
+    - {macro: '{os}', description: OS family}
+    - {macro: '{os_id}', description: Additional OS macro}
+    - {macro: '{device_type}', description: 'One of mediahub, mobile, ereader, console, tv, tablet, desktop, smartwatch'}
+    - {macro: '{referrer}', description: Click referrer}
+    - {macro: '{fbclid}', description: Facebook click ID}
+    - {macro: '{promo_code}', description: Promo code}
+    - {macro: '{user_id}', description: ID of a user}
+    - {macro: '{comment}', description: Comment}
+    - {macro: '{rand}', description: 'Unique UUID per fire, e.g. 9cdf32d5-124e-4e06-b25b-4c92d3cec9dc'}
+    - {macro: '{ref_id}', description: Additional macro}
+    - {macro: '{sub1} - {sub8}', description: Sub accounts 1-8 — the click-id carrier}
+    - {macro: '{sub9} - {sub30}', description: Sub accounts 9-30, higher plan tiers only}
+    - {macro: '{ext1} - {ext3}', description: Additional pass-through macros}
+    - {macro: '{custom_field1} - {custom_field7}', description: 'Additional macros (also spelled {custom_field_1}-{custom_field_7})'}
+  caveat: >-
+    There is deliberately NO {clickid} macro on affiliate postbacks. Affise documents that
+    the click identifier must be round-tripped through {sub1}-{sub8}, which is a real
+    integration trap for anyone porting from another network.
+management_api:
+  description: Postback and pixel subscriptions are managed through the REST API.
+  operations:
+    - 'GET /3.0/admin/postbacks — Affiliate postbacks list'
+    - 'POST /3.0/partner/postback — Add partner postback'
+    - 'POST /3.0/partner/postback/{id} — Edit partner postback'
+    - 'DELETE /3.0/partner/postback/{id}/remove — Delete partner postback'
+    - 'DELETE /3.0/partner/postbacks/by-offers — Bulk delete by offer ids'
+    - 'DELETE /3.0/partner/postbacks/by-affiliates — Bulk delete by affiliate ids'
+    - 'GET /3.0/partner/pixels — Pixel list'
+    - 'POST /3.0/partner/pixel — Pixel add (operationId addPartnerPixel)'
+    - 'POST /3.0/partner/pixel/{id} — Pixel edit'
+    - 'DELETE /3.0/partner/pixel/{id}/remove — Pixel remove'
+  spec: openapi/affise-openapi.yml
+observability:
+  operations:
+    - 'GET /3.0/stats/affiliatepostbacks — outbound delivery log with the affiliate server''s HTTP code'
+    - 'GET /3.0/stats/serverpostbacks — inbound advertiser postback log'
+  docs: https://help-center.affise.com/en/articles/6476530-affiliate-postbacks-in-statistics
+alternative_integration:
+  - name: Pixel (C2S) integration
+    description: Client-side conversion tracking where an S2S postback is not possible.
+    docs: https://help-center.affise.com/en/articles/6471868-pixel-integration-c2s-admins
+gaps:
+  - no_asyncapi: 'No AsyncAPI document is published for this event surface.'
+  - no_signature: 'No HMAC or signing key on outbound postbacks — receivers cannot verify origin.'
+  - no_json_payload: 'Query-string macros only; no structured event body or schema to validate against.'
+  - no_event_types: 'One event (conversion), differentiated by status codes rather than named event types.'

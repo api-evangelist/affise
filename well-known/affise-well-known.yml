@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTPS probes of every host in apis.yml and the OpenAPI servers[] block
+note: >-
+  affise.com serves a real RFC 9116 security.txt, but it EXPIRED on 2025-01-16 —
+  the Expires field is more than eighteen months in the past, which makes the document
+  formally stale under RFC 9116 section 2.5.5 even though it is still served. A second,
+  differently-authored disclosure file sits at the non-standard root path /security.txt,
+  published through the S4E disclosure service, and it names a different contact. The
+  two disagree; a researcher reading the canonical well-known path gets the expired one.
+  No OAuth/OIDC discovery, api-catalog, ai-plugin or agent-card document exists on any
+  host. api.affise.com answers every /.well-known/* path with its JSON 404 envelope
+  (`{"status":2,"error":"Page Not Found"}`), which is a clean negative — not an SPA
+  catch-all.
+hosts:
+  - host: affise.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        file: affise-security.txt
+        spec: RFC 9116
+        expired: true
+        expires: '2025-01-16T15:08:00.000Z'
+        contact: mailto:j.michael@affise.com
+      - path: /security.txt
+        status: 200
+        content_type: text/plain
+        file: affise-security-root.txt
+        spec: RFC 9116 (non-canonical location)
+        contact: https://srs.s4e.io/affise.com/report
+        acknowledgments: https://srs.s4e.io/affise.com
+        note: No Expires field; served from the site root rather than /.well-known/.
+      - path: /llms.txt
+        status: 200
+        content_type: text/plain
+        file: ../llms/affise-llms.txt
+        note: Provider-published llms.txt — saved verbatim under llms/.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: api.affise.com
+    note: Production API reference host. Returns the API's own JSON 404 envelope on every path below.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: help-center.affise.com
+    note: >-
+      Intercom-hosted help center. The security.txt served here is Intercom's own
+      vendor document, not Affise's, so it is recorded but NOT saved as an Affise
+      artifact. The 404s below return an HTML Next.js shell, correctly treated as misses.
+    documents:
+      - path: /llms.txt
+        status: 200
+        content_type: text/plain
+        saved: false
+        note: >-
+          A 2,059-line index of every help-center article in five languages, generated
+          by Intercom for its whole help-center product rather than authored by Affise.
+          Referenced, not vendored.
+      - path: /.well-known/security.txt
+        status: 200
+        third_party: intercom
+        saved: false
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+summary:
+  hits: 3
+  security_txt: true
+  security_txt_expired: true
+  openid_configuration: false
+  oauth_metadata: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false
+  llms_txt: true

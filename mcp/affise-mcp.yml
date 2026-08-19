@@ -1,0 +1,149 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://github.com/affise/mcp-affise
+sources:
+  - https://github.com/affise/mcp-affise
+  - https://raw.githubusercontent.com/affise/mcp-affise/main/manifest.json
+  - https://raw.githubusercontent.com/affise/mcp-affise/main/package.json
+  - https://www.npmjs.com/package/@affise/mcp-server
+note: >-
+  First-party MCP server published by Affise in its own GitHub organization and to npm
+  under the `affise` account. It is a LOCAL STDIO server: a human installs it (npm,
+  Docker image, or the packaged Claude Desktop .dxt extension) and supplies their own
+  tenant API URL plus API key. There is NO hosted remote MCP endpoint — no https URL an
+  agent can POST to today — so the agent surface is real but requires an install step.
+  Tool names, descriptions and backing REST paths below were read from the repository
+  source (manifest.json plus each file under src/tools/), not inferred.
+server:
+  name: affise-mcp-server
+  display_name: Affise Analytics Extension
+  version: 2.1.0
+  protocol_sdk: "@modelcontextprotocol/sdk ^1.29.0"
+  transport: stdio
+  license: MIT
+  repository: https://github.com/affise/mcp-affise
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: "npm install -g @affise/mcp-server"
+  package: https://www.npmjs.com/package/@affise/mcp-server
+  auth: api-key
+  verified: searched
+  alternatives:
+    - kind: docker
+      install: "docker build -t affise-mcp-server . && docker run --rm -i -e AFFISE_API_KEY -e AFFISE_BASE_URL affise-mcp-server:latest"
+    - kind: dxt
+      install: "Drag mcp-affise.dxt into Claude Desktop > Settings > Extensions"
+      note: Claude Desktop extension package committed to the repo (manifest.json, dxt_version 0.1).
+  configuration:
+    AFFISE_BASE_URL:
+      required: true
+      description: 'Tenant API base URL, e.g. https://api-<company>.affise.com'
+      default: https://api-demo.affise.com
+    AFFISE_API_KEY:
+      required: true
+      sensitive: true
+      description: Affise API key from account settings (admin or partner scoped)
+  validation_call: 'GET /3.1/user/me — the client verifies the key before registering tools'
+capabilities:
+  tools: 23
+  prompts: 6
+  resources: 0
+  caching: per-tool TTL (categories 5 min, stats 3 min, static lookups longer)
+  response_compaction: 'tabular {columns, rows, dropped_columns?} envelope on stats/conversions/partners/advertisers'
+tools:
+  - name: affise_status
+    description: Check Affise configuration status and connectivity.
+    source_operation: null
+    note: Local health/config check; calls GET /3.1/user/me only to validate the key.
+  - name: affise_search_offers
+    description: Search and filter offers using natural language queries.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/offers'
+  - name: affise_smart_search
+    description: Intelligent offer search with automatic category and country resolution.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/offers'
+    composite: true
+  - name: affise_offer_categories
+    description: Browse and search offer categories.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/offer/categories'
+  - name: affise_get_offer
+    description: Fetch detail for a single offer by id.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/offer/{id}'
+  - name: affise_offer_tracking_link
+    description: Generate a tracking link for offer x affiliate x sub IDs.
+    source_operation: 'openapi/affise-openapi.yml#POST /3.0/admin/offer/{offerId}/tracking-link'
+  - name: affise_stats
+    description: Natural-language statistics queries (revenue, conversions, traffic).
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/custom'
+  - name: affise_stats_raw
+    description: Structured statistics query with slice/fields/filter.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/custom'
+  - name: affise_conversions_raw
+    description: Per-event conversion records.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/conversions'
+  - name: affise_get_conversion
+    description: Fetch detail for a single conversion by id.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/conversionsbyid'
+  - name: affise_trafficback
+    description: Trafficback analytics and reason breakdown.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/getbytrafficback'
+  - name: affise_retention_rate
+    description: Retention analytics across periods.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/retentionrate'
+  - name: affise_time_to_action
+    description: Time-to-action distribution analytics.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/time-to-action'
+  - name: affise_list_partners
+    description: Paginated affiliate (partner) list — admin role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/admin/partners'
+  - name: affise_get_partner
+    description: Fetch detail for a single affiliate by id — admin role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/admin/partner/{id}'
+  - name: affise_list_advertisers
+    description: Paginated advertiser list.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/admin/advertisers'
+  - name: affise_get_advertiser
+    description: Fetch detail for a single advertiser by MongoId.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/admin/advertiser/{id}'
+  - name: affise_partner_profile
+    description: Calling affiliate's own profile — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.1/partner/me'
+  - name: affise_partner_balance
+    description: Calling affiliate's own balance — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/balance'
+  - name: affise_partner_news
+    description: News feed visible to the calling affiliate — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/news'
+  - name: affise_partner_offers
+    description: Offers visible to the calling affiliate — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/partner/offers'
+  - name: affise_partner_live_offers
+    description: Live (active) offers for the calling affiliate — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/partner/live-offers'
+  - name: affise_partner_find_subs
+    description: Discover sub-ID values the affiliate has used — partner role.
+    source_operation: 'openapi/affise-openapi.yml#GET /3.0/stats/find-subs'
+prompts:
+  - name: analyze_offers
+    description: Offer-portfolio analysis — performance, market, technical, competitive, compliance.
+  - name: analyze_stats
+    description: Statistics analysis — geo, performance, conversion, traffic.
+  - name: analyze_trafficback
+    description: Trafficback root-cause and optimization insights.
+  - name: analyze_conversions
+    description: Conversion-level analysis — fraud review, attribution, partner quality, geo/tech, payouts.
+  - name: workflow_analysis
+    description: End-to-end offer search then analysis pipeline.
+  - name: auto_analysis
+    description: Multi-data-type orchestration across stats, conversions and offers.
+gaps:
+  - no_remote_endpoint: >-
+      Nothing to POST to. An agent cannot reach Affise without a human first installing
+      the stdio server and pasting a tenant API key. A hosted endpoint at, say,
+      mcp.affise.com would turn this from an installable tool into an agent surface.
+  - no_registry_listing: No entry found in the public MCP server registries.
+  - api_key_is_full_privilege: >-
+      The server takes one API key with the full privilege of the user it belongs to.
+      Affise publishes no scoped or delegated credential, so an agent given a General
+      manager key can call every admin write operation.

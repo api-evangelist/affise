@@ -1,0 +1,99 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/affise-openapi.yml + https://help-center.affise.com/en/
+note: >-
+  Packaged Agent Skills for the Affise Performance API. No provider-published skills or
+  AGENTS.md exist, so these are generated from the harvested OpenAPI 3.1.1 and Affise's own
+  help-center documentation. Every step is grounded in a path that exists verbatim in
+  openapi/affise-openapi.yml. Because the spec declares operationId on only 2 of its 167
+  operations, operations are referenced as `METHOD path` rather than by name — that is the
+  only stable identifier this contract offers, and the skills say so.
+skills:
+  - file: affise-performance-reporting.md
+    name: Pull Affise performance statistics
+    description: >-
+      Query conversion, revenue and traffic statistics across any dimension via
+      /3.0/stats/custom, then drill into the conversion records behind a slice.
+    api: openapi/affise-openapi.yml
+    operations:
+      - GET /3.0/stats/custom
+      - GET /3.0/stats/conversions
+      - GET /3.0/stats/conversionsbyid
+      - GET /3.0/stats/getbytrafficback
+      - GET /3.0/stats/retentionrate
+      - GET /3.0/stats/time-to-action
+      - GET /3.0/admin/partners
+      - GET /3.0/admin/advertisers
+    risk: read-only
+  - file: affise-offer-launch.md
+    name: Launch an Affise offer and hand a tracking link to an affiliate
+    description: >-
+      Create an offer against an advertiser, target and cap it, enable affiliates, and
+      generate the tracking link they promote.
+    api: openapi/affise-openapi.yml
+    operations:
+      - GET /3.0/admin/advertisers
+      - GET /3.0/offer/categories
+      - POST /3.0/admin/offer
+      - POST /3.0/admin/offer/{id}
+      - GET /3.0/offer/{id}
+      - POST /3.0/offer/enable-affiliate
+      - POST /3.0/offer/disable-affiliate
+      - GET /3.1/offers/{id}/privacy
+      - POST /3.0/admin/offer/{offerId}/tracking-link
+      - GET /ui/offers/available-for/{affiliate_id}
+    risk: write — no idempotency key; a retried create can duplicate an offer
+  - file: affise-affiliate-payouts.md
+    name: Generate and settle Affise affiliate payouts
+    description: >-
+      Reconcile approved conversions into affiliate payment invoices, apply corrections and
+      close the advertiser billing loop.
+    api: openapi/affise-openapi.yml
+    operations:
+      - GET /3.0/stats/conversions
+      - GET /3.0/admin/partners
+      - POST /3.1/payments/generate
+      - POST /3.1/payments/create-for-affiliate
+      - GET /3.1/payments
+      - GET /3.1/payments/{id}
+      - POST /3.1/payments/{id}
+      - POST /3.1/payments/{id}/add-correction
+      - DELETE /3.1/payments/del-correction/{id}
+      - POST /3.1/payments/{invoice_id}/conversions/delete
+      - DELETE /3.1/payments/delete/{id}
+      - POST /3.1/payments/bulk-delete
+      - GET /3.0/admin/advertiser-invoices
+      - POST /3.0/admin/advertiser-invoice
+      - GET /3.0/admin/payment_systems
+    risk: >-
+      money-moving — no idempotency key on any operation; requires human approval when an
+      agent is driving
+  - file: affise-postback-integration.md
+    name: Wire up Affise conversion tracking with postbacks and pixels
+    description: >-
+      Register the affiliate postback URLs Affise fires on every conversion, choose the
+      macro set, verify delivery, and fall back to pixels or conversion import.
+    api: openapi/affise-openapi.yml
+    operations:
+      - POST /3.0/partner/postback
+      - POST /3.0/partner/postback/{id}
+      - DELETE /3.0/partner/postback/{id}/remove
+      - DELETE /3.0/partner/postbacks/by-offers
+      - DELETE /3.0/partner/postbacks/by-affiliates
+      - GET /3.0/admin/postbacks
+      - GET /3.0/partner/pixels
+      - POST /3.0/partner/pixel
+      - POST /3.0/partner/pixel/{id}
+      - DELETE /3.0/partner/pixel/{id}/remove
+      - GET /3.0/stats/affiliatepostbacks
+      - GET /3.0/stats/serverpostbacks
+      - POST /3.0/admin/conversion/import
+      - POST /3.0/admin/conversions/import
+    risk: write — unsigned webhooks; conversion import has no idempotency key
+cross_links:
+  authentication: authentication/affise-authentication.yml
+  conventions: conventions/affise-conventions.yml
+  errors: errors/affise-problem-types.yml
+  webhooks: asyncapi/affise-postbacks-webhooks.yml
+  sandbox: sandbox/affise-sandbox.yml
+  mcp: mcp/affise-mcp.yml

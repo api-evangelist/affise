@@ -1,3 +1,14 @@
+generated: '2026-08-13'
+method: searched
+source: https://affise.com/pricing/
+plan_count: 7
+plan_note: >-
+  Seven published tiers across two product lines (four Affise Performance, three Affise
+  MMP). Affise Reach is listed as a product but publishes no priced tier. Both the top
+  Performance tier and the top MMP tier are "Custom" — the MMP Custom tier carries no
+  price at all and is recorded as 0.00 with pricingModel custom, meaning contact sales.
+  Prices verified against the public pricing page; annual billing runs roughly 20 percent
+  below monthly across the Performance tiers.
 name: Affise Plans and Pricing
 description: >-
   Affise offers multiple product lines each with tiered pricing plans.

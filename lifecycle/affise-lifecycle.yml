@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.affise.com/docs3.2/
+sources:
+  - https://api.affise.com/docs3.2/
+  - https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - openapi/affise-openapi.yml
+note: >-
+  Affise versions its API in the URI path and runs several path versions side by side in
+  one document: of 167 operations, 117 sit under /3.0/, 47 under /3.1/, 2 under /4.0/ and
+  1 under an unversioned /ui/ path. There is no published deprecation policy, no
+  Sunset/Deprecation header support, no sunset dates, and NOT ONE operation carries
+  `deprecated: true` — so a consumer of a /3.0/ path has no signal about whether its
+  /3.1/ sibling supersedes it. The documentation itself is inconsistent about the
+  current version: the page is served at /docs3.2/, info.version is '3.2', but
+  info.description opens with "API 3.1 documentation" and the help center still titles
+  the affiliate overview "API 3.1 documentation overview".
+versioning:
+  scheme: uri-path
+  current: '3.2'
+  docs: https://api.affise.com/docs3.2/
+  path_versions_in_use:
+    - version: '3.0'
+      operations: 117
+    - version: '3.1'
+      operations: 47
+    - version: '4.0'
+      operations: 2
+      note: 'Only the affiliate conversion import pair: POST /4.0/affiliate/conversion/import and /conversions/import.'
+    - version: unversioned
+      operations: 1
+      note: 'GET /ui/offers/available-for/{affiliate_id} — an internal UI path exposed in the public reference.'
+  previous_documentation:
+    url: https://api.affise.com/docs3.1/
+    http_status: 200
+    note: >-
+      The prior documentation build is still served alongside 3.2 with no notice of which
+      is authoritative. /docs3.0/ and /docs/ both 404.
+  note: >-
+    Version numbers name the DOCUMENT, not per-path contracts. The 3.2 document
+    describes the /3.0/, /3.1/ and /4.0/ paths simultaneously; there is no separate 3.0
+    or 3.1 contract to migrate away from.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy is published anywhere on affise.com or in the help center, and
+    the OpenAPI marks nothing deprecated. Recorded as an honest absence.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment found. Support tiers differ by plan (email, chat,
+    dedicated success manager) — see plans/affise-plans-pricing.yml.
+status_page:
+  url: https://status.affise.com/
+  probed: '2026-08-13'
+  http_status: 500
+  healthy: false
+  note: >-
+    Affise operates a status subdomain, but it returned HTTP 500 "Server Error" on every
+    probe of this run. The status page for the platform is itself down, which is the
+    failure mode a status page exists to prevent. Recorded as probed rather than removed
+    — the surface is real, the response is not.
+changelog:
+  url: null
+  published: false
+  note: >-
+    No dated API changelog, release-notes feed or "what's new" page was found on
+    affise.com, api.affise.com or the help center. The Affise blog carries product
+    announcements but is not versioned or dated against API changes. No changelog/
+    artifact is emitted rather than manufacturing one.
+support:
+  email: support@affise.com
+  help_center: https://help-center.affise.com/en/
+  contact: https://affise.com/contact-us/
+maintenance_signals:
+  - surface: OpenAPI document
+    freshness: 'current — served live at https://api.affise.com/docs3.2/bundled.yaml'
+  - surface: Affise MMP SDKs
+    freshness: 'active — six platforms, latest releases 2026-06 to 2026-08'
+  - surface: Affise Performance server SDKs
+    freshness: 'stale — Go v1.0.0 (2024-05), PHP v0.1.1 (2021-06)'
+  - surface: MCP server
+    freshness: 'active — @affise/mcp-server 2.1.0 published 2026-08-04'
+  - surface: security.txt
+    freshness: 'expired — Expires 2025-01-16'
+  - surface: status page
+    freshness: 'broken — HTTP 500'
