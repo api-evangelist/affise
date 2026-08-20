@@ -85,6 +85,12 @@ apis:
     tags:
       - Mobile Attribution
       - App Installs
+      - Event
+      - Analytics
+      - Mobile Marketing
+    tags_raw:
+      - Mobile Attribution
+      - App Installs
       - Events
       - Analytics
       - Mobile Marketing
