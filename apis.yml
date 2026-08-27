@@ -32,87 +32,726 @@ tags:
   - Analytics
   - Attribution
 apis:
-  - aid: affise:affise-performance-api
-    name: Affise Performance API
-    description: >-
-      REST API for the Affise Performance platform enabling admins and affiliates
-      to manage offers, track conversions, retrieve statistics, handle publisher
-      payouts, and automate billing operations programmatically.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://affise.com/api/
-    baseURL: https://api.affise.com
-    tags:
-      - Affiliate Marketing
-      - Offers
-      - Conversions
-      - Statistics
-      - Payouts
-    properties:
-      - type: OpenAPI
-        url: openapi/affise-openapi.yml
-      - type: OpenAPI
-        url: openapi/_original/affise-openapi-original.yml
-      - type: Overlay
-        url: overlays/affise-openapi-overlay.yaml
-      - type: APIReference
-        url: https://api.affise.com/docs3.2/
-      - type: Documentation
-        url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
-      - type: Documentation
-        url: https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
-      - type: GettingStarted
-        url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
-      - type: PostmanCollection
-        url: https://github.com/affise/affise-postman-api-collection
-      - type: MCPServer
-        url: mcp/affise-mcp.yml
-      - type: ToolCrosswalk
-        url: mcp/affise-tool-crosswalk.yml
-      - type: DataModel
-        url: data-model/affise-data-model.yml
-    contact:
-      - FN: Affise Support
-        url: https://affise.com/contact-us/
-  - aid: affise:affise-mmp-api
-    name: Affise MMP API
-    description: >-
-      Mobile Measurement Partner API enabling mobile app attribution tracking,
-      install measurement, event tracking, and audience analytics for iOS,
-      Android, and cross-platform mobile applications.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://intercom.help/affise-mmp/en
-    baseURL: https://api.affise.com
-    tags:
-      - Mobile Attribution
-      - App Installs
-      - Event
-      - Analytics
-      - Mobile Marketing
-    tags_raw:
-      - Mobile Attribution
-      - App Installs
-      - Events
-      - Analytics
-      - Mobile Marketing
-    properties:
-      - type: Documentation
-        url: https://intercom.help/affise-mmp/en
-      - type: SDKAndroid
-        url: https://github.com/affise/affise-mmp-sdk-android
-      - type: SDKiOS
-        url: https://github.com/affise/affise-mmp-sdk-ios
-      - type: SDKReact
-        url: https://github.com/affise/affise-mmp-sdk-react
-      - type: SDKFlutter
-        url: https://github.com/affise/affise-mmp-sdk-flutter
-      - type: SDKUnity
-        url: https://github.com/affise/affise-mmp-sdk-unity
-      - type: SDKWeb
-        url: https://github.com/affise/affise-mmp-sdk-web
-    contact:
-      - FN: Affise Support
-        url: https://affise.com/contact-us/
+- aid: affise:affise-mmp-api
+  name: Affise MMP API
+  description: >-
+    Mobile Measurement Partner API enabling mobile app attribution tracking, install measurement, event
+    tracking, and audience analytics for iOS, Android, and cross-platform mobile applications.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://intercom.help/affise-mmp/en
+  baseURL: https://api.affise.com
+  tags:
+  - Mobile Attribution
+  - App Installs
+  - Event
+  - Analytics
+  - Mobile Marketing
+  tags_raw:
+  - Mobile Attribution
+  - App Installs
+  - Events
+  - Analytics
+  - Mobile Marketing
+  properties:
+  - type: Documentation
+    url: https://intercom.help/affise-mmp/en
+  - type: SDKAndroid
+    url: https://github.com/affise/affise-mmp-sdk-android
+  - type: SDKiOS
+    url: https://github.com/affise/affise-mmp-sdk-ios
+  - type: SDKReact
+    url: https://github.com/affise/affise-mmp-sdk-react
+  - type: SDKFlutter
+    url: https://github.com/affise/affise-mmp-sdk-flutter
+  - type: SDKUnity
+    url: https://github.com/affise/affise-mmp-sdk-unity
+  - type: SDKWeb
+    url: https://github.com/affise/affise-mmp-sdk-web
+  contact:
+  - FN: Affise Support
+    url: https://affise.com/contact-us/
+- aid: affise:affise-admin-adcosts-api
+  name: Affise Admin Adcosts API
+  description: Ad cost reporting
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-adcosts
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-adcosts-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-advertisers-api
+  name: Affise Admin Advertisers API
+  description: Admin operations on advertisers
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-advertisers
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-advertisers-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-affiliates-api
+  name: Affise Admin Affiliates API
+  description: Admin operations on affiliates (partners)
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-affiliates
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-affiliates-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-automation-api
+  name: Affise Admin Automation API
+  description: KPI and block-logs automation
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-automation
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-automation-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-billing-api
+  name: Affise Admin Billing API
+  description: Advertiser invoice management
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-billing
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-billing-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-conversions-api
+  name: Affise Admin Conversions API
+  description: Admin conversion editing and import
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-conversions
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-conversions-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-offers-api
+  name: Affise Admin Offers API
+  description: >-
+    Admin offer management — create, edit, delete, mass-update, categories, sources, creatives
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-offers
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-offers-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-other-api
+  name: Affise Admin Other API
+  description: Other admin endpoints — domains, currencies, custom fields, payment systems
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-other
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-other-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-payments-api
+  name: Affise Admin Payments API
+  description: Affiliate payments API. Available for Expand, Custom and Trial plans.
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-payments
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-payments-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-presets-api
+  name: Affise Admin Presets API
+  description: Admin presets management
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-presets
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-presets-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-smartlinks-api
+  name: Affise Admin Smartlinks API
+  description: Admin smartlinks — categories management
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-smartlinks
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-smartlinks-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-stats-api
+  name: Affise Admin Stats API
+  description: Statistics endpoints available to admin (includes admin-only and multi-role)
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-stats
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-stats-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-tickets-api
+  name: Affise Admin Tickets API
+  description: >-
+    Ticket management — list, view, approve/reject affiliate connections to offers and SmartLinks
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-tickets
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-tickets-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-admin-users-api
+  name: Affise Admin Users API
+  description: Admin user management
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - admin-users
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-admin-users-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-advertiser-auth-api
+  name: Affise Advertiser Auth API
+  description: Advertiser registration and login
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - advertiser-auth
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-advertiser-auth-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-advertiser-offers-api
+  name: Affise Advertiser Offers API
+  description: Advertiser offer listing
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - advertiser-offers
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-advertiser-offers-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-advertiser-stats-api
+  name: Affise Advertiser Stats API
+  description: Statistics endpoints available to advertiser (multi-role only)
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - advertiser-stats
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-advertiser-stats-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-conversions-api
+  name: Affise Affiliate Conversions API
+  description: Affiliate conversion import
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-conversions
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-conversions-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-news-api
+  name: Affise Affiliate News API
+  description: Affiliate news feed
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-news
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-news-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-offers-api
+  name: Affise Affiliate Offers API
+  description: Affiliate offer listing, live offers, activation
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-offers
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-offers-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-other-api
+  name: Affise Affiliate Other API
+  description: Affiliate balance, product feeds
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-other
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-other-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-pixels-api
+  name: Affise Affiliate Pixels API
+  description: Affiliate tracking pixels
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-pixels
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-pixels-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-postbacks-api
+  name: Affise Affiliate Postbacks API
+  description: Affiliate postback management
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-postbacks
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-postbacks-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-profile-api
+  name: Affise Affiliate Profile API
+  description: Affiliate profile, API key
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-profile
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-profile-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-smartlinks-api
+  name: Affise Affiliate Smartlinks API
+  description: Affiliate smartlinks, referrals
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-smartlinks
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-smartlinks-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-affiliate-stats-api
+  name: Affise Affiliate Stats API
+  description: Statistics endpoints available to affiliate (multi-role + affiliate-only)
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - affiliate-stats
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-affiliate-stats-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
+- aid: affise:affise-resources-api
+  name: Affise Resources API
+  description: Public lookup data — countries, regions, ISPs, OSes, goals, browsers, cities, etc.
+  humanURL: https://affise.com/api/
+  baseURL: https://api.affise.com
+  tags:
+  - resources
+  properties:
+  - type: OpenAPI
+    url: openapi/affise-resources-api-openapi.yml
+  - type: APIReference
+    url: https://api.affise.com/docs3.2/
+  - type: Documentation
+    url: https://help-center.affise.com/en/articles/6492567-api-3-2-documentation-overview-admins
+  - type: Documentation
+    url: >-
+      https://help-center.affise.com/en/articles/6790524-api-3-1-documentation-overview-affiliates
+  - type: GettingStarted
+    url: https://help-center.affise.com/en/articles/6463675-start-with-api-admins
+  - type: PostmanCollection
+    url: https://github.com/affise/affise-postman-api-collection
+  - type: ToolCrosswalk
+    url: mcp/affise-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/affise-data-model.yml
 common:
+  - type: Overlay
+    url: overlays/affise-openapi-overlay.yaml
+  - type: MCPServer
+    url: mcp/affise-mcp.yml
   - type: VulnerabilityDisclosure
     url: security/affise-vulnerability-disclosure.yml
   - type: Security
