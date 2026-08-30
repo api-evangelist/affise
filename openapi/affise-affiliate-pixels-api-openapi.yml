@@ -1,0 +1,483 @@
+openapi: 3.2.0
+info:
+  title: Documentation Affiliate Pixels API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: affiliate-pixels
+  x-displayName: Pixels
+  description: Affiliate tracking pixels
+paths:
+  /3.0/partner/pixels:
+    get:
+      tags:
+      - affiliate-pixels
+      summary: Pixel list
+      description: '`GET /3.0/partner/pixels`
+
+
+        Get list of a partner''s pixels
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: pid
+        in: query
+        description: Filter by partner IDs
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            pid[0]: 610
+      - name: moderation_status
+        in: query
+        description: 'Filter by moderation status: -1 — rejected, 0 — pending, 1 — approved'
+        schema:
+          type: integer
+          enum:
+          - -1
+          - 0
+          - 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  pixel:
+                    type: object
+                    additionalProperties:
+                      $ref: '#/components/schemas/pixel'
+              example:
+                status: 1
+                pixel:
+                  '1':
+                    id: 1
+                    name: '...'
+                    code: <script>alert('123');</script>
+                    code_type: javascript
+                    offer_id: '906'
+                    pid: '610'
+                    is_active: '0'
+                    moderation_status: '0'
+                    created_at: '2017-06-19 22:49:07'
+                    updated_at: '2017-06-19 22:49:07'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/partner/pixels?pid[0]=610&moderation_status=-1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/partner/pixel:
+    post:
+      tags:
+      - affiliate-pixels
+      summary: Pixel add
+      description: Add a new pixel for a partner.
+      operationId: addPartnerPixel
+      parameters:
+      - name: API-Key
+        in: header
+        description: API key of the partner
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - offer_id
+              - name
+              - code
+              - code_type
+              properties:
+                offer_id:
+                  type: integer
+                  description: Offer's ID
+                name:
+                  type: string
+                  description: Name of the pixel
+                code:
+                  type: string
+                  description: The pixel code (script, img, or iframe)
+                code_type:
+                  type: string
+                  description: The type of the pixel code
+                  enum:
+                  - javascript
+                  - iframe
+                  - image
+      responses:
+        '200':
+          description: Pixel added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 1
+                  pixel:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      code:
+                        type: string
+                      code_type:
+                        type: string
+                      offer_id:
+                        type: string
+                      pid:
+                        type: string
+                      is_active:
+                        type: string
+                      moderation_status:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/pixel' \\\n  --header 'API-Key: <API-Key>' \\\n  --form 'offer_id=0' \\\n  --form 'name=string' \\\n  --form 'code=string' \\\n  --form 'code_type=javascript'"
+  /3.0/partner/pixel/{id}:
+    post:
+      tags:
+      - affiliate-pixels
+      summary: Pixel edit
+      description: '`POST /3.0/partner/pixel/{id}`
+
+
+        Edit a partner''s pixel
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: id
+        in: path
+        description: Pixel ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name
+                code:
+                  type: string
+                  description: Code
+                code_type:
+                  type: string
+                  enum:
+                  - javascript
+                  - iframe
+                  - image
+                  description: Code type
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  pixel:
+                    $ref: '#/components/schemas/pixel'
+              example:
+                status: 1
+                pixel:
+                  id: 2
+                  name: test2
+                  code: <script>test2</script>
+                  code_type: javascript
+                  offer_id: '906'
+                  pid: '610'
+                  is_active: '0'
+                  moderation_status: '0'
+                  created_at: '2017-06-21 03:34:51'
+                  updated_at: '2017-06-21 03:34:51'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/pixel/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'name=string' \\\n  --form 'code=string' \\\n  --form 'code_type=javascript'"
+  /3.0/partner/pixel/{id}/remove:
+    delete:
+      tags:
+      - affiliate-pixels
+      summary: Pixel remove
+      description: '`DELETE /3.0/partner/pixel/{id}/remove`
+
+
+        Delete a partner''s pixel
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: id
+        in: path
+        description: Pixel ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  pixel:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      code:
+                        type: string
+                      code_type:
+                        type: string
+                      offer_id:
+                        type: string
+                      pid:
+                        type: string
+                      is_active:
+                        type: string
+                      moderation_status:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+              example:
+                status: 1
+                pixel:
+                  id: 2
+                  name: test2
+                  code: <script>test2</script>
+                  code_type: javascript
+                  offer_id: '906'
+                  pid: '610'
+                  is_active: '0'
+                  moderation_status: '0'
+                  created_at: '2017-06-21 03:34:51'
+                  updated_at: '2017-06-21 03:34:51'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/pixel/{id}/remove' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+  schemas:
+    pixel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        code_type:
+          type: string
+        offer_id:
+          type: string
+        pid:
+          type: string
+        is_active:
+          type: string
+        moderation_status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

@@ -1,0 +1,1084 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Tickets API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-tickets
+  x-displayName: Tickets
+  description: Ticket management — list, view, approve/reject affiliate connections to offers and SmartLinks
+paths:
+  /3.0/admin/ticket/{id}:
+    get:
+      tags:
+      - admin-tickets
+      summary: Get ticket
+      description: '`GET /3.0/admin/ticket/{id}`
+
+
+        Get ticket
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Ticket ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  ticket:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      status:
+                        type: string
+                      type:
+                        type: string
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      partner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          email:
+                            type: string
+                          login:
+                            type: string
+                          ref_percent:
+                            type: number
+                            nullable: true
+                          name:
+                            type: string
+                          notes:
+                            type: string
+                          manager:
+                            type: object
+                            nullable: true
+                          status:
+                            type: string
+                          level:
+                            type: integer
+                          payment_systems:
+                            type: array
+                            items: {}
+                          customFields:
+                            type: array
+                            items: {}
+                          balance:
+                            type: object
+                            additionalProperties:
+                              type: object
+                              properties:
+                                balance:
+                                  type: number
+                                hold:
+                                  type: number
+                                available:
+                                  type: number
+                          offersCount:
+                            type: integer
+                          api_key:
+                            type: string
+                          address_1:
+                            type: string
+                            nullable: true
+                          address_2:
+                            type: string
+                            nullable: true
+                          city:
+                            type: string
+                            nullable: true
+                          country:
+                            type: string
+                            nullable: true
+                          zip_code:
+                            type: string
+                            nullable: true
+                          phone:
+                            type: string
+                            nullable: true
+                          ref:
+                            type: string
+                            nullable: true
+                      offer:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          offer_id:
+                            type: string
+                          title:
+                            type: string
+                          preview_url:
+                            type: string
+                          description:
+                            type: string
+                          cr:
+                            type: number
+                          epc:
+                            type: number
+                          logo:
+                            type: string
+                          logo_source:
+                            type: string
+                            nullable: true
+                          stop_at:
+                            type: string
+                            nullable: true
+                          sources:
+                            type: array
+                            items: {}
+                          categories:
+                            type: array
+                            items: {}
+                          full_categories:
+                            type: array
+                            items: {}
+                          countries:
+                            type: array
+                            items: {}
+                            nullable: true
+                          payments:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                countries:
+                                  type: array
+                                  items: {}
+                                cities:
+                                  type: array
+                                  items: {}
+                                country_exclude:
+                                  type: boolean
+                                title:
+                                  type: string
+                                goal:
+                                  type: string
+                                currency:
+                                  type: string
+                                type:
+                                  type: string
+                                devices:
+                                  type: array
+                                  items: {}
+                                os:
+                                  type: array
+                                  items: {}
+                                revenue:
+                                  type: number
+                          goals:
+                            type: object
+                            additionalProperties:
+                              type: string
+                          caps:
+                            type: array
+                            items: {}
+                          caps_timezone:
+                            type: string
+                          cap:
+                            type: integer
+                          hide_caps:
+                            type: integer
+                          required_approval:
+                            type: boolean
+                          strictly_country:
+                            type: integer
+                          strictly_os:
+                            type: array
+                            items: {}
+                          strictly_brands:
+                            type: object
+                            nullable: true
+                          is_cpi:
+                            type: boolean
+                          kpi:
+                            type: object
+                            properties:
+                              en:
+                                type: string
+                          creatives:
+                            type: array
+                            items: {}
+                          creatives_zip:
+                            type: string
+                            nullable: true
+                          landings:
+                            type: array
+                            items: {}
+                          links:
+                            type: array
+                            items: {}
+                          macro_url:
+                            type: string
+                          link:
+                            type: string
+                            nullable: true
+                          use_https:
+                            type: boolean
+                          use_http:
+                            type: boolean
+                          hold_period:
+                            type: integer
+                          hold_type:
+                            type: string
+                          click_session:
+                            type: string
+                          disabled_choice_postback_status:
+                            type: boolean
+                          strictly_isp:
+                            type: array
+                            items: {}
+                          restriction_isp:
+                            type: array
+                            items: {}
+                          impressions_link:
+                            type: string
+                            nullable: true
+                      attachments:
+                        type: array
+                        items:
+                          type: string
+                      created:
+                        type: string
+                        format: date-time
+                      updated:
+                        type: string
+                        format: date-time
+                        nullable: true
+                  id:
+                    type: string
+              example:
+                status: 1
+                ticket:
+                  id: '1'
+                  status: closed
+                  type: common
+                  title: Connect offer
+                  description: I want to connect offer
+                  partner:
+                    id: 3
+                    created_at: '2018-06-20 14:42:40'
+                    updated_at: '2018-06-20 14:42:40'
+                    email: testtest@gmail.com
+                    login: testtest@gmail.com
+                    ref_percent: null
+                    name: ''
+                    notes: ''
+                    manager: null
+                    status: not active
+                    level: 0
+                    payment_systems: []
+                    customFields: []
+                    balance:
+                      USD:
+                        balance: 0
+                        hold: 0
+                        available: 0
+                    offersCount: 0
+                    api_key: 742638e984afa1dc12983966b4d424228b483b30
+                    address_1: null
+                    address_2: null
+                    city: null
+                    country: null
+                    zip_code: null
+                    phone: null
+                    ref: null
+                  offer:
+                    id: 9
+                    offer_id: 5b2ba4beb861fd58ad8b4670
+                    title: Offer
+                    preview_url: http://link.preview.com
+                    description: ''
+                    cr: 7
+                    epc: 0
+                    logo: ''
+                    logo_source: null
+                    stop_at: null
+                    sources: []
+                    categories: []
+                    full_categories: []
+                    countries: null
+                    payments:
+                    - countries: []
+                      cities: []
+                      country_exclude: false
+                      title: RevShare
+                      goal: '1'
+                      currency: USD
+                      type: percent
+                      devices: []
+                      os: []
+                    - countries: []
+                      cities: []
+                      country_exclude: false
+                      title: Deposit
+                      goal: '3'
+                      revenue: 0
+                      currency: USD
+                      type: fixed
+                      devices: []
+                      os: []
+                    goals:
+                      '1': RevShare
+                      '2': RevShare
+                      '3': Deposit
+                      '4': Registration
+                    caps: []
+                    caps_timezone: Europe/Moscow
+                    cap: 0
+                    hide_caps: 0
+                    required_approval: false
+                    strictly_country: 1
+                    strictly_os: []
+                    strictly_brands: null
+                    is_cpi: false
+                    kpi:
+                      en: ''
+                    creatives: []
+                    creatives_zip: null
+                    landings: []
+                    links: []
+                    macro_url: ''
+                    link: null
+                    use_https: false
+                    use_http: true
+                    hold_period: 0
+                    hold_type: days
+                    click_session: 1y
+                    disabled_choice_postback_status: false
+                    strictly_isp: []
+                    restriction_isp: []
+                    impressions_link: null
+                  attachments:
+                  - http://YOUR_API_DOMAIN/3.0/admin/ticket/file/23/faafe9b1df79e05f4eaf8e6516d7bfafbde2e1f4.png
+                  created: '2018-09-12 12:05:18'
+                  updated: null
+                id: '1'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/ticket/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/tickets:
+    get:
+      tags:
+      - admin-tickets
+      summary: Ticket list
+      description: '`GET /3.0/admin/tickets`
+
+
+        Get list of tickets for connection to offers
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of stat entities
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: status
+        in: query
+        description: Status
+        schema:
+          type: string
+          enum:
+          - open
+          - closed
+      - name: type[]
+        in: query
+        description: Ticket types
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - common
+            - financial
+            - technical
+            - offer_request
+            - smartlink_request
+            - payment_request
+      - name: search
+        in: query
+        description: Search string
+        schema:
+          type: string
+      - name: pid[]
+        in: query
+        description: Affiliate IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: manager_id[]
+        in: query
+        description: Manager IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: offer_id[]
+        in: query
+        description: Offer IDs (each value must be greater than 0)
+        schema:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  tickets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        status:
+                          type: string
+                        type:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        partner:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            updated_at:
+                              type: string
+                              format: date-time
+                            email:
+                              type: string
+                            login:
+                              type: string
+                            ref_percent:
+                              type: number
+                              nullable: true
+                            name:
+                              type: string
+                            notes:
+                              type: string
+                            manager:
+                              type: object
+                              nullable: true
+                            status:
+                              type: string
+                            level:
+                              type: integer
+                            payment_systems:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  active:
+                                    type: integer
+                                  system:
+                                    type: string
+                                  fields:
+                                    type: object
+                                    additionalProperties:
+                                      type: string
+                            customFields:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  name:
+                                    type: string
+                                  value:
+                                    type: string
+                                  label:
+                                    type: string
+                                  id:
+                                    type: integer
+                            balance:
+                              type: object
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  balance:
+                                    type: number
+                                  hold:
+                                    type: number
+                                  available:
+                                    type: number
+                            offersCount:
+                              type: integer
+                            api_key:
+                              type: string
+                        offer:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            offer_id:
+                              type: string
+                            title:
+                              type: string
+                            preview_url:
+                              type: string
+                            description:
+                              type: string
+                            cr:
+                              type: number
+                            epc:
+                              type: number
+                            logo:
+                              type: string
+                            stop_at:
+                              type: string
+                              nullable: true
+                            sources:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                  title:
+                                    type: string
+                                  allowed:
+                                    type: integer
+                            categories:
+                              type: array
+                              items:
+                                type: string
+                            full_categories:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                  title:
+                                    type: string
+                            countries:
+                              type: array
+                              items:
+                                type: string
+                            payments:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  countries:
+                                    type: array
+                                    items:
+                                      type: string
+                                  cities:
+                                    type: array
+                                    items: {}
+                                  country_exclude:
+                                    type: boolean
+                                  title:
+                                    type: string
+                                  goal:
+                                    type: integer
+                                  revenue:
+                                    type: number
+                                  currency:
+                                    type: string
+                                    nullable: true
+                                  type:
+                                    type: string
+                                  devices:
+                                    type: array
+                                    items: {}
+                                  os:
+                                    type: array
+                                    items: {}
+                            goals:
+                              type: object
+                              additionalProperties:
+                                type: string
+                            required_approval:
+                              type: boolean
+                            landings:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  title:
+                                    type: string
+                                  url:
+                                    type: string
+                                  url_preview:
+                                    type: string
+                                  type:
+                                    type: string
+                            is_cpi:
+                              type: boolean
+                            creatives:
+                              type: array
+                              items: {}
+                            creatives_zip:
+                              type: string
+                              nullable: true
+                            links:
+                              type: array
+                              items: {}
+                            macro_url:
+                              type: string
+                              nullable: true
+                            link:
+                              type: string
+                              nullable: true
+                            use_https:
+                              type: boolean
+                            use_http:
+                              type: boolean
+                            hold_period:
+                              type: integer
+                            hold_type:
+                              type: string
+                            click_session:
+                              type: string
+                              nullable: true
+                        attachments:
+                          type: array
+                          items:
+                            type: string
+                        created:
+                          type: string
+                          format: date-time
+                        updated:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                tickets:
+                - id: '17340'
+                  status: open
+                  type: common
+                  title: '...'
+                  description: '...'
+                  partner:
+                    id: 9310
+                    updated_at: '2016-03-01 14:07:29'
+                    email: '...@...'
+                    login: '...@...'
+                    ref_percent: null
+                    name: ''
+                    notes: '...'
+                    manager: null
+                    status: active
+                    level: 0
+                    payment_systems:
+                    - id: 10811
+                      active: 0
+                      system: Webmoney WMZ
+                      fields:
+                        '1': '....'
+                    - id: 10812
+                      active: 0
+                      system: Webmoney WMR
+                      fields:
+                        '1': '....'
+                    customFields:
+                    - name: Skype
+                      value: '...'
+                      label: '...'
+                      id: 1
+                    balance:
+                      USD:
+                        balance: 14
+                        hold: 0
+                        available: 14
+                    offersCount: 3
+                    api_key: 5099412c192828adfe79892d25e5e4a41ffb
+                  offer:
+                    id: 718
+                    offer_id: 563785d13b7d9bc31b8b4585
+                    title: '...'
+                    preview_url: https://YOUR_API_DOMAIN/
+                    description: '...'
+                    cr: 0.63
+                    epc: 0.03
+                    logo: http://YOUR_API_DOMAIN/images/cpa/logos/292223717.png
+                    stop_at: null
+                    sources:
+                    - id: 51f531f53b7d9b1e0382f6d9
+                      title: Web sites
+                      allowed: 1
+                    categories:
+                    - '...'
+                    full_categories:
+                    - id: 5368afb23b7d9b4d5d505342
+                      title: '...'
+                    countries:
+                    - us
+                    payments:
+                    - countries:
+                      - US
+                      cities: []
+                      country_exclude: false
+                      title: ''
+                      goal: 1
+                      revenue: 7
+                      currency: null
+                      type: fixed
+                      devices: []
+                      os: []
+                    goals:
+                      '1': ''
+                    required_approval: true
+                    landings:
+                    - id: 1446479313
+                      title: '...'
+                      url: http://YOUR_API_DOMAIN/landingpages/1811/index.php&click_id={clickid}
+                      url_preview: http://YOUR_API_DOMAIN/landingpages/1880/index.php
+                      type: landing
+                    is_cpi: false
+                    creatives: []
+                    creatives_zip: null
+                    links: []
+                    macro_url: null
+                    link: null
+                    use_https: false
+                    use_http: true
+                    hold_period: 21
+                    hold_type: days
+                    click_session: null
+                  attachments:
+                  - http://YOUR_API_DOMAIN/3.0/admin/ticket/file/23/faafe9b1df79e05f4eaf8e6516d7bfafbde2e1f4.png
+                  created: '2016-09-23 19:31:20'
+                  updated: '1970-01-01 03:00:00'
+                pagination:
+                  per_page: 100
+                  total_count: 0
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/tickets?page=1&limit=100&status=open&type[0]=common&pid[0]=0&pid[1]=1&manager_id[0]=string&manager_id[1]=string2&offer_id[0]=0&offer_id[1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/ticket/{id}/offer:
+    post:
+      tags:
+      - admin-tickets
+      summary: Approve or reject ticket for connect affiliate to offer
+      description: '`POST /3.0/admin/ticket/{id}/offer`
+
+
+        Approve or reject ticket for connect affiliate to offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Ticket ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                do:
+                  type: string
+                  enum:
+                  - approve
+                  - reject
+                  description: What need to do with a ticket
+              required:
+              - do
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Request is successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/ticket/{id}/offer' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'do=approve'"
+  /3.0/admin/ticket/{id}/smartlink:
+    post:
+      tags:
+      - admin-tickets
+      summary: Approve or reject ticket for connect affiliate to SmartLink
+      description: '`POST /3.0/admin/ticket/{id}/smartlink`
+
+
+        Approve or reject ticket for connect affiliate to SmartLink
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Ticket ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                do:
+                  type: string
+                  enum:
+                  - approve
+                  - reject
+                  description: What need to do with a ticket
+              required:
+              - do
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: SmartLink privacy is updated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/ticket/{id}/smartlink' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'do=approve'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

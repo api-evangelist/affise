@@ -1,0 +1,4846 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Offers API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-offers
+  x-displayName: Offers
+  description: Admin offer management — create, edit, delete, mass-update, categories, sources, creatives
+paths:
+  /3.0/admin/offer:
+    post:
+      tags:
+      - admin-offers
+      summary: Add offer
+      description: '`POST /3.0/admin/offer`
+
+
+        Add new offer
+
+        '
+      parameters:
+      - name: API-Key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title
+                advertiser:
+                  type: string
+                  description: Advertiser ID
+                url:
+                  type: string
+                  description: Tracking URL
+                parallel_tracking_url:
+                  type: string
+                  description: Parallel tracking URL
+                cross_postback_url:
+                  type: string
+                  description: Cross-postback URL
+                cross_postback_method:
+                  type: string
+                  enum:
+                  - get
+                  - post
+                  description: Cross-postback method
+                cross_postback_body:
+                  type: string
+                  description: Cross-postback body (required for cross_postback_method=post)
+                macro_url:
+                  type: string
+                  description: Additional macro
+                url_preview:
+                  type: string
+                  description: View URL
+                trafficback_url:
+                  type: string
+                  description: Trafficback URL
+                description_lang[en]:
+                  type: string
+                  description: Offer description in English
+                description_lang[ru]:
+                  type: string
+                  description: Offer description in Russian
+                stopDate:
+                  type: string
+                  format: date
+                  description: Stop date (YYYY-MM-DD)
+                creativeFiles:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Array of creative files to upload
+                creativeUrls:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of URLs to external creative resources
+                creativeDownloads:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of URLs to external creative resources for download
+                creativesHtml:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_creative_html_structure'
+                  description: HTML creative
+                creativeAssets:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Assets for html creative
+                sources:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of traffic sources
+                logo:
+                  type: string
+                  format: binary
+                  description: Logo file
+                status:
+                  type: string
+                  enum:
+                  - stopped
+                  - active
+                  - suspended
+                  default: stopped
+                  description: Offer status
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Offer tags
+                privacy:
+                  type: string
+                  enum:
+                  - public
+                  - protected
+                  - private
+                  description: Privacy level
+                is_top:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: The top offer
+                is_cpi:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: CPI
+                payments:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_payment_structure'
+                  description: Payments array
+                partner_payments:
+                  type: array
+                  items:
+                    allOf:
+                    - type: object
+                      properties:
+                        partners:
+                          type: array
+                          items:
+                            type: integer
+                          required: true
+                          description: Array of partner ID, which include payments (It's available only for personal payments)
+                    - $ref: '#/components/schemas/offer_payment_structure'
+                  description: Array of personal payments
+                notice_percent_overcap:
+                  type: integer
+                  description: The percentage conversions to achieve the daily limit at which messages will be sent
+                landings:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_landing_structure'
+                  description: Array of landings
+                strictly_country:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Strictly identify the country
+                strictly_connection_type:
+                  type: string
+                  enum:
+                  - ''
+                  - wi-fi
+                  - cellular
+                  description: Strictly identify the connection type
+                restriction_os:
+                  type: array
+                  items:
+                    type: object
+                  description: Strictly identify the operating system
+                strictly_devices:
+                  type: array
+                  items:
+                    type: string
+                  description: Strictly identify the device
+                caps:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_caps_structure'
+                  description: Caps
+                strictly_brands:
+                  type: array
+                  items:
+                    type: string
+                  description: Vendors
+                caps_status:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - confirmed
+                    - pending
+                    - hold
+                    - declined
+                  description: Array of conversion statuses for caps calculation
+                caps_timezone:
+                  type: string
+                  description: Select timezone of conversions calculating for caps with periods day/month
+                commission_tiers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_tier_structure'
+                  description: Commission tiers
+                enabled_commission_tiers:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Enable commission tiers
+                hold_period:
+                  type: integer
+                  minimum: 0
+                  maximum: 60
+                  description: 'Hold period duration (0-60). The unit is defined by hold_type (default: days)'
+                hold_type:
+                  type: string
+                  enum:
+                  - days
+                  - hours
+                  default: days
+                  description: Hold type
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of categories
+                notes:
+                  type: string
+                  description: Offer notes
+                allowed_ip:
+                  type: string
+                  description: Allowed IP
+                hash_password:
+                  type: string
+                  description: Secure postback code
+                allow_deeplink:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Allow deeplinks
+                hide_referer:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Hide referrer
+                redirect_type:
+                  type: string
+                  enum:
+                  - http302
+                  - http302hidden
+                  - js
+                  - meta
+                  description: Redirect types
+                schedule[date_start]:
+                  type: string
+                  format: date
+                  description: Date time of launch (YYYY-MM-DD)
+                is_redirect_overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Send traffic to trafficback by daily overcaps
+                hide_payments:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Hide the percentage of contributions to offer for partners
+                click_session:
+                  type: string
+                  default: 1y
+                  description: Click Session Lifespan
+                minimal_click_session:
+                  type: string
+                  default: 0s
+                  description: Minimal click session lifespan
+                sub_account_1:
+                  type: string
+                  description: Allowed sub1 values
+                sub_account_2:
+                  type: string
+                  description: Allowed sub2 values
+                sub_account_1_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Block sub1 values
+                sub_account_2_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Block sub2 values
+                smartlink_categories:
+                  type: array
+                  items:
+                    type: string
+                  description: Smartlink category ID
+                kpi[en]:
+                  type: string
+                  description: KPI description in English
+                kpi[ru]:
+                  type: string
+                  description: KPI description in Russian
+                sub_restrictions:
+                  type: array
+                  items:
+                    type: object
+                  description: Sub restriction pair
+                uniqIpOnly:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Unique IP only flag
+                rejectNotUniqIp:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Reject not unique IP flag
+                restriction_isp:
+                  type: array
+                  items:
+                    type: object
+                  description: Strictly ISP
+                external_offer_id:
+                  type: string
+                  description: External offer id
+                bundle_id:
+                  type: string
+                  description: Bundle id
+                note_aff:
+                  type: string
+                  description: Note for affiliate
+                note_sales:
+                  type: string
+                  description: Note for sales
+                disallowed_ip:
+                  type: string
+                  description: Disallowed IP
+                hide_caps:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Hide caps in partner interface
+                search_empty_sub:
+                  type: integer
+                  minimum: 1
+                  maximum: 8
+                  description: Search for an empty sub with this number
+                caps_goal_overcap:
+                  type: string
+                  description: When cap for chosen default goal is reached, clicks would be redirected to Trafficback url
+                targeting:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/targeting_group_structure'
+                  description: Array of targeting groups
+                allow_impressions:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Allow impressions for offer
+                impressions_url:
+                  type: string
+                  description: Impressions destination URL
+                additional_impression_destination_urls:
+                  type: string
+                  description: Additional impression destination URL
+                consider_personal_targeting_only:
+                  type: string
+                  enum:
+                  - 'true'
+                  - 'false'
+                  description: Consider personal targeting only
+                schedule:
+                  $ref: '#/components/schemas/offer_schedule_structure'
+                sign_clicks_integration:
+                  type: string
+                  enum:
+                  - no_sign
+                  - appsflyer
+                  - kochava
+                  description: Click Signature Service
+                tracking_domain:
+                  type: string
+                  description: The domain name (FQDN) for the tracking URL
+                duplicate_clicks_threshold:
+                  type: integer
+                  minimum: 0
+                  maximum: 100
+                  default: 0
+                  description: The number of clicks after which a user will be redirected to Trafficback
+                macros_replacement:
+                  type: array
+                  items:
+                    type: object
+                  description: Macros replacement
+                macros_replacement_enabled:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - sub1
+                    - sub2
+                    - sub3
+                    - sub4
+                    - sub5
+                    - sub6
+                    - sub7
+                    - sub8
+                    - sub9
+                    - sub10
+                  description: Macros replacement enabled
+                auto_offer_connect:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Automatically connect affiliates to the offer
+                creatives:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      file_name:
+                        type: string
+                        description: Creative file name
+                      width:
+                        type: number
+                        description: Creative width
+                      height:
+                        type: number
+                        description: Creative height
+                  description: Array of existing creatives (used to update dimensions or delete creatives)
+                creativeFileTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Titles for creative files uploaded via creativeFiles (in the same order)
+                creativeUrlTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Titles for creative URLs passed via creativeUrls (in the same order)
+                creativeDownloadTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Titles for creative download URLs passed via creativeDownloads (in the same order)
+                freshness:
+                  type: string
+                  enum:
+                  - default
+                  - old
+                  - fresh
+                  - exclusive
+                  description: Offer freshness
+                privacy_level:
+                  type: integer
+                  minimum: 0
+                  maximum: 6
+                  description: Offer privacy level (0-6)
+                start_at:
+                  type: string
+                  description: Offer start date, YYYY-MM-DD or YYYY-MM-DD HH:MM:SS (only current or future date)
+                send_emails:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Send email notifications about the offer
+                overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Enable overcap
+                is_impression_overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Enable overcap for impressions
+                skad_app_id:
+                  type: string
+                  description: SKAdNetwork application ID
+                redirect_param:
+                  type: string
+                  description: Redirect parameter for the tracking link
+                managers:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 10
+                  description: Array of manager (user) IDs assigned to the offer (max 10)
+                hosts_only:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Count statistics by unique hosts only
+                host_uniqueness_type:
+                  type: string
+                  enum:
+                  - cookie
+                  - sub3
+                  description: Host uniqueness detection type
+                product_feed_id:
+                  type: string
+                  description: Product feed ID
+              required:
+              - title
+              - advertiser
+              - url
+              - payments
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  offer:
+                    $ref: '#/components/schemas/offer'
+              example:
+                status: 1
+                offer:
+                  id: 936
+                  offer_id: 5943f7307e28fe9a1f8b456d
+                  advertiser: 573c69a33b7d9b0e638b4576
+                  hide_payments: false
+                  title: test
+                  macro_url: null
+                  url: http://YOUR_API_DOMAIN
+                  cross_postback_url: http://test-url.com
+                  cross_postback_method: post
+                  cross_postback_body: test data
+                  url_preview: http://preview.YOUR_API_DOMAIN
+                  preview_url: http://preview.YOUR_API_DOMAIN
+                  domain_url: YOUR_API_DOMAIN
+                  use_https: false
+                  use_http: true
+                  description_lang:
+                    ru: Описание
+                    en: Description
+                  sources: []
+                  logo: /images/cpa/logos/
+                  status: stopped
+                  tags:
+                  - default
+                  privacy: public
+                  is_top: 0
+                  payments: []
+                  partner_payments: []
+                  landings: []
+                  strictly_country: 0
+                  strictly_os: {}
+                  strictly_connection_type: wi-fi
+                  is_redirect_overcap: false
+                  notice_percent_overcap: null
+                  hold_period: 0
+                  hold_type: days
+                  categories: []
+                  full_categories: []
+                  cr: 0
+                  epc: 0
+                  notes: null
+                  allowed_ip: ''
+                  hash_password: null
+                  allow_deeplink: 0
+                  hide_referer: 0
+                  start_at: '2017-06-17 12:35:00'
+                  stop_at: null
+                  auto_offer_connect: null
+                  required_approval: false
+                  is_cpi: false
+                  creatives: []
+                  creatives_zip: null
+                  smartlink_categories:
+                  - 595e3b5b7e28fede7b8b456d
+                  click_session: 1y
+                  minimal_click_session: 0s
+                  external_offer_id: 5a97f4af94b814997c8b456a
+                  bundle_id: 5jfj7jjs0amcslsaaah
+                  sub_restrictions:
+                  - sub1: sub_value1
+                    sub2: sub_value2
+                  caps_timezone: Europe/Moscow
+                  strictly_isp:
+                  - 595e3b5b7e28fede7b8b456d
+                  note_aff: ''
+                  note_sales: ''
+                  disallowed_ip: ''
+                  hide_caps: 0
+                  caps_status:
+                  - confirmed
+                  caps_goal_overcap: install
+                  commission_tiers:
+                  - affiliate_type: exact
+                    affiliates:
+                    - 1
+                    goals: []
+                    timeframe: month
+                    type: budget
+                    value: 55.6
+                    target_goals: []
+                    modifier_type: to_percent
+                    modifier_value: 10.02
+                    modifier_payment_type: payout
+                    countries: []
+                  consider_personal_targeting_only: false
+                  schedule:
+                    enabled: true
+                    date_start: '2022-01-09'
+                    date_to: '2022-08-01'
+                    timezone: Europe/Monaco
+                    intervals:
+                    - day_of_week: 1
+                      from: 2
+                      to: 4
+                    - day_of_week: 1
+                      from: 8
+                      to: 10
+                  targeting:
+                  - country:
+                      allow:
+                      - BR
+                      - US
+                      deny: []
+                    region:
+                      allow: {}
+                      deny: {}
+                    city:
+                      allow: {}
+                      deny: {}
+                    os:
+                      allow: []
+                      deny: []
+                    isp:
+                      allow: {}
+                      deny: {}
+                    ip:
+                      allow: []
+                      deny: []
+                    browser:
+                      allow: []
+                      deny: []
+                    brand:
+                      allow: []
+                      deny: []
+                    device_type: []
+                    connection: []
+                    affiliate_id: []
+                    sub:
+                      allow: {}
+                      deny: {}
+                      deny_groups: []
+                    id: cc4fe1f5-3425-42ae-9874-a10fe29a2974
+                    os_deny: false
+                    zip: []
+                    device_type_deny: false
+                    connection_deny: false
+                    macros_replacement: []
+                    macros_replacement_enabled: []
+                    browser_version: []
+                    device_model: []
+                    name: My Targeting
+                    condition: and
+                    enabled: true
+                    isp_organization: []
+                    referrer:
+                      allow: []
+                      deny: []
+                      deny_empty: 0
+                      is_regexp: false
+                    ua: []
+                    block_proxy: false
+                    block_known_bots: false
+                  duplicate_clicks_threshold: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer' \\\n  --header 'API-Key: <API-Key>' \\\n  --form 'title=string' \\\n  --form 'advertiser=string' \\\n  --form 'url=string' \\\n  --form 'parallel_tracking_url=string' \\\n  --form 'cross_postback_url=string' \\\n  --form 'cross_postback_method=get' \\\n  --form 'cross_postback_body=string' \\\n  --form 'macro_url=string' \\\n  --form 'url_preview=string' \\\n  --form 'trafficback_url=string' \\\n  --form 'description_lang[en]=string' \\\n  --form 'description_lang[ru]=string' \\\n  --form 'stopDate=string' \\\n  --form 'creativeFiles[0]=string' \\\n  --form 'creativeFiles[1]=string2' \\\n  --form 'creativeUrls[0]=string' \\\n  --form 'creativeUrls[1]=string2' \\\n  --form 'creativeDownloads[0]=string' \\\n  --form 'creativeDownloads[1]=string2' \\\n  --form 'creativeAssets[0]=string' \\\n  --form 'creativeAssets[1]=string2' \\\n  --form 'sources[0]=string' \\\n  --form 'sources[1]=string2' \\\n  --form 'logo=string' \\\n  --form 'status=stopped' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'privacy=public' \\\n  --form 'is_top=0' \\\n  --form 'is_cpi=0' \\\n  --form 'partner_payments[0][partners][0]=0' \\\n  --form 'partner_payments[0][partners][1]=1' \\\n  --form 'notice_percent_overcap=0' \\\n  --form 'strictly_country=0' \\\n  --form 'strictly_connection_type=' \\\n  --form 'strictly_devices[0]=string' \\\n  --form 'strictly_devices[1]=string2' \\\n  --form 'strictly_brands[0]=string' \\\n  --form 'strictly_brands[1]=string2' \\\n  --form 'caps_status[0]=confirmed' \\\n  --form 'caps_timezone=string' \\\n  --form 'enabled_commission_tiers=0' \\\n  --form 'hold_period=0' \\\n  --form 'hold_type=days' \\\n  --form 'categories[0]=string' \\\n  --form 'categories[1]=string2' \\\n  --form 'notes=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'hash_password=string' \\\n  --form 'allow_deeplink=0' \\\n  --form 'hide_referer=0' \\\n  --form 'redirect_type=http302' \\\n  --form 'schedule[date_start]=string' \\\n  --form 'is_redirect_overcap=0' \\\n  --form 'hide_payments=0' \\\n  --form 'click_session=1y' \\\n  --form 'minimal_click_session=0s' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'smartlink_categories[0]=string' \\\n  --form 'smartlink_categories[1]=string2' \\\n  --form 'kpi[en]=string' \\\n  --form 'kpi[ru]=string' \\\n  --form 'uniqIpOnly=0' \\\n  --form 'rejectNotUniqIp=0' \\\n  --form 'external_offer_id=string' \\\n  --form 'bundle_id=string' \\\n  --form 'note_aff=string' \\\n  --form 'note_sales=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'hide_caps=0' \\\n  --form 'search_empty_sub=0' \\\n  --form 'caps_goal_overcap=string' \\\n  --form 'allow_impressions=0' \\\n  --form 'impressions_url=string' \\\n  --form 'additional_impression_destination_urls=string' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'tracking_domain=string' \\\n  --form 'duplicate_clicks_threshold=0' \\\n  --form 'macros_replacement_enabled[0]=sub1' \\\n  --form 'auto_offer_connect=0' \\\n  --form 'creatives[0][file_name]=string' \\\n  --form 'creatives[0][width]=0' \\\n  --form 'creatives[0][height]=0' \\\n  --form 'creativeFileTitles[0]=string' \\\n  --form 'creativeFileTitles[1]=string2' \\\n  --form 'creativeUrlTitles[0]=string' \\\n  --form 'creativeUrlTitles[1]=string2' \\\n  --form 'creativeDownloadTitles[0]=string' \\\n  --form 'creativeDownloadTitles[1]=string2' \\\n  --form 'freshness=default' \\\n  --form 'privacy_level=0' \\\n  --form 'start_at=string' \\\n  --form 'send_emails=0' \\\n  --form 'overcap=0' \\\n  --form 'is_impression_overcap=0' \\\n  --form 'skad_app_id=string' \\\n  --form 'redirect_param=string' \\\n  --form 'managers[0]=string' \\\n  --form 'managers[1]=string2' \\\n  --form 'hosts_only=0' \\\n  --form 'host_uniqueness_type=cookie' \\\n  --form 'product_feed_id=string'"
+  /3.0/admin/offer/{id}:
+    post:
+      tags:
+      - admin-offers
+      summary: Edit offer
+      description: '`POST /3.0/admin/offer/{id}`
+
+
+        Change an offer settings
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title
+                advertiser:
+                  type: string
+                  description: Advertiser ID
+                url:
+                  type: string
+                  description: Tracking URL
+                parallel_tracking_url:
+                  type: string
+                  description: Parallel tracking URL
+                cross_postback_url:
+                  type: string
+                  description: Cross-postback URL
+                cross_postback_method:
+                  type: string
+                  enum:
+                  - get
+                  - post
+                  description: Cross-postback method
+                cross_postback_body:
+                  type: string
+                  description: Cross-postback body (required for cross_postback_method=post)
+                macro_url:
+                  type: string
+                  description: Additional macro
+                url_preview:
+                  type: string
+                  description: View URL
+                trafficback_url:
+                  type: string
+                  description: Trafficback URL
+                description_lang[en]:
+                  type: string
+                  description: Offer description in English
+                description_lang[ru]:
+                  type: string
+                  description: Offer description in Russian
+                kpi[en]:
+                  type: string
+                  description: KPI description in English
+                kpi[ru]:
+                  type: string
+                  description: KPI description in Russian
+                stopDate:
+                  type: string
+                  format: date
+                  description: Stop date (YYYY-MM-DD)
+                creativeFiles:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: An array of creative FILES to upload
+                creativeUrls:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of URLs to external creative resources
+                creativeDownloads:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of URLs to external creative resources for download
+                creativesHtml:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_creative_html_structure'
+                  description: HTML creative
+                creativeAssets:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Assets for html creative
+                creativeFileTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of titles for file creatives
+                creativeUrlTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of titles for url creatives
+                creativeDownloadTitles:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of titles for download creatives
+                sources:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of traffic sources
+                logo:
+                  type: string
+                  format: binary
+                  description: logo File
+                status:
+                  type: string
+                  enum:
+                  - stopped
+                  - active
+                  - suspended
+                  default: stopped
+                  description: Offer status
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Offer tags
+                privacy:
+                  type: string
+                  enum:
+                  - public
+                  - protected
+                  - private
+                  description: Privacy level
+                is_top:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: The top offer
+                is_cpi:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: CPI
+                payments:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_payment_structure'
+                  description: Payments array
+                partner_payments:
+                  type: array
+                  items:
+                    allOf:
+                    - $ref: '#/components/schemas/offer_payment_structure'
+                    - type: object
+                      properties:
+                        partners:
+                          type: array
+                          items:
+                            type: integer
+                          description: Array of partner ID, which include payments (It's available only for personal payments)
+                  description: Array of personal payments
+                notice_percent_overcap:
+                  type: integer
+                  description: The percentage conversions to achieve the daily limit at which the messages will be sent
+                landings:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_landing_structure'
+                  description: An array of landings. This replaces the entire landings collection — any existing landing not included here is deleted. Pass an existing landing's id to update it in place; omit id to add a new landing. Pass an empty string (instead of an array) to clear all landings.
+                strictly_country:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Strictly identify the country
+                strictly_connection_type:
+                  type: string
+                  enum:
+                  - ''
+                  - wi-fi
+                  - cellular
+                  description: Strictly identify the connection type
+                restriction_os:
+                  type: array
+                  items:
+                    type: object
+                  description: Strictly identify the operating system
+                strictly_devices:
+                  type: array
+                  items:
+                    type: string
+                  description: Strictly identify the device
+                caps:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_caps_structure'
+                  description: Caps
+                caps_status:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - confirmed
+                    - pending
+                    - hold
+                    - declined
+                  description: Array of conversion statuses for caps calculation
+                caps_timezone:
+                  type: string
+                  description: Select timezone of conversions calculating for caps with periods day/month
+                commission_tiers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/offer_tier_structure'
+                  description: Commission tiers
+                enabled_commission_tiers:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Enable commission tiers
+                hold_period:
+                  type: integer
+                  minimum: 0
+                  maximum: 60
+                  description: Hold time
+                hold_type:
+                  type: string
+                  enum:
+                  - days
+                  - hours
+                  default: days
+                  description: Hold type
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of categories
+                notes:
+                  type: string
+                  description: Offer notes
+                allowed_ip:
+                  type: string
+                  description: Allowed IP
+                hash_password:
+                  type: string
+                  description: Secure postback code
+                allow_deeplink:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Allow deeplinks
+                hide_referer:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Hide referrer (deprecated, use redirect_type)
+                redirect_type:
+                  type: string
+                  enum:
+                  - http302
+                  - http302hidden
+                  - js
+                  - meta
+                  description: Redirect types
+                schedule:
+                  $ref: '#/components/schemas/offer_schedule_structure'
+                is_redirect_overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Send traffic to trafficback by daily overcaps
+                hide_payments:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Hide the percentage of contributions to offer for partners
+                click_session:
+                  type: string
+                  default: 1y
+                  description: Click Session Lifespan
+                minimal_click_session:
+                  type: string
+                  default: 0s
+                  description: Minimal click session lifespan
+                sub_account_1:
+                  type: string
+                  description: Sub1 list, separated by commas
+                sub_account_2:
+                  type: string
+                  description: Sub2 list, separated by commas
+                sub_account_1_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub1 list
+                sub_account_2_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub2 list
+                smartlink_categories:
+                  type: array
+                  items:
+                    type: string
+                  description: Smartlink category ID
+                sub_restrictions:
+                  type: array
+                  items:
+                    type: object
+                  description: Sub restriction pair
+                uniqIpOnly:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Unique IP only flag
+                rejectNotUniqIp:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Reject not unique IP flag
+                restriction_isp:
+                  type: array
+                  items:
+                    type: object
+                  description: Stricly ISP
+                external_offer_id:
+                  type: string
+                  description: External offer id
+                bundle_id:
+                  type: string
+                  description: Bundle id
+                hide_caps:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Hide caps in partner interface
+                search_empty_sub:
+                  type: integer
+                  minimum: 1
+                  maximum: 8
+                  description: Search for an empty sub with this number
+                caps_goal_overcap:
+                  type: string
+                  description: When cap for chosen default goal is reached, clicks would be redirected to Trafficback url
+                targeting:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/targeting_group_structure'
+                  description: Array of targeting groups
+                allow_impressions:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Allow impressions for offer
+                impressions_url:
+                  type: string
+                  description: Impressions destination URL
+                additional_impression_destination_urls:
+                  type: string
+                  description: Additional impression destination URL
+                consider_personal_targeting_only:
+                  type: string
+                  enum:
+                  - 'true'
+                  - 'false'
+                  description: Consider personal targeting only
+                sign_clicks_integration:
+                  type: string
+                  enum:
+                  - no_sign
+                  - appsflyer
+                  - kochava
+                  description: Click Signature Service
+                tracking_domain:
+                  type: string
+                  description: The domain name (FQDN) for the tracking URL
+                duplicate_clicks_threshold:
+                  type: integer
+                  minimum: 0
+                  maximum: 100
+                  default: 0
+                  description: The number of clicks after which a user will be redirected to Trafficback
+                macros_replacement:
+                  type: array
+                  items:
+                    type: object
+                  description: Macros replacement
+                macros_replacement_enabled:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - sub1
+                    - sub2
+                    - sub3
+                    - sub4
+                    - sub5
+                    - sub6
+                    - sub7
+                    - sub8
+                    - sub9
+                    - sub10
+                  description: Macros replacement enabled
+                auto_offer_connect:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Automatically connect affiliates to the offer
+                creatives:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      file_name:
+                        type: string
+                        description: Creative file name
+                      width:
+                        type: number
+                        description: Creative width
+                      height:
+                        type: number
+                        description: Creative height
+                  description: Array of existing creatives (used to update dimensions or delete creatives)
+                freshness:
+                  type: string
+                  enum:
+                  - default
+                  - old
+                  - fresh
+                  - exclusive
+                  description: Offer freshness
+                privacy_level:
+                  type: integer
+                  minimum: 0
+                  maximum: 6
+                  description: Offer privacy level (0-6)
+                note_aff:
+                  type: string
+                  description: Note for affiliate
+                note_sales:
+                  type: string
+                  description: Note for sales
+                disallowed_ip:
+                  type: string
+                  description: Disallowed IP addresses or ranges of IP addresses
+                start_at:
+                  type: string
+                  description: Offer start date, YYYY-MM-DD or YYYY-MM-DD HH:MM:SS (only current or future date)
+                send_emails:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Send email notifications about the offer
+                overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Enable overcap
+                is_impression_overcap:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Enable overcap for impressions
+                skad_app_id:
+                  type: string
+                  description: SKAdNetwork application ID
+                redirect_param:
+                  type: string
+                  description: Redirect parameter for the tracking link
+                managers:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 10
+                  description: Array of manager (user) IDs assigned to the offer (max 10)
+                hosts_only:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Count statistics by unique hosts only
+                host_uniqueness_type:
+                  type: string
+                  enum:
+                  - cookie
+                  - sub3
+                  description: Host uniqueness detection type
+                product_feed_id:
+                  type: string
+                  description: Product feed ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  offer:
+                    $ref: '#/components/schemas/offer'
+              example:
+                status: 1
+                offer:
+                  id: 936
+                  offer_id: 5943f7307e28fe9a1f8b456d
+                  advertiser: 573c69a33b7d9b0e638b4576
+                  hide_payments: false
+                  title: test_edit
+                  macro_url: null
+                  url: http://YOUR_API_DOMAIN
+                  cross_postback_url: http://test-url.com
+                  cross_postback_method: post
+                  cross_postback_body: test data
+                  url_preview: http://preview.YOUR_API_DOMAIN
+                  preview_url: http://preview.YOUR_API_DOMAIN
+                  domain_url: YOUR_API_DOMAIN
+                  use_https: false
+                  use_http: true
+                  description_lang:
+                    ru: Описание
+                    en: Description
+                  sources: []
+                  logo: /images/cpa/logos/
+                  status: stopped
+                  tags:
+                  - default
+                  privacy: public
+                  is_top: 0
+                  payments: []
+                  partner_payments: []
+                  landings: []
+                  strictly_country: 0
+                  strictly_os: {}
+                  strictly_connection_type: wi-fi
+                  is_redirect_overcap: false
+                  notice_percent_overcap: null
+                  hold_period: 0
+                  hold_type: days
+                  categories: []
+                  full_categories: []
+                  cr: 0
+                  epc: 0
+                  notes: null
+                  allowed_ip: ''
+                  hash_password: null
+                  allow_deeplink: 0
+                  hide_referer: 0
+                  start_at: '2017-06-17 12:35:00'
+                  stop_at: null
+                  auto_offer_connect: null
+                  required_approval: false
+                  is_cpi: false
+                  creatives: []
+                  creatives_zip: null
+                  smartlink_categories:
+                  - 595e3b5b7e28fede7b8b456d
+                  click_session: 1y
+                  minimal_click_session: 0s
+                  external_offer_id: 5a97f4af94b814997c8b456a
+                  bundle_id: 5jfj7jjs0amcslsaaah
+                  sub_restrictions:
+                  - sub1: sub_value1
+                    sub2: sub_value2
+                  caps_timezone: Europe/Moscow
+                  strictly_isp:
+                  - 595e3b5b7e28fede7b8b456d
+                  note_aff: ''
+                  note_sales: ''
+                  disallowed_ip: ''
+                  hide_caps: 0
+                  caps_status:
+                  - confirmed
+                  caps_goal_overcap: install
+                  commission_tiers:
+                  - affiliate_type: exact
+                    affiliates:
+                    - 1
+                    goals: []
+                    timeframe: month
+                    type: budget
+                    value: 55.6
+                    target_goals: []
+                    modifier_type: to_percent
+                    modifier_value: 10.02
+                    modifier_payment_type: payout
+                    countries: []
+                  consider_personal_targeting_only: false
+                  schedule:
+                    enabled: true
+                    date_start: '2022-01-09'
+                    date_to: '2022-08-01'
+                    timezone: Europe/Monaco
+                    intervals:
+                    - day_of_week: 1
+                      from: 2
+                      to: 4
+                    - day_of_week: 1
+                      from: 8
+                      to: 10
+                  targeting:
+                  - country:
+                      allow:
+                      - BR
+                      - US
+                      deny: []
+                    region:
+                      allow: {}
+                      deny: {}
+                    city:
+                      allow: {}
+                      deny: {}
+                    os:
+                      allow: []
+                      deny: []
+                    isp:
+                      allow: {}
+                      deny: {}
+                    ip:
+                      allow: []
+                      deny: []
+                    browser:
+                      allow: []
+                      deny: []
+                    brand:
+                      allow: []
+                      deny: []
+                    device_type: []
+                    connection: []
+                    affiliate_id: []
+                    sub:
+                      allow: {}
+                      deny: {}
+                      deny_groups: []
+                    id: cc4fe1f5-3425-42ae-9874-a10fe29a2974
+                    os_deny: false
+                    zip: []
+                    device_type_deny: false
+                    connection_deny: false
+                    macros_replacement: []
+                    macros_replacement_enabled: []
+                    browser_version: []
+                    device_model: []
+                    name: My Targeting
+                    condition: and
+                    enabled: true
+                    isp_organization: []
+                    referrer:
+                      allow: []
+                      deny: []
+                      deny_empty: 0
+                      is_regexp: false
+                    ua: []
+                    block_proxy: false
+                    block_known_bots: false
+                  duplicate_clicks_threshold: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string' \\\n  --form 'advertiser=string' \\\n  --form 'url=string' \\\n  --form 'parallel_tracking_url=string' \\\n  --form 'cross_postback_url=string' \\\n  --form 'cross_postback_method=get' \\\n  --form 'cross_postback_body=string' \\\n  --form 'macro_url=string' \\\n  --form 'url_preview=string' \\\n  --form 'trafficback_url=string' \\\n  --form 'description_lang[en]=string' \\\n  --form 'description_lang[ru]=string' \\\n  --form 'kpi[en]=string' \\\n  --form 'kpi[ru]=string' \\\n  --form 'stopDate=string' \\\n  --form 'creativeFiles[0]=string' \\\n  --form 'creativeFiles[1]=string2' \\\n  --form 'creativeUrls[0]=string' \\\n  --form 'creativeUrls[1]=string2' \\\n  --form 'creativeDownloads[0]=string' \\\n  --form 'creativeDownloads[1]=string2' \\\n  --form 'creativeAssets[0]=string' \\\n  --form 'creativeAssets[1]=string2' \\\n  --form 'creativeFileTitles[0]=string' \\\n  --form 'creativeFileTitles[1]=string2' \\\n  --form 'creativeUrlTitles[0]=string' \\\n  --form 'creativeUrlTitles[1]=string2' \\\n  --form 'creativeDownloadTitles[0]=string' \\\n  --form 'creativeDownloadTitles[1]=string2' \\\n  --form 'sources[0]=string' \\\n  --form 'sources[1]=string2' \\\n  --form 'logo=string' \\\n  --form 'status=stopped' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'privacy=public' \\\n  --form 'is_top=0' \\\n  --form 'is_cpi=0' \\\n  --form 'partner_payments[0][partners][0]=0' \\\n  --form 'partner_payments[0][partners][1]=1' \\\n  --form 'notice_percent_overcap=0' \\\n  --form 'strictly_country=0' \\\n  --form 'strictly_connection_type=' \\\n  --form 'strictly_devices[0]=string' \\\n  --form 'strictly_devices[1]=string2' \\\n  --form 'caps_status[0]=confirmed' \\\n  --form 'caps_timezone=string' \\\n  --form 'enabled_commission_tiers=0' \\\n  --form 'hold_period=0' \\\n  --form 'hold_type=days' \\\n  --form 'categories[0]=string' \\\n  --form 'categories[1]=string2' \\\n  --form 'notes=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'hash_password=string' \\\n  --form 'allow_deeplink=0' \\\n  --form 'hide_referer=0' \\\n  --form 'redirect_type=http302' \\\n  --form 'is_redirect_overcap=0' \\\n  --form 'hide_payments=0' \\\n  --form 'click_session=1y' \\\n  --form 'minimal_click_session=0s' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'smartlink_categories[0]=string' \\\n  --form 'smartlink_categories[1]=string2' \\\n  --form 'uniqIpOnly=0' \\\n  --form 'rejectNotUniqIp=0' \\\n  --form 'external_offer_id=string' \\\n  --form 'bundle_id=string' \\\n  --form 'hide_caps=0' \\\n  --form 'search_empty_sub=0' \\\n  --form 'caps_goal_overcap=string' \\\n  --form 'allow_impressions=0' \\\n  --form 'impressions_url=string' \\\n  --form 'additional_impression_destination_urls=string' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'tracking_domain=string' \\\n  --form 'duplicate_clicks_threshold=0' \\\n  --form 'macros_replacement_enabled[0]=sub1' \\\n  --form 'auto_offer_connect=0' \\\n  --form 'creatives[0][file_name]=string' \\\n  --form 'creatives[0][width]=0' \\\n  --form 'creatives[0][height]=0' \\\n  --form 'freshness=default' \\\n  --form 'privacy_level=0' \\\n  --form 'note_aff=string' \\\n  --form 'note_sales=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'start_at=string' \\\n  --form 'send_emails=0' \\\n  --form 'overcap=0' \\\n  --form 'is_impression_overcap=0' \\\n  --form 'skad_app_id=string' \\\n  --form 'redirect_param=string' \\\n  --form 'managers[0]=string' \\\n  --form 'managers[1]=string2' \\\n  --form 'hosts_only=0' \\\n  --form 'host_uniqueness_type=cookie' \\\n  --form 'product_feed_id=string'"
+  /3.0/offers/count:
+    get:
+      tags:
+      - admin-offers
+      summary: Count of active offers
+      description: '`GET /3.0/offers/count`
+
+
+        Get count of offers in status ''active''
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  count:
+                    type: integer
+              example:
+                status: 1
+                count: 8
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offers/count' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /ui/offers/available-for/{affiliate_id}:
+    get:
+      tags:
+      - admin-offers
+      summary: Offers available for affiliate
+      description: '`GET /ui/offers/available-for/{affiliate_id}`
+
+
+        Returns the offers available for the given affiliate — the same list the affiliate would see on the partner panel with their own API key, but requested with an admin API key.
+
+
+        Available only for an admin (common-manager) or root API key that has read access to the offers section.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: affiliate_id
+        in: path
+        description: Affiliate to list available offers for
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - name: page
+        in: query
+        description: Page of offers
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Count offers by page
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  offers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/offer'
+                  pagination:
+                    type: object
+                    properties:
+                      total_count:
+                        type: integer
+                      per_page:
+                        type: integer
+                      page:
+                        type: integer
+                      next_page:
+                        type: integer
+              example:
+                offers: []
+                pagination:
+                  total_count: 127
+                  per_page: 20
+                  page: 1
+                  next_page: 2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/ui/offers/available-for/{affiliate_id}?limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/offer/delete:
+    post:
+      tags:
+      - admin-offers
+      summary: Delete offer
+      description: '`POST /3.0/admin/offer/delete`
+
+
+        Delete the offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: array
+                  items:
+                    type: integer
+                  description: Offer IDs
+                  example:
+                    '0': 1
+              required:
+              - offer_id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Offer 936 is removed successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/delete' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=1'"
+  /3.1/offers/{id}/privacy:
+    get:
+      tags:
+      - admin-offers
+      summary: Enabled/disabled affiliates list
+      description: '`GET /3.1/offers/{id}/privacy`
+
+
+        Get list of enabled/disabled affiliates and offer''s privacy
+
+        '
+      parameters:
+      - name: API-Key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  affiliates_disabled:
+                    type: array
+                    items:
+                      type: integer
+                  affiliates_enabled:
+                    type: array
+                    items:
+                      type: integer
+                  privacy_level:
+                    type: string
+              example:
+                affiliates_disabled: []
+                affiliates_enabled:
+                - 9
+                privacy_level: private
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/offers/{id}/privacy' \\\n  --header 'API-Key: <API-Key>'"
+  /3.0/admin/offer/sources:
+    get:
+      tags:
+      - admin-offers
+      summary: Sources
+      description: '`GET /3.0/admin/offer/sources`
+
+
+        Get list of sources
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        title_lang:
+                          type: object
+                          additionalProperties:
+                            type: string
+                        allowed:
+                          type: integer
+              example:
+                status: 1
+                sources:
+                - id: 51f531f53b7d9b1e0382f6d9
+                  title: Web sites
+                  title_lang:
+                    ru: веб сайты
+                    en: web sites
+                    es: ''
+                  allowed: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/sources' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/offer/source:
+    post:
+      tags:
+      - admin-offers
+      summary: Source add
+      description: '`POST /3.0/admin/offer/source`
+
+
+        Add new source
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title_lang[en]:
+                  type: string
+                  description: Title in English
+                title_lang[ru]:
+                  type: string
+                  description: Title in Russian
+                title_lang[es]:
+                  type: string
+                  description: Title in Spanish
+                title_lang[ka]:
+                  type: string
+                  description: Title in Georgian
+                title_lang[vi]:
+                  type: string
+                  description: Title in Vietnamese
+              required:
+              - title_lang[en]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  source:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      title_lang:
+                        type: object
+                        additionalProperties:
+                          type: string
+              example:
+                status: 1
+                source:
+                  title: api-test-en-3
+                  title_lang:
+                    en: api-test-en-3
+                    ru: api-test-ru-3
+                    es: api-test-es-2
+                    ka: api-test-ka-2
+                    vi: api-test-vi-3
+                  id: 5b7e6d350f0e5a001c7bb4d5
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title_lang[en]=string' \\\n  --form 'title_lang[ru]=string' \\\n  --form 'title_lang[es]=string' \\\n  --form 'title_lang[ka]=string' \\\n  --form 'title_lang[vi]=string'"
+  /3.0/admin/offer/source/{id}:
+    post:
+      tags:
+      - admin-offers
+      summary: Source edit
+      description: '`POST /3.0/admin/offer/source/{id}`
+
+
+        Edit source
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Source ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title_lang[en]:
+                  type: string
+                  description: Title in English
+                title_lang[ru]:
+                  type: string
+                  description: Title in Russian
+                title_lang[es]:
+                  type: string
+                  description: Title in Spanish
+                title_lang[ka]:
+                  type: string
+                  description: Title in Georgian
+                title_lang[vi]:
+                  type: string
+                  description: Title in Vietnamese
+              required:
+              - title_lang[en]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  source:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      title_lang:
+                        type: object
+                        additionalProperties:
+                          type: string
+              example:
+                status: 1
+                source:
+                  title: api-test-en-3
+                  title_lang:
+                    en: api-test-en-3
+                    ru: api-test-ru-3
+                    es: api-test-es-2
+                    ka: api-test-ka-2
+                    vi: api-test-vi-3
+                  id: 5b7e6d350f0e5a001c7bb4d5
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title_lang[en]=string' \\\n  --form 'title_lang[ru]=string' \\\n  --form 'title_lang[es]=string' \\\n  --form 'title_lang[ka]=string' \\\n  --form 'title_lang[vi]=string'"
+    delete:
+      tags:
+      - admin-offers
+      summary: Source remove
+      description: '`DELETE /3.0/admin/offer/source/{id}`
+
+
+        Remove source
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Source ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  source:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      title_lang:
+                        type: object
+                        additionalProperties:
+                          type: string
+              example:
+                status: 1
+                source:
+                  title: api-test-en-3
+                  title_lang:
+                    en: api-test-en-3
+                    ru: api-test-ru-3
+                    es: api-test-es-2
+                    ka: api-test-ka-2
+                    vi: api-test-vi-3
+                  id: 5b7e6d350f0e5a001c7bb4d5
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/category:
+    post:
+      tags:
+      - admin-offers
+      summary: Category add
+      description: '`POST /3.0/admin/category`
+
+
+        Add new category
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Category title
+              required:
+              - title
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  category:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+              example:
+                status: 1
+                category:
+                  id: 59440f427e28feff5c8b4567
+                  title: test_category
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/category' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string'"
+  /3.0/admin/category/{id}:
+    post:
+      tags:
+      - admin-offers
+      summary: Category edit
+      description: '`POST /3.0/admin/category/{id}`
+
+
+        Change a category
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Category ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Category title
+              required:
+              - title
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  category:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+              example:
+                status: 1
+                category:
+                  id: 59440f427e28feff5c8b4567
+                  title: test_category2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/category/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string'"
+  /3.0/offer/enable-affiliate:
+    post:
+      tags:
+      - admin-offers
+      summary: Enable affiliate
+      description: '`POST /3.0/offer/enable-affiliate`
+
+
+        Connection an affiliate to offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  oneOf:
+                  - type: integer
+                  - type: array
+                    items:
+                      type: integer
+                  example:
+                    '0': 2
+                  description: Offer ID or array of offer IDs
+                pid:
+                  type: integer
+                  description: Affiliate ID
+                notice:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 1
+                  description: Send notice to affiliate
+              required:
+              - offer_id
+              - pid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Request for offer 935 is successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/offer/enable-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=2' \\\n  --form 'pid=0' \\\n  --form 'notice=1'"
+  /3.0/offer/disable-affiliate:
+    post:
+      tags:
+      - admin-offers
+      summary: Disable affiliate
+      description: '`POST /3.0/offer/disable-affiliate`
+
+
+        Disconnect an affiliate from offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  oneOf:
+                  - type: integer
+                  - type: array
+                    items:
+                      type: integer
+                  example:
+                    '0': 2
+                  description: Offer ID or array of offer IDs
+                pid:
+                  type: integer
+                  description: Affiliate ID
+                notice:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 1
+                  description: Send notice to affiliate
+              required:
+              - offer_id
+              - pid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Request for offer 935 is successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/offer/disable-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=2' \\\n  --form 'pid=0' \\\n  --form 'notice=1'"
+  /3.0/admin/offer/mass-update:
+    post:
+      tags:
+      - admin-offers
+      summary: Update offer's status
+      description: '`POST /3.0/admin/offer/mass-update`
+
+
+        Update offers status
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: array
+                  items:
+                    type: integer
+                  description: Offer IDs
+                status:
+                  type: string
+                  enum:
+                  - active
+                  - stopped
+                  - suspended
+                  description: Status
+                privacy:
+                  type: string
+                  enum:
+                  - public
+                  - protected
+                  - private
+                  description: Privacy level
+              required:
+              - offer_id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: status updated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/mass-update' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=0' \\\n  --form 'offer_id[1]=1' \\\n  --form 'status=active' \\\n  --form 'privacy=public'"
+  /3.0/admin/offer/{id}/disable-affiliates:
+    post:
+      tags:
+      - admin-offers
+      summary: Disable affiliates
+      description: '`POST /3.0/admin/offer/{id}/disable-affiliates`
+
+
+        Disconnect all affiliates from private or protected offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Private or protected offer ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Affiliates disabled successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}/disable-affiliates' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/affiliate/{id}/disable-offers:
+    post:
+      tags:
+      - admin-offers
+      summary: Disable offers
+      description: '`POST /3.0/admin/affiliate/{id}/disable-offers`
+
+
+        Disconnect all private or protected offers from affiliate
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Affiliate ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Offers disabled successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/affiliate/{id}/disable-offers' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/offer/{offerId}/tracking-link:
+    post:
+      tags:
+      - admin-offers
+      summary: Generate tracking link
+      description: '`POST /3.0/admin/offer/{offerId}/tracking-link`
+
+
+        Generate a tracking link for a specific offer and affiliate. Only available for admin and manager roles.
+
+        Validates that the affiliate has access to the offer based on its privacy settings.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: offerId
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                affiliate_id:
+                  type: integer
+                  description: Affiliate ID
+                sub1:
+                  type: string
+                  description: Sub parameter 1
+                sub2:
+                  type: string
+                  description: Sub parameter 2
+                sub3:
+                  type: string
+                  description: Sub parameter 3
+                sub4:
+                  type: string
+                  description: Sub parameter 4
+                sub5:
+                  type: string
+                  description: Sub parameter 5
+                sub6:
+                  type: string
+                  description: Sub parameter 6
+                sub7:
+                  type: string
+                  description: Sub parameter 7
+                sub8:
+                  type: string
+                  description: Sub parameter 8
+              required:
+              - affiliate_id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  tracking_link:
+                    type: string
+              example:
+                status: 1
+                tracking_link: https://your-tracking-domain.com/click?pid=610&offer_id=935&sub1=value1&sub2=value2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offerId}/tracking-link' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'affiliate_id=0' \\\n  --form 'sub1=string' \\\n  --form 'sub2=string' \\\n  --form 'sub3=string' \\\n  --form 'sub4=string' \\\n  --form 'sub5=string' \\\n  --form 'sub6=string' \\\n  --form 'sub7=string' \\\n  --form 'sub8=string'"
+  /3.0/admin/offer/{id}/remove-creative:
+    delete:
+      tags:
+      - admin-offers
+      summary: Remove creative from offer
+      description: '`DELETE /3.0/admin/offer/{id}/remove-creative`
+
+
+        Remove creative from offer by creative id
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                creatives:
+                  type: array
+                  items:
+                    type: integer
+                  example:
+                    '0': 12345
+                  description: Creative IDs
+              required:
+              - creatives
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  removed:
+                    type: array
+                    items:
+                      type: integer
+              example:
+                status: 1
+                removed:
+                - 1
+                - 2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}/remove-creative' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'creatives[0]=12345'"
+  /3.0/admin/offer/{offer_id}/creative/html/{creative_id}:
+    post:
+      tags:
+      - admin-offers
+      summary: Change HTML creatives
+      description: '`POST /3.0/admin/offer/{offer_id}/creative/html/{creative_id}`
+
+
+        Change html creative from offer by creative id
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: offer_id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      - name: creative_id
+        in: path
+        description: Creative ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: HTML code
+                name:
+                  type: string
+                  description: Creative name
+                width:
+                  type: integer
+                  description: Creative width
+                height:
+                  type: integer
+                  description: Creative height
+              required:
+              - code
+              - name
+              - width
+              - height
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creatives:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        url:
+                          type: string
+                        title:
+                          type: string
+                        width:
+                          type: integer
+                        height:
+                          type: integer
+                        size:
+                          type: integer
+                        overwritten:
+                          type: boolean
+                        assets:
+                          type: array
+                          items:
+                            type: object
+              example:
+                creatives:
+                - id: 7caf7245-be89-4845-bf47-31bfada8e3f9
+                  type: image/jpeg
+                  url: http://s3host/bucket/offers/99999/104/x-files.jpeg
+                  title: x-files
+                  width: 1024
+                  height: 768
+                  size: 79685
+                  overwritten: false
+                - id: a899dae2-a9c0-4c11-a5d3-76a131a9ed0e
+                  type: text/html
+                  url: http://s3host/bucket/offers/99999/104/23249c03-a9b3-11ec-a56e-0242ac10ee4d.html
+                  title: html creative
+                  width: 100
+                  height: 100
+                  size: 132
+                  assets:
+                  - url: http://s3host/bucket/99999/104/opt/app/web/creatives/ab/66/ab661c7ca92142727035b33a72a209d7.jpeg
+                    title: ab661c7ca92142727035b33a72a209d7.jpeg
+                    size: 112836
+                  overwritten: false
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offer_id}/creative/html/{creative_id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'code=string' \\\n  --form 'name=string' \\\n  --form 'width=0' \\\n  --form 'height=0'"
+    delete:
+      tags:
+      - admin-offers
+      summary: Delete HTML creatives
+      description: '`DELETE /3.0/admin/offer/{offer_id}/creative/html/{creative_id}`
+
+
+        Delete html creative from offer by creative id
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: offer_id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      - name: creative_id
+        in: path
+        description: Creative ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+              example:
+                status: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offer_id}/creative/html/{creative_id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/offers/promocodes:
+    get:
+      tags:
+      - admin-offers
+      summary: List of promocodes
+      description: '`GET /3.1/offers/promocodes`
+
+
+        List of promocodes
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: offer_id
+        in: query
+        description: Comma separated list of identifiers
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: Search promocodes by part of string
+        schema:
+          type: string
+      - name: code
+        in: query
+        description: Search promocode by exact match
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        schema:
+          type: integer
+          default: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      promocodes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                            code:
+                              type: string
+                            code_template:
+                              type: string
+                            description:
+                              type: string
+                            offer_id:
+                              type: integer
+                            affiliate_id:
+                              type: integer
+                            usage_limit:
+                              type: integer
+                            usage_value:
+                              type: integer
+                            date_from:
+                              type: string
+                              format: date-time
+                            date_to:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                      total_count:
+                        type: integer
+                      per_page:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                data:
+                  promocodes:
+                  - id: 63bbf54e8098683662ea61b5
+                    type: manual
+                    code: Black-1
+                    code_template: ''
+                    description: Some description
+                    offer_id: 13
+                    affiliate_id: 4
+                    usage_limit: 100
+                    usage_value: 0
+                    date_from: '2023-01-09T00:00:00Z'
+                    date_to: '2023-01-29T00:00:00Z'
+                    created_at: '2023-01-09T11:06:54.189Z'
+                    updated_at: '2023-01-09T11:06:54.189Z'
+                  total_count: 2
+                  per_page: 100
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/offers/promocodes?page=1&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/offers/promocodes/bulk:
+    post:
+      tags:
+      - admin-offers
+      summary: Promocodes bulk creation
+      description: '`POST /3.1/offers/promocodes/bulk`
+
+
+        Promocodes bulk creation (Available if the Promocode feature is enabled)
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                promocodes[0][type]:
+                  type: string
+                  enum:
+                  - manual
+                  description: Promocode type
+                promocodes[0][code]:
+                  type: string
+                  description: Promocode
+                promocodes[0][offer_id]:
+                  type: integer
+                  description: Offer ID
+                promocodes[0][affiliate_id]:
+                  type: integer
+                  description: Affiliate ID
+                promocodes[0][description]:
+                  type: string
+                  maxLength: 130
+                  description: Description
+                promocodes[0][usage_limit]:
+                  type: integer
+                  description: Usage limit
+                promocodes[0][date_from]:
+                  type: string
+                  format: date-time
+                  description: Date from (RFC3339 format)
+                promocodes[0][date_to]:
+                  type: string
+                  format: date-time
+                  description: Date to (RFC3339 format)
+              required:
+              - promocodes[0][type]
+              - promocodes[0][code]
+              - promocodes[0][offer_id]
+              - promocodes[0][affiliate_id]
+              - promocodes[0][date_from]
+              - promocodes[0][date_to]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      promocodes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                            code:
+                              type: string
+                            code_template:
+                              type: string
+                            description:
+                              type: string
+                            offer_id:
+                              type: integer
+                            affiliate_id:
+                              type: integer
+                            usage_limit:
+                              type: integer
+                            usage_value:
+                              type: integer
+                            date_from:
+                              type: string
+                              format: date-time
+                            date_to:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+              example:
+                status: 1
+                data:
+                  promocodes:
+                  - id: 624ad87ac9c43aed7a32ef06
+                    type: manual
+                    code: qwerty
+                    code_template: ''
+                    description: some text
+                    offer_id: 3
+                    affiliate_id: 1
+                    usage_limit: 1
+                    usage_value: 0
+                    date_from: '2022-03-31T00:00:00Z'
+                    date_to: '2032-04-30T00:00:00Z'
+                    created_at: '2022-04-04T11:37:30.137Z'
+                    updated_at: '2022-04-04T11:37:30.137Z'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/offers/promocodes/bulk' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'promocodes[0][type]=manual' \\\n  --form 'promocodes[0][code]=string' \\\n  --form 'promocodes[0][offer_id]=0' \\\n  --form 'promocodes[0][affiliate_id]=0' \\\n  --form 'promocodes[0][description]=string' \\\n  --form 'promocodes[0][usage_limit]=0' \\\n  --form 'promocodes[0][date_from]=string' \\\n  --form 'promocodes[0][date_to]=string'"
+  /3.0/offers:
+    get:
+      tags:
+      - admin-offers
+      summary: Offers list
+      description: '`GET /3.0/offers`
+
+
+        Get a list of offers
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Search by title and id
+        schema:
+          type: string
+      - name: int_id
+        in: query
+        description: Search by one or more offer IDs
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            int_id[0]: 234
+      - name: countries
+        in: query
+        description: Array of offers countries (ISO)
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            countries[0]: US
+      - name: os
+        in: query
+        description: OS
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Windows
+            - webOS
+            - macOS
+            - iPadOS
+            - iOS
+            - Android
+            example: null
+            os[0]: Windows
+      - name: categories
+        in: query
+        description: Array of offers categories
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            categories[0]: 5368afb23b7d9b4d5d505342
+      - name: caps_type
+        in: query
+        description: Caps type. Values clicks, conversions, budget, impressions. This filter will not show offers for the selected cap type if the cap is full
+        schema:
+          type: string
+          enum:
+          - clicks
+          - conversions
+          - budget
+          - impressions
+      - name: caps_country
+        in: query
+        description: Caps country in ISO 3166-1 format
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort offers. Sample sort[id]=asc, sort[title]=desc. You can sort offers by one of (id, title, cr, epc, is_top, created, revenue, daily_cap, total_cap)
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            sort[id]: asc
+      - name: page
+        in: query
+        description: Page of offers
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Count offers by page
+        schema:
+          type: integer
+          maximum: 500
+          default: 100
+      - name: status
+        in: query
+        description: Statuses stopped and suspended ONLY FOR ADMIN. Status active allowed for NON ADMIN
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - active
+            - stopped
+            - suspended
+          example:
+            status[0]: active
+          default:
+          - active
+      - name: advertiser
+        in: query
+        description: ONLY FOR ADMIN - Advertiser ID
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            advertiser[0]: 55b204663b7d9b460b8b45b2
+      - name: privacy
+        in: query
+        description: ONLY FOR ADMIN - Privacy filter Public(0), Premoderated(1), Private(2)
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 0
+            - 1
+            - 2
+      - name: updated_at
+        in: query
+        description: Get offers that have been updated from this date (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: is_top
+        in: query
+        description: Get TOP-offers
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      - name: bundle_id
+        in: query
+        description: ONLY FOR ADMIN - Search by bundle id
+        schema:
+          type: string
+      - name: smartlink_categories
+        in: query
+        description: Array of smartlinks IDs
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            smartlink_categories[0]: 55b204663b7d9b460b8b45b2
+      - name: advertiser_manager_id
+        in: query
+        description: ONLY FOR ADMIN - Array of advertiser managers IDs
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            advertiser_manager_id[0]: 55b204663b7d9b460b8b45b2
+      - name: external_offer_id
+        in: query
+        description: External offer id
+        schema:
+          type: string
+      - name: additional_fields
+        in: query
+        description: ONLY FOR ADMIN - Sample additional_fields=enabled_affiliates
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offers?int_id[0]=234&countries[0]=US&os[0]=&categories[0]=5368afb23b7d9b4d5d505342&caps_type=clicks&sort[id]=asc&limit=100&status[0]=active&advertiser[0]=55b204663b7d9b460b8b45b2&privacy[0]=0&is_top=0&smartlink_categories[0]=55b204663b7d9b460b8b45b2&advertiser_manager_id[0]=55b204663b7d9b460b8b45b2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/offer/{id}:
+    get:
+      tags:
+      - admin-offers
+      summary: Offer by id
+      description: '`GET /3.0/offer/{id}`
+
+
+        Get full information of an offer
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer_affiliate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/offer/categories:
+    get:
+      tags:
+      - admin-offers
+      summary: Categories
+      description: '`GET /3.0/offer/categories`
+
+
+        List of a categories
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: ids
+        in: query
+        description: Search by IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          maximum: 99999
+          default: 99999
+      - name: orderType
+        in: query
+        description: Order type
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: order
+        in: query
+        description: Order by field
+        schema:
+          type: string
+          enum:
+          - id
+          - title
+          default: id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+                      next_page:
+                        type: integer
+              example:
+                status: 1
+                categories:
+                - id: 5368a3973b7d9b4d5d59f1ca
+                  title: '...'
+                pagination:
+                  per_page: 1
+                  total_count: 11
+                  page: 1
+                  next_page: 2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/categories?ids[0]=string&ids[1]=string2&limit=99999&orderType=asc&order=id' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  schemas:
+    targeting_browser_version_structure:
+      type: object
+      description: Browser version structure for targeting
+      properties:
+        name:
+          type: string
+          description: Browser's name.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for browser's version.
+        version:
+          type: string
+          description: Browser's version for comparison.
+    offer_schedule_structure:
+      type: object
+      description: Offer schedule structure
+      properties:
+        enabled:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: Enable/Disable offer schedule.
+        date_start:
+          type: string
+          format: date
+          description: Date of launch, YYYY-MM-DD. Offer activation does not depend on `enabled` field.
+        date_to:
+          type: string
+          format: date
+          description: Date of deactivation, YYYY-MM-DD
+        timezone:
+          type: string
+          description: 'Timezone. Example: Europe/London'
+        intervals:
+          type: array
+          description: 'Array of schedule intervals. Example: [weekday_number(0-6)][interval_number(0,1,2,...)][from]=hour(0-23)'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                From:
+                  type: integer
+                  description: Start hour (0-23)
+                  minimum: 0
+                  maximum: 23
+                To:
+                  type: integer
+                  description: End hour (0-23)
+                  minimum: 0
+                  maximum: 23
+    targeting_os_structure:
+      type: object
+      description: OS structure for targeting
+      properties:
+        name:
+          type: string
+          description: OS name that could be found at OSes list method.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for OS version.
+        version:
+          type: string
+          description: OS version for comparison.
+    offer_affiliate:
+      type: object
+      properties:
+        id:
+          type: integer
+        offer_id:
+          type: string
+        bundle_id:
+          type: string
+        title:
+          type: string
+        preview_url:
+          type: string
+        description_lang:
+          type: object
+          additionalProperties:
+            type: string
+        cr:
+          type: number
+        epc:
+          type: number
+        logo:
+          type: string
+        logo_source:
+          type: string
+        stop_at:
+          type: string
+        sources:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              allowed:
+                type: integer
+        categories:
+          type: array
+          items:
+            type: string
+        full_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+        payments:
+          type: array
+          items:
+            type: object
+            properties:
+              countries:
+                type: array
+                items:
+                  type: string
+              cities:
+                type: array
+                items: {}
+              devices:
+                type: array
+                items: {}
+              os:
+                type: array
+                items: {}
+              goal:
+                type: string
+              revenue:
+                type: number
+              currency:
+                type: string
+              title:
+                type: string
+              type:
+                type: string
+              country_exclude:
+                type: boolean
+        caps:
+          type: array
+          items:
+            type: object
+            properties:
+              goals:
+                type: object
+              period:
+                type: string
+              type:
+                type: string
+              value:
+                type: integer
+              goal_type:
+                type: string
+              country_type:
+                type: string
+              country:
+                type: array
+                items: {}
+        caps_status:
+          type: array
+          items: {}
+        required_approval:
+          type: boolean
+        is_cpi:
+          type: boolean
+        creatives:
+          type: array
+          items: {}
+        creatives_zip:
+          type: string
+          nullable: true
+        impressions_link:
+          type: string
+          nullable: true
+        landings:
+          type: array
+          items: {}
+        links:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                nullable: true
+              title:
+                type: string
+                nullable: true
+              hash:
+                type: string
+                nullable: true
+              url:
+                type: string
+              postbacks:
+                type: array
+                items: {}
+              created:
+                type: string
+                nullable: true
+        macro_url:
+          type: string
+          nullable: true
+        link:
+          type: string
+        use_https:
+          type: boolean
+        use_http:
+          type: boolean
+        hold_period:
+          type: integer
+        kpi:
+          type: object
+          properties:
+            en:
+              type: string
+        click_session:
+          type: string
+        minimal_click_session:
+          type: string
+        targeting:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              condition:
+                type: string
+              country:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              region:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              city:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              os:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              os_deny:
+                type: boolean
+              isp:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              isp_organization:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+                  deny_empty:
+                    type: boolean
+              ip:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+                  ipv6_deny:
+                    type: boolean
+              browser:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              browser_version:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              brand:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              device_type:
+                type: array
+                items: {}
+              device_type_deny:
+                type: boolean
+              device_model:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+              connection:
+                type: array
+                items: {}
+              connection_deny:
+                type: boolean
+              referrer:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+                  deny_empty:
+                    type: boolean
+              ua:
+                type: object
+                properties:
+                  allow:
+                    type: array
+                    items: {}
+                  deny:
+                    type: array
+                    items: {}
+                  deny_crawlers:
+                    type: boolean
+              id:
+                type: string
+                format: uuid
+              block_proxy:
+                type: boolean
+        commission_tiers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              goals:
+                type: array
+                items: {}
+              timeframe:
+                type: string
+              type:
+                type: string
+              value:
+                type: integer
+              target_goals:
+                type: array
+                items: {}
+              modifier_type:
+                type: string
+              modifier_value:
+                type: number
+              countries:
+                type: array
+                items: {}
+              conversion_status:
+                type: array
+                items:
+                  type: string
+              modifier_payment_type:
+                type: string
+        enabled_commission_tiers:
+          type: boolean
+        consider_personal_targeting_only:
+          type: boolean
+        hosts_only:
+          type: boolean
+        uniq_ip_only:
+          type: boolean
+        reject_not_uniq_ip:
+          type: integer
+        sign_clicks_integration:
+          type: string
+          description: Sign clicks integration setting
+        allow_duplicate_conversions:
+          type: boolean
+        enable_impression_sub3_uniqueness:
+          type: boolean
+    targeting_group_structure:
+      type: object
+      description: Targeting group structure
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: id in UUID format
+        enabled:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable targeting group
+        name:
+          type: string
+          description: name for targeting group
+        condition:
+          type: string
+          enum:
+          - and
+          - or
+          description: condition for rules in targeting group
+        country:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied countries. Example: country[allow][]=US'
+        region:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied regions for chosen country(ISO). Example: region[allow][US]=33'
+        city:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied cities for chosen country(ISO). Example: city[allow][US]=57'
+        os:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_os_structure'
+          description: list of allowed OSes and them versions.
+        os_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in os
+        isp:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+          description: 'list of allowed/denied ISP for chosen country(ISO). Example: isp[allow][US]=Att'
+        isp_organization:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed ISP organizations. Set deny_empty to block empty isp organizations.
+        ip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            ipv6_deny:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied ip ranges (IPv4 , IPv6).
+        device_type:
+          type: array
+          items:
+            type: string
+            enum:
+            - mobile
+            - tablet
+            - desktop
+            - mediahub
+            - ereader
+            - console
+            - tv
+            - smartwatch
+          description: list of allowed device types.
+        device_type_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in device_type
+        device_model:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of allowed/denied device models.
+        browser_version:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+            deny:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+          description: list of allowed/denied browsers and their versions.
+        browser:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied browsers. Example: browser[deny][] = "Edge"'
+        brand:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied device brands. Example: brand[deny][] = "SAMTEL"'
+        sub:
+          type: object
+          description: Complex sub-account targeting rules.
+        connection:
+          type: array
+          items:
+            type: string
+            enum:
+            - wi-fi
+            - cellular
+          description: list of allowed connection types.
+        connection_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in connection
+        block_proxy:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable "Click-level Anti-fraud" feature
+        block_known_bots:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable blocking of known bots
+        affiliate_id:
+          type: array
+          items:
+            type: integer
+          description: list of affiliates for personal targeting groups.
+        url:
+          type: string
+          description: Additional Tracking URL
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/targeting_url_weight'
+          description: URLs with weights for traffic redistribution between several track-links
+        referrer:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+            is_regexp:
+              type: integer
+              enum:
+              - 0
+              - 1
+              description: Set to 1 to enable regular expressions in allow or deny values
+          description: list of allowed/denied referrers. Set deny_empty to block empty referrers. Set is_regexp to enable regular expressions in allow or deny values.
+        ua:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_crawlers:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied user agents. Set deny_crawlers to block known crawlers.
+        zip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of zip codes
+        macros_replacement:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: 'Available if the Macros Replacement feature is enabled. Example of the structure: macros_replacement[sub1][]=value'
+        macros_replacement_enabled:
+          type: array
+          items:
+            type: string
+          description: Available if the Macros Replacement feature is enabled.
+    offer_landing_structure:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Landing id. Pass an existing landing's id to update that landing in place; omit to create a new landing. Not required.
+        title:
+          type: string
+          description: Title
+        url:
+          type: string
+          description: Tracking URL
+        url_preview:
+          type: string
+          description: View URL
+        type:
+          type: string
+          enum:
+          - landing
+          - transit
+          default: landing
+          description: Type
+      required:
+      - title
+      - url
+      - url_preview
+    targeting_url_weight:
+      type: object
+      description: URL with weight for traffic redistribution
+      properties:
+        url:
+          type: string
+          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
+        weight:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
+    offer_creative_html_structure:
+      type: object
+      description: HTML creative item structure
+      properties:
+        name:
+          type: string
+          description: Creative name
+        width:
+          type: integer
+          description: Creative width
+        height:
+          type: integer
+          description: Creative height
+        code:
+          type: string
+          description: Creative html code with macroses
+        asset_mapping:
+          type: object
+          description: 'How to map macros and asset. For example: {"aaa":0}. Macros {aaa} match to 0 asset'
+          additionalProperties:
+            type: integer
+    offer:
+      type: object
+      properties:
+        id:
+          type: integer
+        offer_id:
+          type: string
+        advertiser:
+          type: string
+        external_offer_id:
+          type: string
+        bundle_id:
+          type: string
+        hide_payments:
+          type: boolean
+        title:
+          type: string
+        macro_url:
+          type: string
+        url:
+          type: string
+        cross_postback_url:
+          type: string
+        cross_postback_method:
+          type: string
+        cross_postback_body:
+          type: string
+        url_preview:
+          type: string
+        preview_url:
+          type: string
+        domain_url:
+          type: string
+        parallel_tracking_url:
+          type: string
+        trafficback_url:
+          type: string
+        use_https:
+          type: boolean
+        use_http:
+          type: boolean
+        description_lang:
+          type: object
+          additionalProperties:
+            type: string
+        sources:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              allowed:
+                type: integer
+        logo:
+          type: string
+        logo_source:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - stopped
+          - suspended
+        privacy:
+          type: string
+          enum:
+          - public
+          - private
+          - premoderated
+        is_top:
+          type: integer
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_payment_structure'
+        partner_payments:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/offer_payment_structure'
+            - type: object
+              properties:
+                partners:
+                  type: array
+                  items:
+                    type: integer
+        landings:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_landing_structure'
+        strictly_country:
+          type: integer
+        strictly_os:
+          type: array
+          items:
+            type: string
+          nullable: true
+        strictly_brands:
+          type: array
+          items:
+            type: string
+        strictly_connection_type:
+          type: string
+          nullable: true
+        restriction_isp:
+          type: array
+          items:
+            type: object
+          nullable: true
+        is_redirect_overcap:
+          type: boolean
+        is_impression_overcap:
+          type: boolean
+        notice_percent_overcap:
+          type: integer
+        hold_period:
+          type: integer
+        hold_type:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        full_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+        cr:
+          type: number
+        epc:
+          type: number
+        affiliate_epc:
+          type: number
+        notes:
+          type: string
+        allowed_ip:
+          type: string
+        disallowed_ip:
+          type: string
+        hash_password:
+          type: string
+        allow_deeplink:
+          type: boolean
+        hide_referer:
+          type: boolean
+        start_at:
+          type: string
+          format: date-time
+        stop_at:
+          type: string
+          format: date-time
+          nullable: true
+        auto_offer_connect:
+          type: integer
+        required_approval:
+          type: boolean
+        is_cpi:
+          type: boolean
+        creatives:
+          type: array
+          items:
+            type: object
+        creatives_zip:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        sub_accounts:
+          type: object
+          properties:
+            '1':
+              type: object
+              properties:
+                value:
+                  type: string
+                except:
+                  type: boolean
+            '2':
+              type: object
+              properties:
+                value:
+                  type: string
+                except:
+                  type: boolean
+        disabled_by:
+          type: string
+        kpi:
+          type: object
+          additionalProperties:
+            type: string
+        strictly_isp:
+          type: array
+          items:
+            type: string
+        caps:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_caps_structure'
+        updated_at:
+          type: string
+          format: date-time
+        caps_goal_overcap:
+          type: string
+        targeting:
+          type: array
+          items:
+            $ref: '#/components/schemas/targeting_group_structure'
+        commission_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_tier_structure'
+        enabled_commission_tiers:
+          type: boolean
+        consider_personal_targeting_only:
+          type: boolean
+        hosts_only:
+          type: boolean
+        allow_impressions:
+          type: boolean
+        impressions_url:
+          type: string
+        smartlink_categories:
+          type: array
+          items:
+            type: string
+        uniq_ip_only:
+          type: boolean
+        reject_not_uniq_ip:
+          type: integer
+        countries:
+          type: array
+          items:
+            type: string
+          description: Offer countries
+        tags:
+          type: array
+          items:
+            type: string
+        duplicate_clicks_threshold:
+          type: integer
+        sign_clicks_integration:
+          type: string
+          description: Sign clicks integration setting
+        allow_duplicate_conversions:
+          type: boolean
+        enable_impression_sub3_uniqueness:
+          type: boolean
+    offer_tier_structure:
+      type: object
+      description: Commission tier item structure
+      properties:
+        timeframe:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - all
+          description: 'Possible values: day, week, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          description: 'Possible values: budget, conversions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        modifier_value:
+          type: number
+          format: float
+          description: The float value.
+        modifier_type:
+          type: string
+          enum:
+          - by_fix
+          - by_percent
+          - to_fix
+          - to_percent
+          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty.
+        target_goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies target goal value or is empty.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          default: each
+          description: 'Possible values: all, each, exact. Default: each.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed.
+        modifier_payment_type:
+          type: string
+          enum:
+          - payout
+          - total
+          - payout_and_total
+          default: payout
+          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
+        countries:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Countries ISO codes
+        conversion_status:
+          type: array
+          items:
+            type: string
+            enum:
+            - confirmed
+            - pending
+            - declined
+            - hold
+          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
+    offer_payment_structure:
+      type: object
+      description: Payment item structure
+      properties:
+        id:
+          type: integer
+          description: Payment id
+        title:
+          type: string
+          description: Payment title
+        countries:
+          type: array
+          items:
+            type: string
+          description: An array of countries in ISO format (or put empty string to clear existing items)
+        country_exclude:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: Exclude these countries. Available:0,1
+        cities:
+          type: array
+          items:
+            type: integer
+          description: An array of id cities (or put empty string to clear existing items)
+        devices:
+          type: array
+          items:
+            type: string
+            enum:
+            - mediahub
+            - mobile
+            - ereader
+            - console
+            - tv
+            - tablet
+            - desktop
+            - smartwatch
+          description: The array of devices. (or put empty string to clear existing items)
+        os:
+          type: string
+          description: Possible values can be found in oses-list
+        goal:
+          type: string
+          description: Value targets
+        total:
+          type: number
+          description: The amount of payment
+        revenue:
+          type: number
+          description: Payment webmaster
+        currency:
+          type: string
+          description: Currency (Code in ECB format)
+        type:
+          type: string
+          enum:
+          - fixed
+          - percent
+          - mixed
+          - cpc
+          - cpm
+          - first_cpa
+          - first_cps
+          - baseline_onetime
+          - baseline_accumulating
+          description: Type of payment.
+        sub1:
+          type: string
+          description: Comma-separated sub values for sub1
+        sub2:
+          type: string
+          description: Comma-separated sub values for sub2
+        sub3:
+          type: string
+          description: Comma-separated sub values for sub3
+        sub4:
+          type: string
+          description: Comma-separated sub values for sub4
+        sub5:
+          type: string
+          description: Comma-separated sub values for sub5
+        sub6:
+          type: string
+          description: Comma-separated sub values for sub6
+        sub7:
+          type: string
+          description: Comma-separated sub values for sub7
+        sub8:
+          type: string
+          description: Comma-separated sub values for sub8
+        custom_field1:
+          type: string
+        custom_field2:
+          type: string
+        custom_field3:
+          type: string
+        custom_field4:
+          type: string
+        custom_field5:
+          type: string
+        custom_field6:
+          type: string
+        custom_field7:
+          type: string
+        custom_field8:
+          type: string
+        custom_field9:
+          type: string
+        custom_field10:
+          type: string
+        custom_field11:
+          type: string
+        custom_field12:
+          type: string
+        custom_field13:
+          type: string
+        custom_field14:
+          type: string
+        custom_field15:
+          type: string
+        baseline_value:
+          type: number
+          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
+      required:
+      - currency
+      - type
+    offer_caps_structure:
+      type: object
+      description: Cap item structure
+      properties:
+        period:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          - all
+          description: 'Possible values: hour (if enabled), day, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          - clicks
+          - impressions
+          description: 'Possible values: budget, conversions, clicks, impressions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
+        goal_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
+        country:
+          type: array
+          items:
+            type: string
+          description: 'Array[string]. Values: Country codes.'
+        country_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
+        sub_number:
+          type: integer
+          description: '[integer]. Possible values: 2.'
+          enum:
+          - 2
+        sub_value:
+          type: array
+          items:
+            type: string
+  responses:
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

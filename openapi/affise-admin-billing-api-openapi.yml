@@ -1,0 +1,656 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Billing API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-billing
+  x-displayName: Advertiser Billing
+  description: Advertiser invoice management
+paths:
+  /3.0/admin/advertiser-invoices:
+    get:
+      tags:
+      - admin-billing
+      summary: Invoices list
+      description: '`GET /3.0/admin/advertiser-invoices`
+
+
+        Get list of invoices
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 100
+      - name: status
+        in: query
+        description: Status of invoice
+        schema:
+          type: string
+          enum:
+          - paid
+          - unpaid
+      - name: start_date
+        in: query
+        description: Start date of period
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        description: End date of period
+        schema:
+          type: string
+          format: date
+      - name: supplier_id
+        in: query
+        description: Advertiser ID
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort field
+        schema:
+          type: string
+          enum:
+          - number
+          - supplier_id
+          - created_at
+          - start_date
+          - end_date
+          - status
+      - name: sort_type
+        in: query
+        description: Sort direction
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: integer
+                        supplier_id:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date
+                        updated_at:
+                          type: string
+                          format: date
+                        start_date:
+                          type: string
+                          format: date
+                        end_date:
+                          type: string
+                          format: date
+                        status:
+                          type: string
+                        detail:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              offer_id:
+                                type: integer
+                              payout_type:
+                                type: string
+                              actions:
+                                type: integer
+                              amount:
+                                type: integer
+                              comment:
+                                type: string
+                        currency:
+                          type: string
+                        comment:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                message:
+                - number: 1
+                  supplier_id: 5a37c01cbf0b6b18008b4567
+                  created_at: '2018-01-11'
+                  updated_at: '2018-01-11'
+                  start_date: '2017-12-05'
+                  end_date: '2017-12-07'
+                  status: unpaid
+                  detail:
+                  - offer_id: 1
+                    payout_type: RPA
+                    actions: 100
+                    amount: 100
+                    comment: null
+                  currency: USD
+                  comment: null
+                - number: 2
+                  supplier_id: 5a37c01cbf0b6b18008b4567
+                  created_at: '2018-01-11'
+                  updated_at: '2018-01-11'
+                  start_date: '2018-01-11'
+                  end_date: '2018-01-11'
+                  status: unpaid
+                  detail:
+                  - offer_id: 1
+                    payout_type: RPA
+                    actions: 55
+                    amount: 666
+                    comment: null
+                  currency: USD
+                  comment: some comment
+                pagination:
+                  per_page: 100
+                  total_count: 2
+                  page: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser-invoices?limit=100&status=paid&sort=number&sort_type=asc' \\\n  --header 'api-key: <api-key>'"
+  /3.0/admin/advertiser-invoice:
+    post:
+      tags:
+      - admin-billing
+      summary: Add invoice
+      description: '`POST /3.0/admin/advertiser-invoice`
+
+
+        Add new invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                supplier_id:
+                  type: string
+                  description: Advertiser Id
+                start_date:
+                  type: string
+                  description: Start date of invoice period
+                end_date:
+                  type: string
+                  description: End date of invoice period
+                status:
+                  type: string
+                  description: Invoice status
+                  enum:
+                  - paid
+                  - unpaid
+                currency:
+                  type: string
+                  description: One of the active currencies (RUB, USD, EUR etc)
+                comment:
+                  type: string
+                  description: Comment
+                detail:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      offer_id:
+                        type: integer
+                        description: Offer id
+                      payout_type:
+                        type: string
+                        description: Payout type
+                        enum:
+                        - RPA
+                        - RPS
+                        - RPA + RPS
+                        - RPC
+                        - RPM
+                      actions:
+                        type: integer
+                        description: Actions
+                      amount:
+                        type: integer
+                        description: Amount
+                      comment:
+                        type: string
+                        description: Comment for detail
+              required:
+              - supplier_id
+              - currency
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Invoice created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser-invoice' \\\n  --header 'api-key: <api-key>' \\\n  --form 'supplier_id=string' \\\n  --form 'start_date=string' \\\n  --form 'end_date=string' \\\n  --form 'status=paid' \\\n  --form 'currency=string' \\\n  --form 'comment=string' \\\n  --form 'detail[0][offer_id]=0' \\\n  --form 'detail[0][payout_type]=RPA' \\\n  --form 'detail[0][actions]=0' \\\n  --form 'detail[0][amount]=0' \\\n  --form 'detail[0][comment]=string'"
+  /3.0/admin/advertiser-invoice/{number}:
+    get:
+      tags:
+      - admin-billing
+      summary: Invoices view
+      description: '`GET /3.0/admin/advertiser-invoice/{number}`
+
+
+        Get a invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: number
+        in: path
+        description: Invoice number
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: object
+                    properties:
+                      number:
+                        type: integer
+                      supplier_id:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date
+                      updated_at:
+                        type: string
+                        format: date
+                      start_date:
+                        type: string
+                        format: date
+                      end_date:
+                        type: string
+                        format: date
+                      status:
+                        type: string
+                      detail:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            offer_id:
+                              type: integer
+                            payout_type:
+                              type: string
+                            actions:
+                              type: integer
+                            amount:
+                              type: integer
+                            comment:
+                              type: string
+                      currency:
+                        type: string
+                      comment:
+                        type: string
+              example:
+                status: 1
+                message:
+                  number: 1
+                  supplier_id: 5a37c01cbf0b6b18008b4567
+                  created_at: '2018-01-11'
+                  updated_at: '2018-01-11'
+                  start_date: '2017-12-05'
+                  end_date: '2017-12-07'
+                  status: paid
+                  detail:
+                  - offer_id: 1
+                    payout_type: RPA
+                    actions: 100
+                    amount: 100
+                    comment: null
+                  currency: USD
+                  comment: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser-invoice/{number}' \\\n  --header 'api-key: <api-key>'"
+    post:
+      tags:
+      - admin-billing
+      summary: Edit invoice
+      description: '`POST /3.0/admin/advertiser-invoice/{number}`
+
+
+        Change an invoice''s data
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: number
+        in: path
+        description: Invoice number
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                supplier_id:
+                  type: string
+                  description: Advertiser Id
+                start_date:
+                  type: string
+                  description: Start date of invoice period
+                end_date:
+                  type: string
+                  description: End date of invoice period
+                status:
+                  type: string
+                  description: Invoice status
+                  enum:
+                  - paid
+                  - unpaid
+                comment:
+                  type: string
+                  description: Comment
+                detail:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      offer_id:
+                        type: integer
+                        description: Offer id
+                      payout_type:
+                        type: string
+                        description: Payout type
+                        enum:
+                        - RPA
+                        - RPS
+                        - RPA + RPS
+                        - RPC
+                        - RPM
+                      actions:
+                        type: integer
+                        description: Actions
+                      amount:
+                        type: integer
+                        description: Amount
+                      comment:
+                        type: string
+                        description: Comment for detail
+                currency:
+                  type: string
+                  description: 'Currency code (one of the currencies active in the network). Example: USD'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Invoice updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser-invoice/{number}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'supplier_id=string' \\\n  --form 'start_date=string' \\\n  --form 'end_date=string' \\\n  --form 'status=paid' \\\n  --form 'comment=string' \\\n  --form 'detail[0][offer_id]=0' \\\n  --form 'detail[0][payout_type]=RPA' \\\n  --form 'detail[0][actions]=0' \\\n  --form 'detail[0][amount]=0' \\\n  --form 'detail[0][comment]=string' \\\n  --form 'currency=string'"
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

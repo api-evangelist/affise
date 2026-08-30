@@ -1,0 +1,877 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Presets API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-presets
+  x-displayName: Presets
+  description: Admin presets management
+paths:
+  /3.1/presets:
+    get:
+      tags:
+      - admin-presets
+      summary: Get list of presets
+      description: '`GET /3.1/presets`
+
+
+        Get presets list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page with results
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: limit
+        in: query
+        description: Results per page
+        schema:
+          type: integer
+          minimum: 1
+          default: 50
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  presets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        permissions:
+                          type: object
+                          properties:
+                            automation:
+                              type: object
+                              additionalProperties: true
+                            general:
+                              type: object
+                              additionalProperties: true
+                            notificator:
+                              type: object
+                              additionalProperties: true
+                            stats:
+                              type: object
+                              additionalProperties: true
+                            users:
+                              type: object
+                              additionalProperties: true
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+              example:
+                status: 1
+                presets:
+                - id: 5f51755a535bac2217eb7619
+                  name: Test affiliate_manager 4
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: deny
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        exceptions:
+                          strings: []
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: []
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: []
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+                  created_at: '2020-09-03T22:59:38Z'
+                  updated_at: '2020-09-03T22:59:38Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/presets?page=1&limit=50' \\\n  --header 'api-key: <api-key>'"
+    post:
+      tags:
+      - admin-presets
+      summary: Create preset
+      description: '`POST /3.1/presets`
+
+
+        Create preset using JSON dataset
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Preset name
+                permissions:
+                  type: object
+                  description: Permissions for preset
+                  properties:
+                    automation:
+                      type: object
+                      additionalProperties: true
+                    general:
+                      type: object
+                      additionalProperties: true
+                    notificator:
+                      type: object
+                      additionalProperties: true
+                    stats:
+                      type: object
+                      additionalProperties: true
+                    users:
+                      type: object
+                      additionalProperties: true
+                type:
+                  type: string
+                  enum:
+                  - affiliate_manager
+                  - account_manager
+                  - common_manager
+                  description: Preset type
+              required:
+              - name
+              - permissions
+              - type
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  preset:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      permissions:
+                        type: object
+                        properties:
+                          automation:
+                            type: object
+                            additionalProperties: true
+                          general:
+                            type: object
+                            additionalProperties: true
+                          notificator:
+                            type: object
+                            additionalProperties: true
+                          stats:
+                            type: object
+                            additionalProperties: true
+                          users:
+                            type: object
+                            additionalProperties: true
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                preset:
+                  id: 5f51755a535bac2217eb7619
+                  name: Test affiliate_manager 4
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: deny
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        exceptions:
+                          strings: []
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: []
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: []
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+                  created_at: '2020-09-03T22:59:38Z'
+                  updated_at: '2020-09-03T22:59:38Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/presets' \\\n  --header 'api-key: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"automation\": {},\n    \"general\": {},\n    \"notificator\": {},\n    \"stats\": {},\n    \"users\": {}\n  },\n  \"type\": \"affiliate_manager\"\n}'"
+  /3.1/presets/{preset_id}:
+    post:
+      tags:
+      - admin-presets
+      summary: Update preset
+      description: '`POST /3.1/presets/{preset_id}`
+
+
+        Update preset using JSON dataset
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: preset_id
+        in: path
+        description: Preset ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Preset name
+                permissions:
+                  type: object
+                  description: Permissions for update
+                  properties:
+                    automation:
+                      type: object
+                      additionalProperties: true
+                    general:
+                      type: object
+                      additionalProperties: true
+                    notificator:
+                      type: object
+                      additionalProperties: true
+                    stats:
+                      type: object
+                      additionalProperties: true
+                    users:
+                      type: object
+                      additionalProperties: true
+              required:
+              - permissions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  preset:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      permissions:
+                        type: object
+                        properties:
+                          automation:
+                            type: object
+                            additionalProperties: true
+                          general:
+                            type: object
+                            additionalProperties: true
+                          notificator:
+                            type: object
+                            additionalProperties: true
+                          stats:
+                            type: object
+                            additionalProperties: true
+                          users:
+                            type: object
+                            additionalProperties: true
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                preset:
+                  id: 5f51755a535bac2217eb7619
+                  name: Test affiliate_manager 4 (update)
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: write
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        exceptions:
+                          strings: []
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: []
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: []
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+                  created_at: '2020-09-03T22:59:38Z'
+                  updated_at: '2020-09-03T23:16:22Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/presets/{preset_id}' \\\n  --header 'api-key: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"name\": \"string\",\n  \"permissions\": {\n    \"automation\": {},\n    \"general\": {},\n    \"notificator\": {},\n    \"stats\": {},\n    \"users\": {}\n  }\n}'"
+    delete:
+      tags:
+      - admin-presets
+      summary: Delete preset
+      description: '`DELETE /3.1/presets/{preset_id}`
+
+
+        Delete preset by id
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: preset_id
+        in: path
+        description: Preset ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+              example:
+                status: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/presets/{preset_id}' \\\n  --header 'api-key: <api-key>'"
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

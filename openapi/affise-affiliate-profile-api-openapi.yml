@@ -1,0 +1,515 @@
+openapi: 3.2.0
+info:
+  title: Documentation Affiliate Profile API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: affiliate-profile
+  x-displayName: Profile
+  description: Affiliate profile, API key
+paths:
+  /3.1/partner/me:
+    get:
+      tags:
+      - affiliate-profile
+      summary: Get partner own data
+      description: '`GET /3.1/partner/me`
+
+
+        Get partner own data
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      partner_id:
+                        type: integer
+                      needAcceptTerms:
+                        type: boolean
+                      manager:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          email:
+                            type: string
+                          skype:
+                            type: string
+                          work_hours:
+                            type: string
+                      id:
+                        type: string
+                      api_key:
+                        type: string
+                      info:
+                        type: string
+                        nullable: true
+                      created_at:
+                        type: string
+                        format: date-time
+                      settings:
+                        type: string
+                        nullable: true
+                      email:
+                        type: string
+                      login:
+                        type: string
+                      name:
+                        type: string
+                        nullable: true
+                      company:
+                        type: string
+                        nullable: true
+                      status:
+                        type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      confirm_code:
+                        type: string
+                        nullable: true
+                      ref:
+                        type: string
+                        nullable: true
+                      lang:
+                        type: string
+                      timezone:
+                        type: string
+                        nullable: true
+                      level:
+                        type: integer
+                        nullable: true
+                      manager_id:
+                        type: string
+                      notes:
+                        type: string
+                      ref_percent:
+                        type: number
+                        nullable: true
+                      pay_sys:
+                        type: string
+                        nullable: true
+                      pay_acc:
+                        type: string
+                      pay_acc_wmz:
+                        type: string
+                      balance_ru:
+                        type: string
+                      hold_ru:
+                        type: string
+                      available_ru:
+                        type: string
+                      balance_usd:
+                        type: string
+                      hold_usd:
+                        type: string
+                      available_usd:
+                        type: string
+                      address_1:
+                        type: string
+                        nullable: true
+                      address_2:
+                        type: string
+                        nullable: true
+                      city:
+                        type: string
+                        nullable: true
+                      country:
+                        type: string
+                      zip_code:
+                        type: string
+                        nullable: true
+                      phone:
+                        type: string
+                        nullable: true
+                      sub_accounts:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                            except:
+                              type: integer
+                      type:
+                        type: string
+                      permissions:
+                        type: object
+                        additionalProperties: true
+                      work_hours:
+                        type: string
+                      last_login_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                user:
+                  partner_id: 2
+                  needAcceptTerms: false
+                  manager:
+                    name: firstName lastName
+                    email: manager@manager.com
+                    skype: manager
+                    work_hours: '24'
+                  id: 5d91e81acbe5a8fd53e7215d
+                  api_key: cd21e0d96fdfcd181403531854bba48f
+                  info: null
+                  created_at: '2019-09-30T11:33:46Z'
+                  settings: null
+                  email: test1.users-stage-v1@cud.partner
+                  login: test11.users-stage-v1@cud.partner
+                  name: null
+                  company: null
+                  status: '1'
+                  updated_at: '2019-10-02T07:28:01Z'
+                  confirm_code: null
+                  ref: null
+                  lang: en
+                  timezone: null
+                  level: null
+                  manager_id: ''
+                  notes: ''
+                  ref_percent: null
+                  pay_sys: null
+                  pay_acc: ''
+                  pay_acc_wmz: ''
+                  balance_ru: '0.00'
+                  hold_ru: '0.00'
+                  available_ru: '0.00'
+                  balance_usd: '0.00'
+                  hold_usd: '0.00'
+                  available_usd: '0.00'
+                  address_1: null
+                  address_2: null
+                  city: null
+                  country: GH
+                  zip_code: null
+                  phone: null
+                  sub_accounts:
+                    '1':
+                      value: ''
+                      except: 0
+                    '2':
+                      value: ''
+                      except: 0
+                  type: affiliate
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: deny
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        default_level: read
+                        exceptions:
+                          strings: []
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: []
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: []
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+                  work_hours: ''
+                  last_login_at: '2019-10-02T07:29:22Z'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/partner/me' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/partner/api-key:
+    post:
+      tags:
+      - affiliate-profile
+      summary: Change partner api key
+      description: '`POST /3.1/partner/api-key`
+
+
+        Change partner api key
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 97366c88ad626fdf4c73687d2cae5394
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      api_key:
+                        type: string
+              example:
+                status: 1
+                user:
+                  id: 1
+                  api_key: 97366c88ad626fdf4c73687d2cae5394
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/partner/api-key' \\\n  --header 'api-key: 97366c88ad626fdf4c73687d2cae5394'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

@@ -1,0 +1,314 @@
+openapi: 3.2.0
+info:
+  title: Documentation Affiliate News API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: affiliate-news
+  x-displayName: News
+  description: Affiliate news feed
+paths:
+  /3.0/news:
+    get:
+      tags:
+      - affiliate-news
+      summary: News list
+      description: '`GET /3.0/news`
+
+
+        News list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of items to return
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - name: skip
+        in: query
+        description: Offset
+        schema:
+          type: integer
+          default: 0
+      - name: fixed
+        in: query
+        description: 1 - pinned, 0 - not pinned
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: object
+                          properties:
+                            $id:
+                              type: string
+                        title:
+                          type: string
+                        small_desc:
+                          type: string
+                        desc:
+                          type: string
+                        status:
+                          type: integer
+                        created_at:
+                          type: object
+                          properties:
+                            sec:
+                              type: integer
+                            usec:
+                              type: integer
+                  all_items:
+                    type: integer
+              example:
+                status: 1
+                items:
+                - _id:
+                    $id: 57a4914f3b7d9bbd358b45b6
+                  title: Title news
+                  small_desc: '....'
+                  desc: '....'
+                  status: 1
+                  created_at:
+                    sec: 1470402895
+                    usec: 891000
+                all_items: 334
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/news?limit=10&skip=0&fixed=0' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/news/{id}:
+    get:
+      tags:
+      - affiliate-news
+      summary: News get by ID
+      description: '`GET /3.0/news/{id}`
+
+
+        Get news by ID
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: News ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  news:
+                    type: object
+                    properties:
+                      _id:
+                        type: object
+                        properties:
+                          $id:
+                            type: string
+                      title:
+                        type: string
+                      small_desc:
+                        type: string
+                      desc:
+                        type: string
+                      status:
+                        type: integer
+                      created_at:
+                        type: object
+                        properties:
+                          sec:
+                            type: integer
+                          usec:
+                            type: integer
+              example:
+                status: 1
+                news:
+                  _id:
+                    $id: 57a4914f3b7d9bbd358b45b6
+                  title: '...'
+                  small_desc: '....'
+                  desc: '....'
+                  status: 1
+                  created_at:
+                    sec: 1470402895
+                    usec: 891000
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/news/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

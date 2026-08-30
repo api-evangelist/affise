@@ -1,0 +1,428 @@
+openapi: 3.2.0
+info:
+  title: Documentation Affiliate Conversions API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: affiliate-conversions
+  x-displayName: Conversions
+  description: Affiliate conversion import
+paths:
+  /4.0/affiliate/conversion/import:
+    post:
+      tags:
+      - affiliate-conversions
+      summary: Import single conversion (affiliate)
+      description: '`POST /4.0/affiliate/conversion/import`
+
+
+        Import a single conversion for affiliate
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 5718dac83b7d9bf8588b4579
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer:
+                  type: integer
+                  description: Offer id
+                action_id:
+                  type: string
+                  description: Advertiser conversion id
+                click_id:
+                  type: string
+                  description: Click ID
+                goal:
+                  type: integer
+                  description: Goal number
+                ip:
+                  type: string
+                  description: Visitor IP
+                ua:
+                  type: string
+                  description: Visitor user-agent
+                comment:
+                  type: string
+                  description: Comment
+                sum:
+                  type: integer
+                  description: Payouts amount for conversion
+                status:
+                  type: string
+                  enum:
+                  - confirmed
+                  - pending
+                  - declined
+                  - hold
+                  description: Conversion status
+                created_at:
+                  type: string
+                  format: date
+                  description: Created at (YYYY-MM-DD)
+                send_advertiser_postbacks:
+                  type: boolean
+                  default: false
+                  description: If true conversion advertiser postback will be sent
+                custom_field_1:
+                  type: string
+                  description: custom field 1
+                custom_field_2:
+                  type: string
+                  description: custom field 2
+                custom_field_3:
+                  type: string
+                  description: custom field 3
+                custom_field_4:
+                  type: string
+                  description: custom field 4
+                custom_field_5:
+                  type: string
+                  description: custom field 5
+                custom_field_6:
+                  type: string
+                  description: custom field 6
+                custom_field_7:
+                  type: string
+                  description: custom field 7
+              required:
+              - offer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      offer:
+                        type: integer
+                      action_id:
+                        type: string
+                      goal:
+                        type: integer
+                      ip:
+                        type: string
+                      ua:
+                        type: string
+                      sum:
+                        type: integer
+                      comment:
+                        type: string
+                  message:
+                    type: string
+              example:
+                status: 1
+                data:
+                  offer: 1000
+                  action_id: null
+                  goal: null
+                  ip: null
+                  ua: null
+                  sum: null
+                  comment: null
+                message: Conversion import will take a few minutes
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/4.0/affiliate/conversion/import' \\\n  --header 'api-key: 5718dac83b7d9bf8588b4579' \\\n  --form 'offer=0' \\\n  --form 'action_id=string' \\\n  --form 'click_id=string' \\\n  --form 'goal=0' \\\n  --form 'ip=string' \\\n  --form 'ua=string' \\\n  --form 'comment=string' \\\n  --form 'sum=0' \\\n  --form 'status=confirmed' \\\n  --form 'created_at=string' \\\n  --form 'send_advertiser_postbacks=false' \\\n  --form 'custom_field_1=string' \\\n  --form 'custom_field_2=string' \\\n  --form 'custom_field_3=string' \\\n  --form 'custom_field_4=string' \\\n  --form 'custom_field_5=string' \\\n  --form 'custom_field_6=string' \\\n  --form 'custom_field_7=string'"
+  /4.0/affiliate/conversions/import:
+    post:
+      tags:
+      - affiliate-conversions
+      summary: Import multiple conversions (affiliate)
+      description: '`POST /4.0/affiliate/conversions/import`
+
+
+        Import multiple conversions for affiliate
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                list:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      offer:
+                        type: integer
+                        description: Offer id
+                      action_id:
+                        type: string
+                        description: Advertiser conversion id
+                      click_id:
+                        type: string
+                        description: Click ID
+                      goal:
+                        type: integer
+                        description: Goal number
+                      ip:
+                        type: string
+                        description: Visitor IP
+                      ua:
+                        type: string
+                        description: Visitor user-agent
+                      comment:
+                        type: string
+                        description: Comment
+                      sum:
+                        type: integer
+                        description: Payouts amount for conversion
+                      status:
+                        type: string
+                        enum:
+                        - confirmed
+                        - pending
+                        - declined
+                        - hold
+                        - pending_cap
+                        description: Conversion status
+                      created_at:
+                        type: string
+                        format: date
+                        description: Created at (YYYY-MM-DD)
+                      custom_field_1:
+                        type: string
+                        description: custom field 1
+                      custom_field_2:
+                        type: string
+                        description: custom field 2
+                      custom_field_3:
+                        type: string
+                        description: custom field 3
+                      custom_field_4:
+                        type: string
+                        description: custom field 4
+                      custom_field_5:
+                        type: string
+                        description: custom field 5
+                      custom_field_6:
+                        type: string
+                        description: custom field 6
+                      custom_field_7:
+                        type: string
+                        description: custom field 7
+                    required:
+                    - offer
+                  description: List of conversions to import
+                send_advertiser_postbacks:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: If 1 conversion advertiser postback will be sent
+              required:
+              - list
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            offer:
+                              type: integer
+                            action_id:
+                              type: string
+                            goal:
+                              type: integer
+                            ip:
+                              type: string
+                            ua:
+                              type: string
+                            sum:
+                              type: integer
+                            comment:
+                              type: string
+                  message:
+                    type: string
+              example:
+                status: 1
+                data:
+                  list:
+                  - offer: 1000
+                    action_id: null
+                    goal: null
+                    ip: null
+                    ua: null
+                    sum: null
+                    comment: null
+                message: Conversion import will take a few minutes
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/4.0/affiliate/conversions/import' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'list[0][offer]=0' \\\n  --form 'list[0][action_id]=string' \\\n  --form 'list[0][click_id]=string' \\\n  --form 'list[0][goal]=0' \\\n  --form 'list[0][ip]=string' \\\n  --form 'list[0][ua]=string' \\\n  --form 'list[0][comment]=string' \\\n  --form 'list[0][sum]=0' \\\n  --form 'list[0][status]=confirmed' \\\n  --form 'list[0][created_at]=string' \\\n  --form 'list[0][custom_field_1]=string' \\\n  --form 'list[0][custom_field_2]=string' \\\n  --form 'list[0][custom_field_3]=string' \\\n  --form 'list[0][custom_field_4]=string' \\\n  --form 'list[0][custom_field_5]=string' \\\n  --form 'list[0][custom_field_6]=string' \\\n  --form 'list[0][custom_field_7]=string' \\\n  --form 'send_advertiser_postbacks=0'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

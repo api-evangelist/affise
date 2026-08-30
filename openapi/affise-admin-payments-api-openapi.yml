@@ -1,0 +1,1004 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Payments API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-payments
+  x-displayName: Billing
+  description: Affiliate payments API. Available for Expand, Custom and Trial plans.
+paths:
+  /3.1/payments:
+    get:
+      tags:
+      - admin-payments
+      summary: Get payments list
+      description: '`GET /3.1/payments`
+
+
+        Get payments list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: date_from
+        in: query
+        description: The date from (format YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        description: The date to (format YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: id
+        in: query
+        description: Filter by payment invoice ids
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            id[0]: 3
+      - name: status
+        in: query
+        description: Filter by payment invoice status. Possible values (1 - waiting, 2 - completed, 3 - paid partly, 4 - waiting, -1 - declined)
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - -1
+            - 1
+            - 2
+            - 3
+            - 4
+          example:
+            status[0]: 1
+      - name: aid
+        in: query
+        description: Filter by affiliate ids
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            aid[0]: 2
+      - name: manager_id
+        in: query
+        description: Filter by affiliate manager ids
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            manager_id[0]: 62164a9a5a8b7e788f752f13
+      - name: payment_system
+        in: query
+        description: Filter by payment systems
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            payment_system[0]: 62164a9a5a8b7e788f752f13
+      - name: payment_account
+        in: query
+        description: Filter by payment accounts
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            payment_account[0]: 62164a9a5a8b7e788f752f13
+      - name: update_from_date
+        in: query
+        description: The updated date from (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: update_to_date
+        in: query
+        description: The updated date to (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: update_from_hour
+        in: query
+        description: The updated from hour (between 0 to 23)
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 23
+      - name: update_to_hour
+        in: query
+        description: The updated to hour (between 0 to 23)
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 23
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities. From 0 to 100
+        schema:
+          type: integer
+          default: 100
+          maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  payments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/payment'
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total:
+                        type: integer
+              example:
+                status: 1
+                payments:
+                - id: 5
+                  pid: 1
+                  manager_id: null
+                  posted_date: '2022-03-02 17:28:29'
+                  pay_sys: 1
+                  pay_sys_name: Webmoney
+                  pay_acc: test-update-payment-account
+                  status: '4'
+                  revenue: '52.12000000'
+                  ref_revenue: null
+                  currency: '2'
+                  currency_code: USD
+                  comment: test-update-comment
+                  notes: test-update-note
+                  cpa_actions:
+                  - 62164a9a5a8b7e788f752f13
+                  ref_ids: []
+                  details:
+                    details:
+                      '4':
+                        cost:
+                          '22.00000000':
+                            count: 1
+                            currency: 2
+                        title: test 4
+                    count: 1
+                  additional_payments:
+                    '9':
+                      posted_date: '2022-03-31 18:00:55'
+                      revenue: '5.02000000'
+                      currency: '2'
+                      comment: test-add-correction
+                  updated_at: '2022-03-03 17:28:29'
+                pagination:
+                  page: 1
+                  limit: 100
+                  total: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/payments?date_from=<date_from>&date_to=<date_to>&id[0]=3&status[0]=1&aid[0]=2&manager_id[0]=62164a9a5a8b7e788f752f13&payment_system[0]=62164a9a5a8b7e788f752f13&payment_account[0]=62164a9a5a8b7e788f752f13&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/payments/{id}:
+    get:
+      tags:
+      - admin-payments
+      summary: Get payment invoice info
+      description: '`GET /3.1/payments/{id}`
+
+
+        Get payment invoice info
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Payment invoice ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  payment:
+                    $ref: '#/components/schemas/payment'
+              example:
+                status: 1
+                payment:
+                  id: 5
+                  pid: 1
+                  manager_id: null
+                  posted_date: '2022-03-02 17:28:29'
+                  pay_sys: 1
+                  pay_sys_name: Webmoney
+                  pay_acc: 'WMR: 344324
+
+                    WMZ: 23423423'
+                  status: '1'
+                  revenue: '22.00000000'
+                  ref_revenue: null
+                  currency: '2'
+                  currency_code: USD
+                  comment: test
+                  notes: test
+                  cpa_actions:
+                  - 62164a9a5a8b7e788f752f13
+                  ref_ids: []
+                  additional_payments: []
+                  updated_at: '2022-03-03 17:28:29'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+    post:
+      tags:
+      - admin-payments
+      summary: Update payment invoice
+      description: '`POST /3.1/payments/{id}`
+
+
+        Update payment invoice
+
+        '
+      parameters:
+      - name: API-Key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Payment invoice ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                payment_account:
+                  type: string
+                  description: Payment account information
+                status:
+                  type: integer
+                  enum:
+                  - -1
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  description: Status (1 - waiting, 2 - completed, 3 - paid partly, 4 - waiting, -1 - declined)
+                comment:
+                  type: string
+                  description: Comment for payment invoice
+                note:
+                  type: string
+                  description: Note for payment invoice
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  result:
+                    type: boolean
+              example:
+                status: 1
+                result: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}' \\\n  --header 'API-Key: <API-Key>' \\\n  --form 'payment_account=string' \\\n  --form 'status=-1' \\\n  --form 'comment=string' \\\n  --form 'note=string'"
+  /3.1/payments/create-for-affiliate:
+    post:
+      tags:
+      - admin-payments
+      summary: Create payment invoice
+      description: '`POST /3.1/payments/create-for-affiliate`
+
+
+        Create payment invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                aid:
+                  type: integer
+                  description: Affiliate Id
+                sum:
+                  type: number
+                  description: Payment invoice sum
+                currency:
+                  type: integer
+                  description: Currency Id (/3.0/admin/currency?extended=1)
+                note:
+                  type: string
+                  description: Note for payment invoice
+              required:
+              - aid
+              - sum
+              - currency
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Payment generates will take a few minutes
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/create-for-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'aid=0' \\\n  --form 'sum=0' \\\n  --form 'currency=0' \\\n  --form 'note=string'"
+  /3.1/payments/generate:
+    post:
+      tags:
+      - admin-payments
+      summary: Generate payment invoices for affiliates
+      description: '`POST /3.1/payments/generate`
+
+
+        Generate payment invoices for affiliates
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  description: To generation day (format YYYY-MM-DD)
+                date_from:
+                  type: string
+                  format: date
+                  description: From generation day (format YYYY-MM-DD)
+                date_to:
+                  type: string
+                  format: date
+                  description: To generation day (format YYYY-MM-DD)
+                aid:
+                  type: integer
+                  description: Affiliate Id
+                note:
+                  type: string
+                  description: Note for payment invoice
+                exclude_aids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Exclude affiliate ids
+                include_aids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Include affiliate ids
+                by_last_unpaid_conversion:
+                  type: boolean
+                  description: To start generation from the first unpaid conversion
+                by_last_invoice:
+                  type: boolean
+                  description: To start generation from the last invoice date
+                offer_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Offer Id
+                advertiser_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    '0': 62164a9a5a8b7e788f752f13
+                  description: Advertiser Id
+                currencies:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    '0': USD
+                  description: Currency code
+                countries:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    '0': USA
+                  description: Country code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Payment generates will take a few minutes
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/generate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'date=string' \\\n  --form 'date_from=string' \\\n  --form 'date_to=string' \\\n  --form 'aid=0' \\\n  --form 'note=string' \\\n  --form 'exclude_aids[0]=0' \\\n  --form 'exclude_aids[1]=1' \\\n  --form 'include_aids[0]=0' \\\n  --form 'include_aids[1]=1' \\\n  --form 'by_last_unpaid_conversion=false' \\\n  --form 'by_last_invoice=false' \\\n  --form 'offer_ids[0]=0' \\\n  --form 'offer_ids[1]=1' \\\n  --form 'advertiser_ids[0]=62164a9a5a8b7e788f752f13' \\\n  --form 'currencies[0]=USD' \\\n  --form 'countries[0]=USA'"
+  /3.1/payments/{id}/add-correction:
+    post:
+      tags:
+      - admin-payments
+      summary: Add correction value for payment invoice
+      description: '`POST /3.1/payments/{id}/add-correction`
+
+
+        Add correction value for payment invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Payment invoice ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                revenue:
+                  type: number
+                  description: Revenue
+                comment:
+                  type: string
+                  description: Comment for correction payment
+              required:
+              - revenue
+              - comment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  result:
+                    type: boolean
+              example:
+                status: 1
+                result: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}/add-correction' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'revenue=0' \\\n  --form 'comment=string'"
+  /3.1/payments/del-correction/{id}:
+    delete:
+      tags:
+      - admin-payments
+      summary: Remove correction value for payment invoice
+      description: '`DELETE /3.1/payments/del-correction/{id}`
+
+
+        Remove correction value for payment invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Payment invoice correction sum ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  result:
+                    type: boolean
+              example:
+                status: 1
+                result: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/payments/del-correction/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/payments/delete/{id}:
+    delete:
+      tags:
+      - admin-payments
+      summary: Remove payment invoice
+      description: '`DELETE /3.1/payments/delete/{id}`
+
+
+        Remove payment invoice
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Payment invoice ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  result:
+                    type: boolean
+              example:
+                status: 1
+                result: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/payments/delete/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/payments/bulk-delete:
+    post:
+      tags:
+      - admin-payments
+      summary: Remove several payment invoices
+      description: '`POST /3.1/payments/bulk-delete`
+
+
+        Remove several payment invoices
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                  example:
+                  - 2
+                  - 3
+                  description: Payment invoice ids
+              required:
+              - ids
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  result:
+                    type: object
+                    additionalProperties:
+                      type: boolean
+              example:
+                status: 1
+                result:
+                  '1': true
+                  '2': false
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/bulk-delete' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'ids[0]=2' \\\n  --form 'ids[1]=3'"
+  /3.1/payments/{invoice_id}/conversions/delete:
+    post:
+      tags:
+      - admin-payments
+      summary: Delete conversions from invoice
+      description: Deletes specified conversions from the invoice by ID.
+      operationId: deleteInvoiceConversions
+      parameters:
+      - name: invoice_id
+        in: path
+        description: ID of the invoice
+        required: true
+        schema:
+          type: integer
+      - name: Api-Key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                conversion_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of conversion IDs to delete. Required if offer_ids is not present.
+                offer_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of offer IDs to delete all their conversions from the invoice. Required if conversion_ids is not present.
+      responses:
+        '200':
+          description: Conversions deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 1
+                  message:
+                    type: string
+                    example: Conversions successfully deleted from payment
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{invoice_id}/conversions/delete' \\\n  --header 'Api-Key: <Api-Key>' \\\n  --form 'conversion_ids[0]=string' \\\n  --form 'conversion_ids[1]=string2' \\\n  --form 'offer_ids[0]=0' \\\n  --form 'offer_ids[1]=1'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+  schemas:
+    payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        pid:
+          type: integer
+        manager_id:
+          type: string
+          nullable: true
+        posted_date:
+          type: string
+          format: date-time
+        pay_sys:
+          type: integer
+        pay_sys_name:
+          type: string
+        pay_acc:
+          type: string
+        status:
+          type: string
+        revenue:
+          type: string
+        ref_revenue:
+          type: string
+          nullable: true
+        currency:
+          type: string
+        currency_code:
+          type: string
+        comment:
+          type: string
+        notes:
+          type: string
+        cpa_actions:
+          type: array
+          items:
+            type: string
+        ref_ids:
+          type: array
+          items:
+            type: string
+        details:
+          type: object
+          properties:
+            details:
+              type: object
+              additionalProperties: true
+            count:
+              type: integer
+        additional_payments:
+          type: array
+          items: {}
+        updated_at:
+          type: string
+          format: date-time
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

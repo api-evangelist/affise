@@ -1,0 +1,864 @@
+openapi: 3.2.0
+info:
+  title: Documentation Affiliate Postbacks API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: affiliate-postbacks
+  x-displayName: Postbacks
+  description: Affiliate postback management
+paths:
+  /3.0/admin/postbacks:
+    get:
+      tags:
+      - affiliate-postbacks
+      summary: Affiliate postbacks list
+      description: '`GET /3.0/admin/postbacks`
+
+
+        Get a list of partner postbacks
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: partner_id
+        in: query
+        description: Partner ID
+        required: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities (max 500)
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: offer_ids
+        in: query
+        description: Filter by offer IDs
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            offer_ids[0]: 906
+      - name: after_id
+        in: query
+        description: Show postbacks with ID greater than the specified one (cursor-style pagination)
+        schema:
+          type: integer
+      - name: only_global
+        in: query
+        description: Show only global postbacks (not bound to a specific offer)
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      - name: verbose
+        in: query
+        description: Return extended postback information
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  postbacks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        url:
+                          type: string
+                        offer_id:
+                          type: string
+                        status:
+                          type: string
+                        goal:
+                          type: string
+                        created:
+                          type: string
+                          format: date-time
+                        forced:
+                          type: string
+                        integration_method:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                postbacks:
+                - id: 8
+                  url: http://...
+                  offer_id: null
+                  status: pending
+                  goal: ''
+                  created: '2018-01-30 18:31:52'
+                  forced: '0'
+                  integration_method: all
+                - id: 22
+                  url: http://...
+                  offer_id: '17'
+                  status: null
+                  goal: ''
+                  created: '2018-05-14 12:39:51'
+                  forced: '0'
+                  integration_method: all
+                pagination:
+                  per_page: 100
+                  total_count: 4
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/postbacks?partner_id=<partner_id>&limit=100&offer_ids[0]=906&only_global=0&verbose=0' \\\n  --header 'api-key: <api-key>'"
+  /3.0/partner/postback:
+    post:
+      tags:
+      - affiliate-postbacks
+      summary: Add partner postback
+      description: '`POST /3.0/partner/postback`
+
+
+        Add a partner''s postback
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: integer
+                  description: Offer ID (missed parameter means creation of global postback)
+                url:
+                  type: string
+                  description: Example http://YOUR_API_DOMAIN
+                status:
+                  type: string
+                  enum:
+                  - by_creating
+                  - confirmed
+                  - pending
+                  - declined
+                  - hold
+                  description: Postback status. Status "not_found" is deprecated and will be transformed to "declined".
+                goal:
+                  type: string
+                  description: Postback goal (value)
+                pid:
+                  type: integer
+                  description: Partner ID
+                integration_method:
+                  type: string
+                  enum:
+                  - all
+                  - default
+                  - skad
+                  - probabilistic_attribution
+                  default: all
+                  description: Postback integration method
+                forced:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Forced postback flag
+                meta:
+                  type: object
+                  description: Postback meta settings — conversion fields mapping for the Meta (Facebook) Conversions API integration. All values are strings. The fields meta_access_token, meta_pixel_id and event_name are required together when any of them is provided
+                  additionalProperties: false
+                  properties:
+                    action_source:
+                      type: string
+                    city:
+                      type: string
+                    click_date:
+                      type: string
+                    comment:
+                      type: string
+                    currency:
+                      type: string
+                    custom_event_currency:
+                      type: string
+                    custom_event_value:
+                      type: string
+                    custom_field1:
+                      type: string
+                    custom_field2:
+                      type: string
+                    custom_field3:
+                      type: string
+                    custom_field4:
+                      type: string
+                    custom_field5:
+                      type: string
+                    custom_field6:
+                      type: string
+                    custom_field7:
+                      type: string
+                    date:
+                      type: string
+                    date_only:
+                      type: string
+                    device_type:
+                      type: string
+                    event_name:
+                      type: string
+                    event_url:
+                      type: string
+                    ext1:
+                      type: string
+                    ext2:
+                      type: string
+                    ext3:
+                      type: string
+                    fbclid:
+                      type: string
+                    geo:
+                      type: string
+                    ip:
+                      type: string
+                    meta_access_token:
+                      type: string
+                    meta_pixel_id:
+                      type: string
+                    order_currency:
+                      type: string
+                    order_sum:
+                      type: string
+                    os:
+                      type: string
+                    os_id:
+                      type: string
+                    promo_code:
+                      type: string
+                    rand:
+                      type: string
+                    ref_id:
+                      type: string
+                    referrer:
+                      type: string
+                    sub1:
+                      type: string
+                    sub2:
+                      type: string
+                    sub3:
+                      type: string
+                    sub4:
+                      type: string
+                    sub5:
+                      type: string
+                    sub6:
+                      type: string
+                    sub7:
+                      type: string
+                    sub8:
+                      type: string
+                    sum:
+                      type: string
+                    time:
+                      type: string
+                    timestamp:
+                      type: string
+                    transaction_id:
+                      type: string
+                    user_agent:
+                      type: string
+                    user_id:
+                      type: string
+                    status:
+                      type: string
+                    offer_id:
+                      type: string
+                    offer_name:
+                      type: string
+                    goal:
+                      type: string
+                custom_filter_field:
+                  type: string
+                  description: Custom filter — conversion field name to check before sending the postback
+                custom_filter_text:
+                  type: string
+                  description: Custom filter — value the field set in custom_filter_field must match for the postback to be sent
+              required:
+              - url
+              - pid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  postback:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      url:
+                        type: string
+                      status:
+                        type: string
+                      goal:
+                        type: string
+                      created:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      forced:
+                        type: string
+                      pid:
+                        type: string
+                      integration_method:
+                        type: string
+              example:
+                status: 1
+                postback:
+                  id: 960
+                  url: http://YOUR_API_DOMAIN
+                  status: by_creating
+                  goal: null
+                  created: '2017-06-20 02:17:58'
+                  updated_at: '2017-06-20 02:17:58'
+                  forced: '0'
+                  pid: '1'
+                  integration_method: all
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id=0' \\\n  --form 'url=string' \\\n  --form 'status=by_creating' \\\n  --form 'goal=string' \\\n  --form 'pid=0' \\\n  --form 'integration_method=all' \\\n  --form 'forced=0' \\\n  --form 'meta[action_source]=string' \\\n  --form 'meta[city]=string' \\\n  --form 'meta[click_date]=string' \\\n  --form 'meta[comment]=string' \\\n  --form 'meta[currency]=string' \\\n  --form 'meta[custom_event_currency]=string' \\\n  --form 'meta[custom_event_value]=string' \\\n  --form 'meta[custom_field1]=string' \\\n  --form 'meta[custom_field2]=string' \\\n  --form 'meta[custom_field3]=string' \\\n  --form 'meta[custom_field4]=string' \\\n  --form 'meta[custom_field5]=string' \\\n  --form 'meta[custom_field6]=string' \\\n  --form 'meta[custom_field7]=string' \\\n  --form 'meta[date]=string' \\\n  --form 'meta[date_only]=string' \\\n  --form 'meta[device_type]=string' \\\n  --form 'meta[event_name]=string' \\\n  --form 'meta[event_url]=string' \\\n  --form 'meta[ext1]=string' \\\n  --form 'meta[ext2]=string' \\\n  --form 'meta[ext3]=string' \\\n  --form 'meta[fbclid]=string' \\\n  --form 'meta[geo]=string' \\\n  --form 'meta[ip]=string' \\\n  --form 'meta[meta_access_token]=string' \\\n  --form 'meta[meta_pixel_id]=string' \\\n  --form 'meta[order_currency]=string' \\\n  --form 'meta[order_sum]=string' \\\n  --form 'meta[os]=string' \\\n  --form 'meta[os_id]=string' \\\n  --form 'meta[promo_code]=string' \\\n  --form 'meta[rand]=string' \\\n  --form 'meta[ref_id]=string' \\\n  --form 'meta[referrer]=string' \\\n  --form 'meta[sub1]=string' \\\n  --form 'meta[sub2]=string' \\\n  --form 'meta[sub3]=string' \\\n  --form 'meta[sub4]=string' \\\n  --form 'meta[sub5]=string' \\\n  --form 'meta[sub6]=string' \\\n  --form 'meta[sub7]=string' \\\n  --form 'meta[sub8]=string' \\\n  --form 'meta[sum]=string' \\\n  --form 'meta[time]=string' \\\n  --form 'meta[timestamp]=string' \\\n  --form 'meta[transaction_id]=string' \\\n  --form 'meta[user_agent]=string' \\\n  --form 'meta[user_id]=string' \\\n  --form 'meta[status]=string' \\\n  --form 'meta[offer_id]=string' \\\n  --form 'meta[offer_name]=string' \\\n  --form 'meta[goal]=string' \\\n  --form 'custom_filter_field=string' \\\n  --form 'custom_filter_text=string'"
+  /3.0/partner/postback/{id}:
+    post:
+      tags:
+      - affiliate-postbacks
+      summary: Edit partner postback
+      description: '`POST /3.0/partner/postback/{id}`
+
+
+        Edit a partner''s postback
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: id
+        in: path
+        description: Postback ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: Example http://YOUR_API_DOMAIN
+                status:
+                  type: string
+                  enum:
+                  - by_creating
+                  - confirmed
+                  - pending
+                  - declined
+                  - hold
+                  description: Postback status. Status "not_found" is deprecated and will be transformed to "declined".
+                goal:
+                  type: string
+                  description: Postback goal (value)
+                integration_method:
+                  type: string
+                  enum:
+                  - all
+                  - default
+                  - skad
+                  - probabilistic_attribution
+                  description: Postback integration method
+                forced:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Forced postback flag
+                meta:
+                  type: object
+                  description: Postback meta settings — conversion fields mapping for the Meta (Facebook) Conversions API integration. All values are strings. The fields meta_access_token, meta_pixel_id and event_name are required together when any of them is provided
+                  additionalProperties: false
+                  properties:
+                    action_source:
+                      type: string
+                    city:
+                      type: string
+                    click_date:
+                      type: string
+                    comment:
+                      type: string
+                    currency:
+                      type: string
+                    custom_event_currency:
+                      type: string
+                    custom_event_value:
+                      type: string
+                    custom_field1:
+                      type: string
+                    custom_field2:
+                      type: string
+                    custom_field3:
+                      type: string
+                    custom_field4:
+                      type: string
+                    custom_field5:
+                      type: string
+                    custom_field6:
+                      type: string
+                    custom_field7:
+                      type: string
+                    date:
+                      type: string
+                    date_only:
+                      type: string
+                    device_type:
+                      type: string
+                    event_name:
+                      type: string
+                    event_url:
+                      type: string
+                    ext1:
+                      type: string
+                    ext2:
+                      type: string
+                    ext3:
+                      type: string
+                    fbclid:
+                      type: string
+                    geo:
+                      type: string
+                    ip:
+                      type: string
+                    meta_access_token:
+                      type: string
+                    meta_pixel_id:
+                      type: string
+                    order_currency:
+                      type: string
+                    order_sum:
+                      type: string
+                    os:
+                      type: string
+                    os_id:
+                      type: string
+                    promo_code:
+                      type: string
+                    rand:
+                      type: string
+                    ref_id:
+                      type: string
+                    referrer:
+                      type: string
+                    sub1:
+                      type: string
+                    sub2:
+                      type: string
+                    sub3:
+                      type: string
+                    sub4:
+                      type: string
+                    sub5:
+                      type: string
+                    sub6:
+                      type: string
+                    sub7:
+                      type: string
+                    sub8:
+                      type: string
+                    sum:
+                      type: string
+                    time:
+                      type: string
+                    timestamp:
+                      type: string
+                    transaction_id:
+                      type: string
+                    user_agent:
+                      type: string
+                    user_id:
+                      type: string
+                    status:
+                      type: string
+                    offer_id:
+                      type: string
+                    offer_name:
+                      type: string
+                    goal:
+                      type: string
+                custom_filter_field:
+                  type: string
+                  description: Custom filter — conversion field name to check before sending the postback
+                custom_filter_text:
+                  type: string
+                  description: Custom filter — value the field set in custom_filter_field must match for the postback to be sent
+                offer_id:
+                  type: integer
+                  description: Offer ID (missed parameter means creation of global postback)
+                pid:
+                  type: integer
+                  description: Partner ID
+              required:
+              - url
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  postback:
+                    type: object
+              example:
+                status: 1
+                postback:
+                  id: 960
+                  url: http://YOUR_API_DOMAIN
+                  status: confirmed
+                  goal: null
+                  created: '2017-06-20 02:17:58'
+                  updated_at: '2017-06-20 02:17:58'
+                  forced: '0'
+                  pid: '1'
+                  integration_method: all
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'url=string' \\\n  --form 'status=by_creating' \\\n  --form 'goal=string' \\\n  --form 'integration_method=all' \\\n  --form 'forced=0' \\\n  --form 'meta[action_source]=string' \\\n  --form 'meta[city]=string' \\\n  --form 'meta[click_date]=string' \\\n  --form 'meta[comment]=string' \\\n  --form 'meta[currency]=string' \\\n  --form 'meta[custom_event_currency]=string' \\\n  --form 'meta[custom_event_value]=string' \\\n  --form 'meta[custom_field1]=string' \\\n  --form 'meta[custom_field2]=string' \\\n  --form 'meta[custom_field3]=string' \\\n  --form 'meta[custom_field4]=string' \\\n  --form 'meta[custom_field5]=string' \\\n  --form 'meta[custom_field6]=string' \\\n  --form 'meta[custom_field7]=string' \\\n  --form 'meta[date]=string' \\\n  --form 'meta[date_only]=string' \\\n  --form 'meta[device_type]=string' \\\n  --form 'meta[event_name]=string' \\\n  --form 'meta[event_url]=string' \\\n  --form 'meta[ext1]=string' \\\n  --form 'meta[ext2]=string' \\\n  --form 'meta[ext3]=string' \\\n  --form 'meta[fbclid]=string' \\\n  --form 'meta[geo]=string' \\\n  --form 'meta[ip]=string' \\\n  --form 'meta[meta_access_token]=string' \\\n  --form 'meta[meta_pixel_id]=string' \\\n  --form 'meta[order_currency]=string' \\\n  --form 'meta[order_sum]=string' \\\n  --form 'meta[os]=string' \\\n  --form 'meta[os_id]=string' \\\n  --form 'meta[promo_code]=string' \\\n  --form 'meta[rand]=string' \\\n  --form 'meta[ref_id]=string' \\\n  --form 'meta[referrer]=string' \\\n  --form 'meta[sub1]=string' \\\n  --form 'meta[sub2]=string' \\\n  --form 'meta[sub3]=string' \\\n  --form 'meta[sub4]=string' \\\n  --form 'meta[sub5]=string' \\\n  --form 'meta[sub6]=string' \\\n  --form 'meta[sub7]=string' \\\n  --form 'meta[sub8]=string' \\\n  --form 'meta[sum]=string' \\\n  --form 'meta[time]=string' \\\n  --form 'meta[timestamp]=string' \\\n  --form 'meta[transaction_id]=string' \\\n  --form 'meta[user_agent]=string' \\\n  --form 'meta[user_id]=string' \\\n  --form 'meta[status]=string' \\\n  --form 'meta[offer_id]=string' \\\n  --form 'meta[offer_name]=string' \\\n  --form 'meta[goal]=string' \\\n  --form 'custom_filter_field=string' \\\n  --form 'custom_filter_text=string' \\\n  --form 'offer_id=0' \\\n  --form 'pid=0'"
+  /3.0/partner/postback/{id}/remove:
+    delete:
+      tags:
+      - affiliate-postbacks
+      summary: Delete partner postback
+      description: '`DELETE /3.0/partner/postback/{id}/remove`
+
+
+        Delete a partner''s postback
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Postback ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  postback:
+                    type: object
+              example:
+                status: 1
+                postback:
+                  id: 960
+                  url: http://YOUR_API_DOMAIN
+                  offer_id: '4'
+                  status: confirmed
+                  goal: null
+                  created: '2017-06-20 02:17:58'
+                  updated_at: '2017-06-20 02:17:58'
+                  forced: '0'
+                  pid: '1'
+                  integration_method: all
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback/{id}/remove' \\\n  --header 'api-key: <api-key>'"
+  /3.0/partner/postbacks/by-offers:
+    delete:
+      tags:
+      - affiliate-postbacks
+      summary: Delete partners postbacks by offers ids
+      description: '`DELETE /3.0/partner/postbacks/by-offers`
+
+
+        Delete partners postbacks by offers ids
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: ids
+        in: query
+        description: Comma separated array of offer IDs
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postbacks/by-offers?ids=<ids>' \\\n  --header 'api-key: <api-key>'"
+  /3.0/partner/postbacks/by-affiliates:
+    delete:
+      tags:
+      - affiliate-postbacks
+      summary: Delete partners postbacks by affiliates ids
+      description: '`DELETE /3.0/partner/postbacks/by-affiliates`
+
+
+        Delete partners postbacks by affiliates ids
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: ids
+        in: query
+        description: Comma separated array of affiliate IDs
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postbacks/by-affiliates?ids=<ids>' \\\n  --header 'api-key: <api-key>'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

@@ -1,0 +1,1349 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Advertisers API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-advertisers
+  x-displayName: Advertisers
+  description: Admin operations on advertisers
+paths:
+  /3.0/admin/advertiser/{id}:
+    get:
+      tags:
+      - admin-advertisers
+      summary: Get advertiser
+      description: '`GET /3.0/admin/advertiser/{id}`
+
+
+        Get advertiser by ID
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Advertiser ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  advertiser:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      contact:
+                        type: string
+                      email:
+                        type: string
+                      skype:
+                        type: string
+                      manager:
+                        type: string
+                      manager_obj:
+                        type: object
+                      url:
+                        type: string
+                      address_1:
+                        type: string
+                      address_2:
+                        type: string
+                      city:
+                        type: string
+                      country:
+                        type: string
+                      zip_code:
+                        type: string
+                      vat_code:
+                        type: string
+                      allowed_ip:
+                        type: array
+                        items:
+                          type: string
+                      disallowed_ip:
+                        type: array
+                        items:
+                          type: string
+                      consider_personal_targeting_only:
+                        type: boolean
+                      tags:
+                        type: array
+                        items:
+                          type: string
+                      hash_password:
+                        type: string
+                      skad_network_id:
+                        type: array
+                        items:
+                          type: string
+                      disabled_choice_postback_status:
+                        type: boolean
+                      hide_conversion_status:
+                        type: boolean
+                      hosts_only:
+                        type: boolean
+                      sign_clicks_integration:
+                        type: string
+                      sub_accounts:
+                        type: object
+                      note:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      affiliates_enabled:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                      affiliates_disabled:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+              example:
+                status: 1
+                advertiser:
+                  address_1: null
+                  address_2: null
+                  allowed_ip: []
+                  city: Los Angeles
+                  consider_personal_targeting_only: false
+                  contact: John Doe
+                  country: US
+                  created_at: '2023-02-22 15:11:09'
+                  updated_at: '2023-02-22 15:11:09'
+                  disabled_choice_postback_status: false
+                  disallowed_ip: []
+                  email: adv@gmail.com
+                  hash_password: e6277f0201b26c2c0bb5fcf8bdf25997
+                  hide_conversion_status: false
+                  hosts_only: false
+                  id: 5b5f415035752723008b456a
+                  manager: 63f5ecb90ed3182eb3dba530
+                  manager_obj:
+                    api_key: c40469ac42533296ac6c638f392b2ece
+                    avatar: null
+                    created_at: '2023-04-20 17:21:40'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64413c649b70ab801d9b9a71
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_ADMIN
+                    skype: skype
+                    telegram: telegram
+                    type: common_manager
+                    updated_at: '2023-04-20 17:21:40'
+                    username: 64413c649b70ab801d9b9a71
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  note: null
+                  sign_clicks_integration: no_sign
+                  skad_network_id: []
+                  skype: '456345345'
+                  sub_accounts:
+                    '1':
+                      except: false
+                      value: null
+                    '2':
+                      except: false
+                      value: null
+                  tags: []
+                  title: Test supplier
+                  url: null
+                  vat_code: null
+                  zip_code: null
+                  affiliates_enabled:
+                  - id: 1
+                    name: Affiliate
+                  affiliates_disabled: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+    post:
+      tags:
+      - admin-advertisers
+      summary: Edit advertiser
+      description: '`POST /3.0/admin/advertiser/{id}`
+
+
+        Change an advertiser''s data
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Advertiser ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Company name
+                contact:
+                  type: string
+                  description: Contact person name
+                skype:
+                  type: string
+                  description: IM/Skype
+                manager:
+                  type: string
+                  description: Manager ID
+                url:
+                  type: string
+                  description: Site Url
+                email:
+                  type: string
+                  description: Email
+                password:
+                  type: string
+                  description: 'Password: 8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed: _-!@*.$%?&#/|\~<>^{}[]():;'
+                allowed_ip:
+                  type: string
+                  description: 'Allowed IP. Example: 127.0.0.1
+
+                    127.0.1.1-127.0.2.1'
+                note:
+                  type: string
+                  description: Note
+                address_1:
+                  type: string
+                  description: Main address string
+                address_2:
+                  type: string
+                  description: Additional address
+                city:
+                  type: string
+                  description: City name
+                country:
+                  type: string
+                  description: Country ISO name
+                zip_code:
+                  type: string
+                  description: Zip code
+                vat_code:
+                  type: string
+                  description: Vat code
+                sub_account_1:
+                  type: string
+                  description: Sub1 list, separated by commas
+                sub_account_2:
+                  type: string
+                  description: Sub2 list, separated by commas
+                sub_account_1_except:
+                  type: integer
+                  description: Except Sub1 list
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                sub_account_2_except:
+                  type: integer
+                  description: Except Sub2 list
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                consider_personal_targeting_only:
+                  type: string
+                  enum:
+                  - 'true'
+                  - 'false'
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of tags (All the previous tags will be overwritten by new ones)
+                  example:
+                    '0': tag1
+                    '1': tag2
+                sign_clicks_integration:
+                  type: string
+                  enum:
+                  - no_sign
+                  - appsflyer
+                  - kochava
+                  description: Click Signature Service
+                hash_password:
+                  type: string
+                  description: Secure postback code
+                skad_network_id:
+                  type: array
+                  description: SkadNetwork ID. For multiple IDs, use `skad_network_id[1]`, `skad_network_id[2]`, etc. (All the IDs will be overwritten by new ones)
+                  items:
+                    type: string
+                  example:
+                    '0': string
+                disabled_choice_postback_status:
+                  type: boolean
+                  description: 'Forbid the affiliates from changing the postback status (for all the offers of this advertiser): true or false'
+                affiliates_enabled:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of Affiliate IDs
+                affiliates_disabled:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of Affiliate IDs
+                disallowed_ip:
+                  type: string
+                  description: 'Disallowed IP. Example: 127.0.0.1
+
+                    127.0.1.1-127.0.2.1'
+                logo:
+                  type: string
+                  description: Advertiser logo URL
+                hide_conversion_status:
+                  type: boolean
+                  description: 'Hide conversion status from affiliates: true or false'
+                sign_clicks_appsflyer_key:
+                  type: boolean
+                  description: 'Enable click signing: true or false'
+                status:
+                  type: string
+                  enum:
+                  - active
+                  - inactive
+                  - moderation
+                  description: Advertiser status
+                hosts_only:
+                  type: boolean
+                  description: 'Count statistics by unique clicks (hosts) only: true or false. Available when the hosts-only feature is enabled'
+                subaccounts_encryption:
+                  type: boolean
+                  description: 'Enable sub-accounts encryption: true or false. Available when the sub-accounts encryption feature is enabled'
+                host_uniqueness_number_unique_clicks:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  description: Host uniqueness — number of unique clicks (1-100)
+                host_uniqueness_time_frame:
+                  type: integer
+                  minimum: 1
+                  maximum: 48
+                  description: Host uniqueness — time frame in hours (1-48)
+                custom_fields:
+                  type: object
+                  description: 'Custom field values keyed by custom field ID. Send as `custom_fields[1]=value`; checkbox-type fields accept multiple values: `custom_fields[2][0]=value`'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  advertiser:
+                    type: object
+              example:
+                status: 1
+                advertiser:
+                  address_1: address 1
+                  address_2: address 2
+                  allowed_ip: []
+                  city: Lisbon
+                  consider_personal_targeting_only: true
+                  contact: John Doe
+                  country: PT
+                  created_at: '2023-04-17 11:32:06'
+                  updated_at: '2023-04-17 11:40:18'
+                  disallowed_ip: []
+                  email: adv-test6@gmail.com
+                  hash_password: b5ecd86502e9bdfba8d1dc16444b4602
+                  hide_conversion_status: false
+                  hosts_only: false
+                  id: 643cf5f6b49e5edafb231b40
+                  manager: 5cd55442d596c1c7008b4567
+                  manager_obj:
+                    api_key: c40469ac42533296ac6c638f392b2ece
+                    avatar: null
+                    created_at: '2023-04-20 17:21:40'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64413c649b70ab801d9b9a71
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_ADMIN
+                    skype: skype
+                    telegram: telegram
+                    type: common_manager
+                    updated_at: '2023-04-20 17:21:40'
+                    username: 64413c649b70ab801d9b9a71
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  note: null
+                  sign_clicks_integration: no_sign
+                  skad_network_id: []
+                  skype: '123123'
+                  sub_accounts:
+                    '1':
+                      except: false
+                      value: null
+                    '2':
+                      except: false
+                      value: null
+                  tags:
+                  - mobile
+                  title: Market Inc
+                  url: http://example.com
+                  vat_code: null
+                  zip_code: null
+                  disabled_choice_postback_status: true
+                  affiliates_enabled:
+                  - 1
+                  - 2
+                  affiliates_disabled:
+                  - 3
+                  - 4
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'title=string' \\\n  --form 'contact=string' \\\n  --form 'skype=string' \\\n  --form 'manager=string' \\\n  --form 'url=string' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'note=string' \\\n  --form 'address_1=string' \\\n  --form 'address_2=string' \\\n  --form 'city=string' \\\n  --form 'country=string' \\\n  --form 'zip_code=string' \\\n  --form 'vat_code=string' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'tags[0]=tag1' \\\n  --form 'tags[1]=tag2' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'hash_password=string' \\\n  --form 'skad_network_id[0]=string' \\\n  --form 'disabled_choice_postback_status=false' \\\n  --form 'affiliates_enabled[0]=0' \\\n  --form 'affiliates_enabled[1]=1' \\\n  --form 'affiliates_disabled[0]=0' \\\n  --form 'affiliates_disabled[1]=1' \\\n  --form 'disallowed_ip=string' \\\n  --form 'logo=string' \\\n  --form 'hide_conversion_status=false' \\\n  --form 'sign_clicks_appsflyer_key=false' \\\n  --form 'status=active' \\\n  --form 'hosts_only=false' \\\n  --form 'subaccounts_encryption=false' \\\n  --form 'host_uniqueness_number_unique_clicks=0' \\\n  --form 'host_uniqueness_time_frame=0'"
+  /3.0/admin/advertisers:
+    get:
+      tags:
+      - admin-advertisers
+      summary: Advertisers list
+      description: '`GET /3.0/admin/advertisers`
+
+
+        Get a list of advertisers
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities (max 500)
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: order
+        in: query
+        description: Sort by field
+        schema:
+          type: string
+          enum:
+          - id
+          - email
+          - title
+          - created_at
+          - updated_at
+          default: id
+      - name: orderType
+        in: query
+        description: Sorting order
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+          default: asc
+      - name: updated_at
+        in: query
+        description: Get advertisers that have been updated from this date (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: with_offers
+        in: query
+        description: Show advertisers with offers
+        schema:
+          type: integer
+          enum:
+          - 1
+      - name: id[]
+        in: query
+        description: Filter by advertiser ID
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name
+        in: query
+        description: Filter by advertiser name
+        schema:
+          type: string
+      - name: tags[]
+        in: query
+        description: Filter by tags
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  advertisers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        contact:
+                          type: string
+                        email:
+                          type: string
+                        skype:
+                          type: string
+                        manager:
+                          type: string
+                        manager_obj:
+                          type: object
+                        url:
+                          type: string
+                        address_1:
+                          type: string
+                        address_2:
+                          type: string
+                        city:
+                          type: string
+                        country:
+                          type: string
+                        zip_code:
+                          type: string
+                        vat_code:
+                          type: string
+                        allowed_ip:
+                          type: array
+                          items:
+                            type: string
+                        disallowed_ip:
+                          type: array
+                          items:
+                            type: string
+                        consider_personal_targeting_only:
+                          type: boolean
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                        hash_password:
+                          type: string
+                        skad_network_id:
+                          type: array
+                          items:
+                            type: string
+                        hide_conversion_status:
+                          type: boolean
+                        hosts_only:
+                          type: boolean
+                        sign_clicks_integration:
+                          type: string
+                        sub_accounts:
+                          type: object
+                        note:
+                          type: string
+                        offers:
+                          type: integer
+                        has_user:
+                          type: boolean
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                        affiliates_enabled:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                        affiliates_disabled:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+                      next_page:
+                        type: integer
+              example:
+                status: 1
+                advertisers:
+                - address_1: Address 1
+                  address_2: null
+                  allowed_ip: []
+                  city: Berlin
+                  consider_personal_targeting_only: false
+                  contact: Samuel
+                  country: DE
+                  created_at: '2023-02-17 18:29:42'
+                  updated_at: '2023-02-17 18:29:42'
+                  disallowed_ip: []
+                  email: adv@gmail.com
+                  has_user: false
+                  hash_password: null
+                  hide_conversion_status: false
+                  hosts_only: false
+                  id: 63ef8f56d05af8acc266ae09
+                  manager: Sales Manager
+                  manager_obj:
+                    api_key: c40469ac42533296ac6c638f392b2ece
+                    avatar: null
+                    created_at: '2023-04-20 17:21:40'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64413c649b70ab801d9b9a71
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_ADMIN
+                    skype: skype
+                    telegram: telegram
+                    type: common_manager
+                    updated_at: '2023-04-20 17:21:40'
+                    username: 64413c649b70ab801d9b9a71
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  sub_accounts:
+                    '1':
+                      except: false
+                      value: null
+                    '2':
+                      except: false
+                      value: null
+                  note: null
+                  offers: 0
+                  sign_clicks_integration: no_sign
+                  skad_network_id: []
+                  skype: '32543543'
+                  tags: []
+                  title: Advertiser
+                  url: http://YOUR_API_DOMAIN
+                  vat_code: null
+                  zip_code: null
+                  affiliates_enabled:
+                  - id: 1
+                    name: Affiliate
+                  affiliates_disabled: []
+                pagination:
+                  per_page: 100
+                  total_count: 183
+                  page: 1
+                  next_page: 2
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertisers?limit=100&order=id&orderType=asc&with_offers=1&id[0]=string&id[1]=string2&tags[0]=string&tags[1]=string2' \\\n  --header 'api-key: <api-key>'"
+  /3.0/admin/advertiser:
+    post:
+      tags:
+      - admin-advertisers
+      summary: Add advertiser
+      description: '`POST /3.0/admin/advertiser`
+
+
+        Add new advertiser
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Company name
+                contact:
+                  type: string
+                  description: Contact person name
+                skype:
+                  type: string
+                  description: IM/Skype
+                manager:
+                  type: string
+                  description: Manager ID
+                url:
+                  type: string
+                  description: Site Url
+                email:
+                  type: string
+                  description: Email
+                password:
+                  type: string
+                  description: 'Password: 8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed: _-!@*.$%?&#/|\~<>^{}[]():;'
+                allowed_ip:
+                  type: string
+                  description: 'Allowed IP. Example: 127.0.0.1
+
+                    127.0.1.1-127.0.2.1'
+                address_1:
+                  type: string
+                  description: Main address string
+                address_2:
+                  type: string
+                  description: Additional address
+                city:
+                  type: string
+                  description: City name
+                country:
+                  type: string
+                  description: Country ISO name
+                zip_code:
+                  type: string
+                  description: Zip code
+                vat_code:
+                  type: string
+                  description: Vat code
+                sub_account_1:
+                  type: string
+                  description: Allowed sub1 values (only letters(a-z), numbers(0-9) and these symbols ,._-{}+=/:~)
+                sub_account_2:
+                  type: string
+                  description: Allowed sub2 values (only letters(a-z), numbers(0-9) and these symbols ,._-{}+=/:~)
+                sub_account_1_except:
+                  type: integer
+                  description: Block sub1 values
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                sub_account_2_except:
+                  type: integer
+                  description: Block sub2 values
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                consider_personal_targeting_only:
+                  type: string
+                  enum:
+                  - 'true'
+                  - 'false'
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of advertiser's tags
+                hash_password:
+                  type: string
+                  description: Secure postback code
+                skad_network_id:
+                  type: array
+                  description: SkadNetwork ID. For multiple IDs, use `skad_network_id[1]`, `skad_network_id[2]`, etc. (All the IDs will be overwritten by new ones)
+                  items:
+                    type: string
+                  example:
+                    '0': string
+                disabled_choice_postback_status:
+                  type: boolean
+                  description: 'Forbid the affiliates from changing the postback status (for all the offers of this advertiser): true or false'
+                affiliates_enabled:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of Affiliate IDs
+                affiliates_disabled:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of Affiliate IDs
+                note:
+                  type: string
+                  description: Note
+                disallowed_ip:
+                  type: string
+                  description: 'Disallowed IP. Example: 127.0.0.1
+
+                    127.0.1.1-127.0.2.1'
+                logo:
+                  type: string
+                  description: Advertiser logo URL
+                hide_conversion_status:
+                  type: boolean
+                  description: 'Hide conversion status from affiliates: true or false'
+                sign_clicks_appsflyer_key:
+                  type: boolean
+                  description: 'Enable click signing: true or false'
+                sign_clicks_integration:
+                  type: string
+                  enum:
+                  - no_sign
+                  - appsflyer
+                  - kochava
+                  description: Click Signature Service. Besides the listed values, an AppsFlyer multi-account ID can be passed
+                status:
+                  type: string
+                  enum:
+                  - active
+                  - inactive
+                  - moderation
+                  description: Advertiser status
+                hosts_only:
+                  type: boolean
+                  description: 'Count statistics by unique clicks (hosts) only: true or false. Available when the hosts-only feature is enabled'
+                subaccounts_encryption:
+                  type: boolean
+                  description: 'Enable sub-accounts encryption: true or false. Available when the sub-accounts encryption feature is enabled'
+                host_uniqueness_number_unique_clicks:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  description: Host uniqueness — number of unique clicks (1-100)
+                host_uniqueness_time_frame:
+                  type: integer
+                  minimum: 1
+                  maximum: 48
+                  description: Host uniqueness — time frame in hours (1-48)
+                custom_fields:
+                  type: object
+                  description: 'Custom field values keyed by custom field ID. Send as `custom_fields[1]=value`; checkbox-type fields accept multiple values: `custom_fields[2][0]=value`'
+              required:
+              - title
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  advertiser:
+                    type: object
+              example:
+                status: 1
+                advertiser:
+                  address_1: address 1
+                  address_2: address 2
+                  allowed_ip: []
+                  city: Lisbon
+                  consider_personal_targeting_only: true
+                  contact: John Doe
+                  country: PT
+                  created_at: '2023-04-17 11:32:06'
+                  updated_at: '2023-04-17 11:32:06'
+                  disallowed_ip: []
+                  email: adv-test6@gmail.com
+                  hash_password: null
+                  hide_conversion_status: false
+                  hosts_only: false
+                  id: 643cf5f6b49e5edafb231b40
+                  manager: 5cd55442d596c1c7008b4567
+                  manager_obj:
+                    api_key: c40469ac42533296ac6c638f392b2ece
+                    avatar: null
+                    created_at: '2023-04-20 17:21:40'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64413c649b70ab801d9b9a71
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_ADMIN
+                    skype: skype
+                    telegram: telegram
+                    type: common_manager
+                    updated_at: '2023-04-20 17:21:40'
+                    username: 64413c649b70ab801d9b9a71
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  note: null
+                  sign_clicks_integration: no_sign
+                  skad_network_id: []
+                  skype: '456345345'
+                  sub_accounts:
+                    '1':
+                      except: false
+                      value: null
+                    '2':
+                      except: false
+                      value: null
+                  tags:
+                  - mobile
+                  title: Market Inc
+                  url: http://example.com
+                  vat_code: null
+                  zip_code: null
+                  disabled_choice_postback_status: true
+                  affiliates_enabled:
+                  - 1
+                  - 2
+                  affiliates_disabled:
+                  - 3
+                  - 4
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser' \\\n  --header 'api-key: <api-key>' \\\n  --form 'title=string' \\\n  --form 'contact=string' \\\n  --form 'skype=string' \\\n  --form 'manager=string' \\\n  --form 'url=string' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'address_1=string' \\\n  --form 'address_2=string' \\\n  --form 'city=string' \\\n  --form 'country=string' \\\n  --form 'zip_code=string' \\\n  --form 'vat_code=string' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'hash_password=string' \\\n  --form 'skad_network_id[0]=string' \\\n  --form 'disabled_choice_postback_status=false' \\\n  --form 'affiliates_enabled[0]=0' \\\n  --form 'affiliates_enabled[1]=1' \\\n  --form 'affiliates_disabled[0]=0' \\\n  --form 'affiliates_disabled[1]=1' \\\n  --form 'note=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'logo=string' \\\n  --form 'hide_conversion_status=false' \\\n  --form 'sign_clicks_appsflyer_key=false' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'status=active' \\\n  --form 'hosts_only=false' \\\n  --form 'subaccounts_encryption=false' \\\n  --form 'host_uniqueness_number_unique_clicks=0' \\\n  --form 'host_uniqueness_time_frame=0'"
+  /3.0/admin/advertiser/{id}/sendpass:
+    post:
+      tags:
+      - admin-advertisers
+      summary: Send password to advertiser
+      description: '`POST /3.0/admin/advertiser/{id}/sendpass`
+
+
+        Change an advertiser password and send it by email
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Advertiser ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: 'Custom password to set and send instead of an auto-generated one. 8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed: _-!@*.$%?&#/|\~<>^{}[]():;'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Email send successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}/sendpass' \\\n  --header 'api-key: <api-key>' \\\n  --form 'password=string'"
+  /3.0/admin/advertiser/enable-affiliate:
+    post:
+      tags:
+      - admin-advertisers
+      summary: Advertisers enable affiliate
+      description: '`POST /3.0/admin/advertiser/enable-affiliate`
+
+
+        Un-put affiliate from blacklist for specified advertisers
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                advertisers_id:
+                  type: array
+                  items:
+                    type: string
+                  description: Advertiser ID array
+                  example:
+                    '0': string
+                pid:
+                  type: integer
+                  description: affiliate ID
+              required:
+              - advertisers_id
+              - pid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: 'Request is successfully: Partner #610 doesn''t exist in blacklist for advertiser 56fce8ab3b7d9b95588b4568'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/enable-affiliate' \\\n  --header 'api-key: <api-key>' \\\n  --form 'advertisers_id[0]=string' \\\n  --form 'pid=0'"
+  /3.0/admin/advertiser/disable-affiliate:
+    post:
+      tags:
+      - admin-advertisers
+      summary: Advertisers disable affiliate
+      description: '`POST /3.0/admin/advertiser/disable-affiliate`
+
+
+        Put affiliate to blacklist for specified advertisers
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                advertisers_id:
+                  type: array
+                  items:
+                    type: string
+                  description: Advertiser ID array
+                  example:
+                    '0': string
+                pid:
+                  type: integer
+                  description: affiliate ID
+              required:
+              - advertisers_id
+              - pid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Request is successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/disable-affiliate' \\\n  --header 'api-key: <api-key>' \\\n  --form 'advertisers_id[0]=string' \\\n  --form 'pid=0'"
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

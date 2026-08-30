@@ -1,0 +1,989 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Automation API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-automation
+  x-displayName: Automation
+  description: KPI and block-logs automation
+paths:
+  /3.1/automation/kpi:
+    get:
+      tags:
+      - admin-automation
+      summary: Kpi automation list
+      description: '`GET /3.1/automation/kpi`
+
+
+        Get list of kpi automation
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+              example:
+                status: 1
+                items: []
+                pagination:
+                  page: 1
+                  per_page: 10
+                  total_count: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi?page=1&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+    post:
+      tags:
+      - admin-automation
+      summary: Create new kpi automation
+      description: '`POST /3.1/automation/kpi`
+
+
+        Create new kpi automation
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offers:
+                  type: array
+                  items:
+                    type: integer
+                  description: Offer ID (only one offer id is available)
+                action_type:
+                  type: string
+                  enum:
+                  - block
+                  - conversion
+                  description: Action type
+                period:
+                  type: string
+                  enum:
+                  - hour
+                  - day
+                  - week
+                  - month
+                  description: Period
+                sub:
+                  type: string
+                  enum:
+                  - sub1
+                  - sub2
+                  - sub3
+                  - sub4
+                  - sub5
+                  description: Sub (required only for action_type == block)
+                change_to:
+                  type: string
+                  enum:
+                  - confirmed
+                  - pending
+                  - declined
+                  - hold
+                  description: Change to (required only for action_type == conversion)
+                affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Affiliate IDs (required only for action_type == block)
+                goal1:
+                  type: string
+                  description: Goal 1
+                goal2:
+                  type: string
+                  description: Goal 2
+                kpi:
+                  type: number
+                  format: float
+                  description: KPI value
+                notify_manager:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Notify manager
+              required:
+              - offers
+              - action_type
+              - period
+              - goal1
+              - goal2
+              - kpi
+              - notify_manager
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      offers:
+                        type: array
+                        items:
+                          type: string
+                      period:
+                        type: string
+                      action_type:
+                        type: string
+                      change_to:
+                        type: string
+                        nullable: true
+                      affiliates:
+                        type: array
+                        items:
+                          type: integer
+                      sub:
+                        type: string
+                      goal1:
+                        type: string
+                      goal2:
+                        type: string
+                      kpi:
+                        type: number
+                        format: float
+                      notify_manager:
+                        type: integer
+              example:
+                status: 1
+                message:
+                  id: 5fcf6e20f28f89004e187664
+                  offers:
+                  - '3'
+                  period: hour
+                  action_type: block
+                  change_to: null
+                  affiliates:
+                  - 1
+                  sub: sub1
+                  goal1: '1'
+                  goal2: '2'
+                  kpi: 0.1
+                  notify_manager: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offers[0]=0' \\\n  --form 'offers[1]=1' \\\n  --form 'action_type=block' \\\n  --form 'period=hour' \\\n  --form 'sub=sub1' \\\n  --form 'change_to=confirmed' \\\n  --form 'affiliates[0]=0' \\\n  --form 'affiliates[1]=1' \\\n  --form 'goal1=string' \\\n  --form 'goal2=string' \\\n  --form 'kpi=0' \\\n  --form 'notify_manager=0'"
+  /3.1/automation/kpi/{id}:
+    post:
+      tags:
+      - admin-automation
+      summary: Edit kpi automation
+      description: '`POST /3.1/automation/kpi/{id}`
+
+
+        Edit kpi automation
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Automation ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offers:
+                  type: array
+                  items:
+                    type: integer
+                  description: Offer ID (only one offer id is available)
+                action_type:
+                  type: string
+                  enum:
+                  - block
+                  - conversion
+                  description: Action type
+                period:
+                  type: string
+                  enum:
+                  - hour
+                  - day
+                  - week
+                  - month
+                  description: Period
+                sub:
+                  type: string
+                  enum:
+                  - sub1
+                  - sub2
+                  - sub3
+                  - sub4
+                  - sub5
+                  description: Sub (required only for action_type == block)
+                change_to:
+                  type: string
+                  enum:
+                  - confirmed
+                  - pending
+                  - declined
+                  - hold
+                  description: Change to (required only for action_type == conversion)
+                affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Affiliate IDs (required only for action_type == block)
+                goal1:
+                  type: string
+                  description: Goal 1
+                goal2:
+                  type: string
+                  description: Goal 2
+                kpi:
+                  type: number
+                  format: float
+                  description: KPI value
+                notify_manager:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  description: Notify manager
+              required:
+              - offers
+              - action_type
+              - period
+              - goal1
+              - goal2
+              - kpi
+              - notify_manager
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      offers:
+                        type: array
+                        items:
+                          type: string
+                      period:
+                        type: string
+                      action_type:
+                        type: string
+                      change_to:
+                        type: string
+                        nullable: true
+                      affiliates:
+                        type: array
+                        items:
+                          type: integer
+                      sub:
+                        type: string
+                      goal1:
+                        type: string
+                      goal2:
+                        type: string
+                      kpi:
+                        type: number
+                        format: float
+                      notify_manager:
+                        type: integer
+              example:
+                status: 1
+                message:
+                  id: 5fce42c5f28f8900143f3463
+                  offers:
+                  - '3'
+                  period: hour
+                  action_type: block
+                  change_to: null
+                  affiliates:
+                  - 1
+                  sub: sub1
+                  goal1: '1'
+                  goal2: '2'
+                  kpi: 0.1
+                  notify_manager: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offers[0]=0' \\\n  --form 'offers[1]=1' \\\n  --form 'action_type=block' \\\n  --form 'period=hour' \\\n  --form 'sub=sub1' \\\n  --form 'change_to=confirmed' \\\n  --form 'affiliates[0]=0' \\\n  --form 'affiliates[1]=1' \\\n  --form 'goal1=string' \\\n  --form 'goal2=string' \\\n  --form 'kpi=0' \\\n  --form 'notify_manager=0'"
+    delete:
+      tags:
+      - admin-automation
+      summary: Remove kpi automation
+      description: '`DELETE /3.1/automation/kpi/{id}`
+
+
+        Remove kpi automation
+
+        '
+      parameters:
+      - name: Api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Automation ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                status: 1
+                message:
+                  message: success deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/{id}' \\\n  --header 'Api-key: <Api-key>'"
+  /3.1/automation/kpi/change-logs:
+    get:
+      tags:
+      - admin-automation
+      summary: Kpi automation changes
+      description: '`GET /3.1/automation/kpi/change-logs`
+
+
+        Get list of kpi automation changes
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        example: 23df424b0a53b0899f78685966243ee61
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: filter[date_from]
+        in: query
+        description: Filter by date from (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: filter[date_to]
+        in: query
+        description: Filter by date to (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 10
+      - name: offers
+        in: query
+        description: Offers IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: affiliates
+        in: query
+        description: Affiliates IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: type
+        in: query
+        description: Array of kpi automation types (add, update, delete)
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - add
+            - update
+            - delete
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+              example:
+                status: 1
+                items: []
+                pagination:
+                  page: 1
+                  per_page: 10
+                  total_count: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/change-logs?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&page=1&limit=10&offers[0]=0&offers[1]=1&affiliates[0]=0&affiliates[1]=1&type[0]=add' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/automation/kpi/block-logs:
+    get:
+      tags:
+      - admin-automation
+      summary: Kpi automation block log
+      description: '`GET /3.1/automation/kpi/block-logs`
+
+
+        Get list of kpi automation block logs
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        example: 23df424b0a53b0899f78685966243ee61
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: filter[date_from]
+        in: query
+        description: Filter by date from (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: filter[date_to]
+        in: query
+        description: Filter by date to (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: filter[sub_index]
+        in: query
+        description: Sub index
+        schema:
+          type: string
+      - name: filter[sub_value]
+        in: query
+        description: Sub value
+        schema:
+          type: string
+      - name: filter[action]
+        in: query
+        description: Action
+        schema:
+          type: string
+      - name: filter[offers]
+        in: query
+        description: Offers IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: filter[affiliates]
+        in: query
+        description: Affiliates IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                        offer_id:
+                          type: integer
+                        affiliate_id:
+                          type: integer
+                        sub_index:
+                          type: string
+                        sub_value:
+                          type: string
+                        action:
+                          type: string
+                        additional_data:
+                          type: string
+                          nullable: true
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                items:
+                - created_at: '2020-10-05 19:59:22'
+                  offer_id: 2
+                  affiliate_id: 2
+                  sub_index: data
+                  sub_value: data
+                  action: data
+                  additional_data: null
+                pagination:
+                  per_page: 5
+                  total_count: 1
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/block-logs?page=1&limit=100&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[offers][0]=0&filter[offers][1]=1&filter[affiliates][0]=0&filter[affiliates][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/automation/cr-and-sub/block-logs:
+    get:
+      tags:
+      - admin-automation
+      summary: CR and SUB automation block log
+      description: '`GET /3.1/automation/cr-and-sub/block-logs`
+
+
+        Get list of cr and sub automation block logs
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        example: 23df424b0a53b0899f78685966243ee61
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Limit of entities
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: filter[date_from]
+        in: query
+        description: Filter by date from (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: filter[date_to]
+        in: query
+        description: Filter by date to (YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: filter[advertisers]
+        in: query
+        description: Advertisers IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter[offers]
+        in: query
+        description: Offers IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: filter[affiliates]
+        in: query
+        description: Affiliates IDs
+        schema:
+          type: array
+          items:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  rules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        advertiser:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            title:
+                              type: string
+                        offer:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            title:
+                              type: string
+                        affiliate:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            title:
+                              type: string
+                        rule_id:
+                          type: string
+                        sub1:
+                          type: string
+                        sub2:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        current_cr:
+                          type: number
+                        cr_thresholds_min:
+                          type: string
+                        cr_thresholds_max:
+                          type: string
+                        type:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                rules:
+                - advertiser:
+                    id: 5bc9d7c16d73e41c008b4567
+                    title: Test advertiser
+                  offer:
+                    id: '4'
+                    title: test offer 4
+                  affiliate:
+                    id: '3'
+                    title: test1234
+                  rule_id: 5fe0abb38e36eb001a2efb82
+                  sub1: ''
+                  sub2: ''
+                  created_at: '2020-12-21 17:15:15'
+                  current_cr: 0
+                  cr_thresholds_min: '10.000000'
+                  cr_thresholds_max: '50.000000'
+                  type: disabled affiliate
+                pagination:
+                  per_page: 10
+                  total_count: 1
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/cr-and-sub/block-logs?page=1&limit=100&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[advertisers][0]=string&filter[advertisers][1]=string2&filter[offers][0]=0&filter[offers][1]=1&filter[affiliates][0]=0&filter[affiliates][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

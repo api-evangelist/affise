@@ -1,0 +1,702 @@
+openapi: 3.2.0
+info:
+  title: Documentation Resources API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: resources
+  x-displayName: Lookup
+  description: Public lookup data — countries, regions, ISPs, OSes, goals, browsers, cities, etc.
+paths:
+  /3.1/isp:
+    get:
+      tags:
+      - resources
+      summary: ISP list
+      description: '`GET /3.1/isp`
+
+
+        Get ISP list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: Country code. Example "US"
+        required: true
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Search query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  isps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        country:
+                          type: string
+                        name:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+              example:
+                status: 1
+                isps:
+                - country: KZ
+                  name: reliablesite.net llc
+                - country: KZ
+                  name: smartnet too
+                - country: KZ
+                  name: betting office olimp kz llc
+                pagination:
+                  page: 1
+                  per_page: 2147483647
+                  total_count: 3
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/isp?country=<country>' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/countries:
+    get:
+      tags:
+      - resources
+      summary: Countries list
+      description: '`GET /3.1/countries`
+
+
+        Get countries list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  countries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        name:
+                          type: string
+              example:
+                status: 1
+                countries:
+                - code: KP
+                  name: North Korea
+                - code: PF
+                  name: French Polynesia
+                - code: EG
+                  name: Egypt
+                - code: DE
+                  name: Germany
+                - code: GI
+                  name: Gibraltar
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/countries' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/regions:
+    get:
+      tags:
+      - resources
+      summary: Regions list
+      description: '`GET /3.1/regions`
+
+
+        Get regions list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: Country code. Example "US"
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            country[0]: FR
+      - name: code
+        in: query
+        description: Filter regions by id
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            code[0]: FR
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  regions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        country_code:
+                          type: string
+              example:
+                status: 1
+                regions:
+                - id: 2
+                  name: Alaska
+                  country_code: US
+                - id: 1
+                  name: Alabama
+                  country_code: US
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/regions?country[0]=FR&code[0]=FR' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/connection-types:
+    get:
+      tags:
+      - resources
+      summary: Connection types list
+      description: '`GET /3.1/connection-types`
+
+
+        Get connection types list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  types:
+                    type: array
+                    items:
+                      type: string
+              example:
+                status: 1
+                types:
+                - wi-fi
+                - cellular
+                - other
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/connection-types' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/vendors:
+    get:
+      tags:
+      - resources
+      summary: Vendors list
+      description: '`GET /3.1/vendors`
+
+
+        Get vendors list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Search query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  vendors:
+                    type: array
+                    items:
+                      type: string
+              example:
+                status: 1
+                vendors:
+                - Nextbit
+                - Next
+                - NextBook
+                - NEXTAB
+                - Nextel
+                - NextTab
+                - NEXTPAD
+                - NextWolf
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/vendors' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/oses:
+    get:
+      tags:
+      - resources
+      summary: Oses list
+      description: '`GET /3.1/oses`
+
+
+        Get oses list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  oses:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+              example:
+                status: 1
+                oses:
+                  '0': Firefox OS
+                  '1': 3DS System Software
+                  '2': DSi System Software
+                  '4': VictorReader Stream
+                  '5': ThreadX
+                  '6': Feedfetcher
+                  '7': Maemo
+                  '8': Series 60
+                  '9': Android with AOKP
+                  '10': Apple TV Software
+                pagination:
+                  page: 1
+                  per_page: 2147483647
+                  total_count: 99
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/oses' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.1/oses/{os}:
+    get:
+      tags:
+      - resources
+      summary: OS versions list
+      description: '`GET /3.1/oses/{os}`
+
+
+        Get os versions list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: os
+        in: path
+        description: One of OS
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  versions:
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+              example:
+                status: 1
+                versions:
+                - '11.0'
+                - '10.12'
+                - '10.13'
+                - '10.19'
+                - '10.17'
+                - '10.16'
+                - '10.18'
+                - 10.12.1
+                - 10.12.2
+                - 10.12.3
+                - 10.12.4
+                - 10.12.5
+                - 10.12.6
+                - 10.13.1
+                - 10.13.2
+                - 10.13.4
+                - 10.13.3
+                - 10.14.0
+                - 10.12.8
+                - 10.13.5
+                - 10.13.6
+                pagination:
+                  page: 1
+                  per_page: 2147483647
+                  total_count: 21
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/oses/{os}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/goals:
+    get:
+      tags:
+      - resources
+      summary: Goals list
+      description: '`GET /3.0/goals`
+
+
+        Get goals list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  goals:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+              example:
+                status: 1
+                goals:
+                - id: 1
+                  title: Default
+                - id: 2
+                  title: Sale
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/goals' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

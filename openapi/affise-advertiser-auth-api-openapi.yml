@@ -1,0 +1,270 @@
+openapi: 3.2.0
+info:
+  title: Documentation Advertiser Auth API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: advertiser-auth
+  x-displayName: Auth & Registration
+  description: Advertiser registration and login
+paths:
+  /3.1/advertiser/registration:
+    post:
+      tags:
+      - advertiser-auth
+      summary: Advertiser Registration
+      description: '`POST /3.1/advertiser/registration`
+
+
+        Registers a new advertiser account
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Name of the advertiser
+                email:
+                  type: string
+                  format: email
+                  description: Advertiser's email address
+                password:
+                  type: string
+                  description: Account password
+                captcha:
+                  type: string
+                  description: Code from the captcha image. Required when captcha is enabled for the advertiser registration form; validated together with the `captcha_token` request parameter issued when the captcha image was generated
+              required:
+              - title
+              - email
+              - password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Advertiser created successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/advertiser/registration' \\\n  --form 'title=string' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'captcha=string'"
+  /3.1/advertiser/login:
+    post:
+      tags:
+      - advertiser-auth
+      summary: Advertiser Login
+      description: '`POST /3.1/advertiser/login`
+
+
+        Authenticates an advertiser and returns access tokens
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Advertiser's email address
+                password:
+                  type: string
+                  description: Account password
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                      type:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      api_key:
+                        type: string
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  expires_in:
+                    type: integer
+              example:
+                user:
+                  id: 6848050f08e2615692933935
+                  email: test@advertiser.com
+                  type: advertiser
+                  created_at: '2025-06-10T10:12:31.052Z'
+                  api_key: 86cf36ea9f74d822c64ebcccc4ee2c09
+                access_token: IOBDJ2v42z8Vev3gy_zBrrd7ShzrVh3sdgi-vzK6M9o.Q6n5LMbkePzcYG3jeAE6cU9SOk9pdf6QSQqZPDbxBPA
+                refresh_token: FStbN5FROfnTcWw9nJx1gkDwGjuB3DXXc1ApyRrcuCM.CDCxmJTibIkHB9kga1gwZqj9ldtsU9A10WlXtPlAQJ0
+                expires_in: 259200
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/advertiser/login' \\\n  --form 'email=string' \\\n  --form 'password=string'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

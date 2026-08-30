@@ -1,0 +1,2365 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Users API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-users
+  x-displayName: Users
+  description: Admin user management
+paths:
+  /3.0/admin/users:
+    get:
+      tags:
+      - admin-users
+      summary: Users list
+      description: '`GET /3.0/admin/users`
+
+
+        Get a list of users
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit of entities (max 500)
+        schema:
+          type: integer
+          default: 100
+          maximum: 500
+      - name: updated_at
+        in: query
+        description: Get users that have been updated from this date (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: q
+        in: query
+        description: Search query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        api_key:
+                          type: string
+                        avatar:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        email:
+                          type: string
+                        facebook:
+                          type: string
+                        viber:
+                          type: string
+                        wechat:
+                          type: string
+                        whatsapp:
+                          type: string
+                        skype:
+                          type: string
+                        telegram:
+                          type: string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        last_login_at:
+                          type: string
+                          format: date-time
+                        roles:
+                          type: array
+                          items:
+                            type: string
+                        type:
+                          type: string
+                          enum:
+                          - common_manager
+                          - affiliate_manager
+                          - account_manager
+                        updated_at:
+                          type: string
+                          format: date-time
+                        username:
+                          type: string
+                        work_hours:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                users:
+                - id: 64413c649b70ab801d9b9a71
+                  api_key: c40469ac42533296ac6c638f392b2ece
+                  avatar: null
+                  created_at: '2023-04-20 17:21:40'
+                  email: new-user@gmail.com
+                  facebook: facebook
+                  viber: viber
+                  wechat: wechat
+                  whatsapp: whatsapp
+                  skype: skype
+                  telegram: telegram
+                  first_name: John
+                  last_name: Doe
+                  last_login_at: null
+                  roles:
+                  - ROLE_ADMIN
+                  type: common_manager
+                  updated_at: '2023-04-20 17:21:40'
+                  username: 64413c649b70ab801d9b9a71
+                  work_hours: null
+                pagination:
+                  per_page: 100
+                  total_count: 18
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/users?limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/user:
+    post:
+      tags:
+      - admin-users
+      summary: Add user
+      description: '`POST /3.0/admin/user`
+
+
+        Add a new user
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email
+                password:
+                  type: string
+                  description: Password (8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed _-!@*.$%?&#/|\\~<>^{}[]():;)
+                first_name:
+                  type: string
+                  description: Name
+                last_name:
+                  type: string
+                  description: Last name
+                roles:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - ROLE_ADMIN
+                    - ROLE_MANAGER_AFFILIATE
+                    - ROLE_MANAGER_SALES
+                    - ROLE_SECTION_OFFER
+                    - ROLE_SECTION_SUPPLIER
+                    - ROLE_SECTION_DASHBOARD
+                    - ROLE_SECTION_NEWS
+                    - ROLE_SECTION_CATEGORY
+                    - ROLE_SECTION_PARTNER
+                    - ROLE_SECTION_TICKET
+                    - ROLE_SECTION_AUTOMATION
+                    example:
+                    - ROLE_ADMIN
+                  description: Array of allowed roles
+                type:
+                  type: string
+                  enum:
+                  - common_manager
+                  - affiliate_manager
+                  - account_manager
+                  description: User type
+                skype:
+                  type: string
+                  description: Skype
+                whatsapp:
+                  type: string
+                  description: Whatsapp
+                telegram:
+                  type: string
+                  description: Telegram
+                viber:
+                  type: string
+                  description: Viber
+                facebook:
+                  type: string
+                  description: Facebook
+                wechat:
+                  type: string
+                  description: Wechat
+                work_hours:
+                  type: string
+                  description: Working time
+                avatar:
+                  type: string
+                  format: base64
+                  description: Base64 encoded image. Allowed formats jpg, jpeg
+                internal_telegram_username:
+                  type: string
+                  description: Internal Telegram username (available only when the Telegram intercom integration is enabled)
+              required:
+              - email
+              - password
+              - first_name
+              - last_name
+              - roles
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      api_key:
+                        type: string
+                      avatar:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      email:
+                        type: string
+                      facebook:
+                        type: string
+                      viber:
+                        type: string
+                      wechat:
+                        type: string
+                      whatsapp:
+                        type: string
+                      skype:
+                        type: string
+                      telegram:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      last_login_at:
+                        type: string
+                        format: date-time
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                      type:
+                        type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      username:
+                        type: string
+                      work_hours:
+                        type: string
+              example:
+                status: 1
+                user:
+                  id: 64413c649b70ab801d9b9a71
+                  api_key: c40469ac42533296ac6c638f392b2ece
+                  avatar: null
+                  created_at: '2023-04-20 17:21:40'
+                  email: new-user@gmail.com
+                  facebook: facebook
+                  viber: viber
+                  wechat: wechat
+                  whatsapp: whatsapp
+                  skype: skype
+                  telegram: telegram
+                  first_name: John
+                  last_name: Doe
+                  last_login_at: null
+                  roles:
+                  - ROLE_ADMIN
+                  type: common_manager
+                  updated_at: '2023-04-20 17:21:40'
+                  username: 64413c649b70ab801d9b9a71
+                  work_hours: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'first_name=string' \\\n  --form 'last_name=string' \\\n  --form 'roles[0][0]=ROLE_ADMIN' \\\n  --form 'type=common_manager' \\\n  --form 'skype=string' \\\n  --form 'whatsapp=string' \\\n  --form 'telegram=string' \\\n  --form 'viber=string' \\\n  --form 'facebook=string' \\\n  --form 'wechat=string' \\\n  --form 'work_hours=string' \\\n  --form 'avatar=string' \\\n  --form 'internal_telegram_username=string'"
+  /3.0/admin/user/{id}:
+    get:
+      tags:
+      - admin-users
+      summary: Read user
+      description: '`GET /3.0/admin/user/{id}`
+
+
+        Read single user
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      work_hours:
+                        type: string
+                      email:
+                        type: string
+                      skype:
+                        type: string
+                      api_key:
+                        type: string
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_login_at:
+                        type: string
+                        format: date-time
+                      type:
+                        type: string
+                      avatar:
+                        type: string
+                      info:
+                        type: string
+                      permissions:
+                        type: object
+                        description: User permissions object with nested structure
+              example:
+                status: 1
+                user:
+                  id: 5f515aefa1ceda82eed06518
+                  first_name: test1
+                  last_name: test1
+                  work_hours: ''
+                  email: test1@example.com
+                  skype: test1
+                  api_key: c03d492dc29faa4028610aaca57f00d1
+                  roles:
+                  - ROLE_MANAGER_AFFILIATE
+                  updated_at: '2020-09-03T23:30:34Z'
+                  created_at: '2020-09-03T21:06:55Z'
+                  last_login_at: null
+                  type: affiliate_manager
+                  avatar: null
+                  info: null
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: deny
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                      billing:
+                        level: deny
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        default_level: read
+                        exceptions:
+                          strings: []
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                      slice-events:
+                        level: read
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: []
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: []
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: []
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+    post:
+      tags:
+      - admin-users
+      summary: Edit user
+      description: '`POST /3.0/admin/user/{id}`
+
+
+        Change the user
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email
+                password:
+                  type: string
+                  description: Password (8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed _-!@*.$%?&#/|\\~<>^{}[]():;)
+                first_name:
+                  type: string
+                  description: Name
+                last_name:
+                  type: string
+                  description: Last name
+                roles:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - ROLE_ADMIN
+                    - ROLE_MANAGER_AFFILIATE
+                    - ROLE_MANAGER_SALES
+                    - ROLE_SECTION_OFFER
+                    - ROLE_SECTION_SUPPLIER
+                    - ROLE_SECTION_DASHBOARD
+                    - ROLE_SECTION_NEWS
+                    - ROLE_SECTION_CATEGORY
+                    - ROLE_SECTION_PARTNER
+                    - ROLE_SECTION_TICKET
+                    - ROLE_SECTION_AUTOMATION
+                    example:
+                    - ROLE_MANAGER_AFFILIATE
+                  description: Array of allowed roles
+                skype:
+                  type: string
+                  description: Skype
+                whatsapp:
+                  type: string
+                  description: Whatsapp
+                telegram:
+                  type: string
+                  description: Telegram
+                viber:
+                  type: string
+                  description: Viber
+                facebook:
+                  type: string
+                  description: Facebook
+                wechat:
+                  type: string
+                  description: Wechat
+                work_hours:
+                  type: string
+                  description: Working time
+                type:
+                  type: string
+                  enum:
+                  - common_manager
+                  - affiliate_manager
+                  - account_manager
+                  description: User type
+                avatar:
+                  type: string
+                  format: base64
+                  description: Base64 encoded image. Allowed formats jpg, jpeg
+                internal_telegram_username:
+                  type: string
+                  description: Internal Telegram username (available only when the Telegram intercom integration is enabled)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+              example:
+                status: 1
+                user:
+                  id: 64413c649b70ab801d9b9a71
+                  api_key: c40469ac42533296ac6c638f392b2ece
+                  avatar: null
+                  created_at: '2023-04-20 17:21:40'
+                  email: new-user@gmail.com
+                  facebook: facebook
+                  viber: viber
+                  wechat: wechat
+                  whatsapp: whatsapp
+                  skype: skype
+                  telegram: telegram
+                  first_name: John
+                  last_name: Doe
+                  last_login_at: null
+                  roles:
+                  - ROLE_ADMIN
+                  type: common_manager
+                  updated_at: '2023-04-20 17:21:40'
+                  username: 64413c649b70ab801d9b9a71
+                  work_hours: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'first_name=string' \\\n  --form 'last_name=string' \\\n  --form 'roles[0][0]=ROLE_MANAGER_AFFILIATE' \\\n  --form 'skype=string' \\\n  --form 'whatsapp=string' \\\n  --form 'telegram=string' \\\n  --form 'viber=string' \\\n  --form 'facebook=string' \\\n  --form 'wechat=string' \\\n  --form 'work_hours=string' \\\n  --form 'type=common_manager' \\\n  --form 'avatar=string' \\\n  --form 'internal_telegram_username=string'"
+  /3.0/admin/user/api_key/{id}:
+    post:
+      tags:
+      - admin-users
+      summary: Change user api key
+      description: '`POST /3.0/admin/user/api_key/{id}`
+
+
+        Change user api key
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      api_key:
+                        type: string
+              example:
+                status: 1
+                user:
+                  id: 594927bd7e28fe1c4a8b4569
+                  api_key: c740955e768795098c8b91ef40ec008526f3f884
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/api_key/{id}' \\\n  --header 'api-key: <api-key>'"
+  /3.0/admin/user/{id}/password:
+    post:
+      tags:
+      - admin-users
+      summary: Change user password
+      description: '`POST /3.0/admin/user/{id}/password`
+
+
+        Change user password
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: Password (8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed _-!@*.$%?&#/|\\~<>^{}[]():;)
+              required:
+              - password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      password:
+                        type: string
+              example:
+                status: 1
+                user:
+                  id: 594927bd7e28fe1c4a8b4569
+                  password: c740955e768795098c8b91ef40ec008526f3f884
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}/password' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'password=string'"
+  /3.1/user/{id}/permissions:
+    post:
+      tags:
+      - admin-users
+      summary: Update user permissions
+      description: '`POST /3.1/user/{id}/permissions`
+
+
+        Update user permissions
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissions:
+                  type: object
+                  description: Complex permissions object with nested structure
+                  properties:
+                    automation:
+                      type: object
+                      properties:
+                        affise-checker:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                    general:
+                      type: object
+                      properties:
+                        marketplace:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        settings:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        billing:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                    notificator:
+                      type: object
+                      properties:
+                        client-subscription:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        transport-configuration:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        user-subscription:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                    stats:
+                      type: object
+                      properties:
+                        affiliate-postback:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        clicks-list:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        comparison-report:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        conversions-export:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        conversions-import:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        conversions-list:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        entity-account-manager:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            default_level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-affiliate-manager:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        referral:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        server-postback:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-account_manager_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-advertiser_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-affiliate_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-affiliate_manager_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-browser:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-city:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-connection-type:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-country:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-day:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-device:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-goal:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-landing:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-mobile-carrier:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-offer_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-os:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-prelanding:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-smart_id:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-sub1:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-sub2:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-trafficback_reason:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        stats-export:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        view-custom:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        view-kpi:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        view-retention-rate:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        slice-events:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                    users:
+                      type: object
+                      properties:
+                        entity-account-manager:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-advertiser:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-affiliate:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-affiliate-manager:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-common-manager:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                            exceptions:
+                              type: object
+                              properties:
+                                strings:
+                                  type: object
+                                ints:
+                                  type: object
+                        entity-preset:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+                        view-users:
+                          type: object
+                          properties:
+                            level:
+                              type: string
+                              enum:
+                              - deny
+                              - read
+                              - write
+              required:
+              - permissions
+            example:
+              permissions:
+                automation:
+                  affise-checker:
+                    level: deny
+                general:
+                  marketplace:
+                    level: read
+                  settings:
+                    level: deny
+                  billing:
+                    level: write
+                notificator:
+                  client-subscription:
+                    level: write
+                  transport-configuration:
+                    level: write
+                  user-subscription:
+                    level: write
+                stats:
+                  affiliate-postback:
+                    level: read
+                  clicks-list:
+                    level: read
+                  comparison-report:
+                    level: read
+                  conversions-export:
+                    level: read
+                  conversions-import:
+                    level: write
+                  conversions-list:
+                    level: read
+                  entity-account-manager:
+                    level: read
+                    default_level: read
+                    exceptions:
+                      strings: {}
+                  entity-affiliate-manager:
+                    level: deny
+                    exceptions:
+                      strings: {}
+                  referral:
+                    level: deny
+                  server-postback:
+                    level: read
+                  slice-account_manager_id:
+                    level: deny
+                  slice-advertiser_id:
+                    level: deny
+                  slice-affiliate_id:
+                    level: read
+                  slice-affiliate_manager_id:
+                    level: deny
+                  slice-browser:
+                    level: deny
+                  slice-city:
+                    level: read
+                  slice-connection-type:
+                    level: deny
+                  slice-country:
+                    level: read
+                  slice-day:
+                    level: read
+                  slice-device:
+                    level: read
+                  slice-goal:
+                    level: read
+                  slice-landing:
+                    level: deny
+                  slice-mobile-carrier:
+                    level: deny
+                  slice-offer_id:
+                    level: read
+                  slice-os:
+                    level: read
+                  slice-prelanding:
+                    level: deny
+                  slice-smart_id:
+                    level: deny
+                  slice-sub1:
+                    level: deny
+                  slice-sub2:
+                    level: deny
+                  slice-trafficback_reason:
+                    level: read
+                  stats-export:
+                    level: read
+                  view-custom:
+                    level: read
+                  view-kpi:
+                    level: deny
+                  view-retention-rate:
+                    level: deny
+                  slice-events:
+                    level: read
+                users:
+                  entity-account-manager:
+                    level: deny
+                    exceptions:
+                      strings: {}
+                  entity-advertiser:
+                    level: deny
+                    exceptions:
+                      strings: {}
+                  entity-affiliate:
+                    level: deny
+                    exceptions:
+                      ints: {}
+                  entity-affiliate-manager:
+                    level: write
+                    exceptions:
+                      strings: {}
+                  entity-common-manager:
+                    level: deny
+                    exceptions:
+                      strings: {}
+                  entity-preset:
+                    level: deny
+                  view-users:
+                    level: deny
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                      type:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      permissions:
+                        type: object
+                        description: Complex permissions object with nested structure
+                        properties:
+                          automation:
+                            type: object
+                            properties:
+                              affise-checker:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                          general:
+                            type: object
+                            properties:
+                              marketplace:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              settings:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              billing:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                          notificator:
+                            type: object
+                            properties:
+                              client-subscription:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              transport-configuration:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              user-subscription:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                          stats:
+                            type: object
+                            properties:
+                              affiliate-postback:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              clicks-list:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              comparison-report:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              conversions-export:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              conversions-import:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              conversions-list:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              entity-account-manager:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  default_level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-affiliate-manager:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              referral:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              server-postback:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-account_manager_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-advertiser_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-affiliate_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-affiliate_manager_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-browser:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-city:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-connection-type:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-country:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-day:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-device:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-goal:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-landing:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-mobile-carrier:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-offer_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-os:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-prelanding:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-smart_id:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-sub1:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-sub2:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-trafficback_reason:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              stats-export:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              view-custom:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              view-kpi:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              view-retention-rate:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              slice-events:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                          users:
+                            type: object
+                            properties:
+                              entity-account-manager:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-advertiser:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-affiliate:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-affiliate-manager:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-common-manager:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                                  exceptions:
+                                    type: object
+                                    properties:
+                                      strings:
+                                        type: object
+                                      ints:
+                                        type: object
+                              entity-preset:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                              view-users:
+                                type: object
+                                properties:
+                                  level:
+                                    type: string
+                                    enum:
+                                    - deny
+                                    - read
+                                    - write
+                      work_hours:
+                        type: string
+                      api_key:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                user:
+                  id: 5f515aefa1ceda82eed06518
+                  email: test1@example.com
+                  type: affiliate_manager
+                  first_name: test1
+                  last_name: test1
+                  work_hours: ''
+                  api_key: c03d492dc29faa4028610aaca57f00d1
+                  created_at: '2020-09-03T21:06:55Z'
+                  updated_at: '2020-09-03T23:30:34Z'
+                  permissions:
+                    automation:
+                      affise-checker:
+                        level: deny
+                    general:
+                      marketplace:
+                        level: read
+                      settings:
+                        level: deny
+                      billing:
+                        level: write
+                    notificator:
+                      client-subscription:
+                        level: write
+                      transport-configuration:
+                        level: write
+                      user-subscription:
+                        level: write
+                    stats:
+                      affiliate-postback:
+                        level: read
+                      clicks-list:
+                        level: read
+                      comparison-report:
+                        level: read
+                      conversions-export:
+                        level: read
+                      conversions-import:
+                        level: write
+                      conversions-list:
+                        level: read
+                      entity-account-manager:
+                        level: read
+                        default_level: read
+                        exceptions:
+                          strings: {}
+                      entity-affiliate-manager:
+                        level: deny
+                        exceptions:
+                          strings: {}
+                      referral:
+                        level: deny
+                      server-postback:
+                        level: read
+                      slice-account_manager_id:
+                        level: deny
+                      slice-advertiser_id:
+                        level: deny
+                      slice-affiliate_id:
+                        level: read
+                      slice-affiliate_manager_id:
+                        level: deny
+                      slice-browser:
+                        level: deny
+                      slice-city:
+                        level: read
+                      slice-connection-type:
+                        level: deny
+                      slice-country:
+                        level: read
+                      slice-day:
+                        level: read
+                      slice-device:
+                        level: read
+                      slice-goal:
+                        level: read
+                      slice-landing:
+                        level: deny
+                      slice-mobile-carrier:
+                        level: deny
+                      slice-offer_id:
+                        level: read
+                      slice-os:
+                        level: read
+                      slice-prelanding:
+                        level: deny
+                      slice-smart_id:
+                        level: deny
+                      slice-sub1:
+                        level: deny
+                      slice-sub2:
+                        level: deny
+                      slice-trafficback_reason:
+                        level: read
+                      stats-export:
+                        level: read
+                      view-custom:
+                        level: read
+                      view-kpi:
+                        level: deny
+                      view-retention-rate:
+                        level: deny
+                      slice-events:
+                        level: read
+                    users:
+                      entity-account-manager:
+                        level: deny
+                        exceptions:
+                          strings: {}
+                      entity-advertiser:
+                        level: deny
+                        exceptions:
+                          strings: {}
+                      entity-affiliate:
+                        level: deny
+                        exceptions:
+                          ints: {}
+                      entity-affiliate-manager:
+                        level: write
+                        exceptions:
+                          strings: {}
+                      entity-common-manager:
+                        level: deny
+                        exceptions:
+                          strings: {}
+                      entity-preset:
+                        level: deny
+                      view-users:
+                        level: deny
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/user/{id}/permissions' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"permissions\": {\n    \"automation\": {\n      \"affise-checker\": {\n        \"level\": \"deny\"\n      }\n    },\n    \"general\": {\n      \"marketplace\": {\n        \"level\": \"read\"\n      },\n      \"settings\": {\n        \"level\": \"deny\"\n      },\n      \"billing\": {\n        \"level\": \"write\"\n      }\n    },\n    \"notificator\": {\n      \"client-subscription\": {\n        \"level\": \"write\"\n      },\n      \"transport-configuration\": {\n        \"level\": \"write\"\n      },\n      \"user-subscription\": {\n        \"level\": \"write\"\n      }\n    },\n    \"stats\": {\n      \"affiliate-postback\": {\n        \"level\": \"read\"\n      },\n      \"clicks-list\": {\n        \"level\": \"read\"\n      },\n      \"comparison-report\": {\n        \"level\": \"read\"\n      },\n      \"conversions-export\": {\n        \"level\": \"read\"\n      },\n      \"conversions-import\": {\n        \"level\": \"write\"\n      },\n      \"conversions-list\": {\n        \"level\": \"read\"\n      },\n      \"entity-account-manager\": {\n        \"level\": \"read\",\n        \"default_level\": \"read\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-affiliate-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"referral\": {\n        \"level\": \"deny\"\n      },\n      \"server-postback\": {\n        \"level\": \"read\"\n      },\n      \"slice-account_manager_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-advertiser_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-affiliate_id\": {\n        \"level\": \"read\"\n      },\n      \"slice-affiliate_manager_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-browser\": {\n        \"level\": \"deny\"\n      },\n      \"slice-city\": {\n        \"level\": \"read\"\n      },\n      \"slice-connection-type\": {\n        \"level\": \"deny\"\n      },\n      \"slice-country\": {\n        \"level\": \"read\"\n      },\n      \"slice-day\": {\n        \"level\": \"read\"\n      },\n      \"slice-device\": {\n        \"level\": \"read\"\n      },\n      \"slice-goal\": {\n        \"level\": \"read\"\n      },\n      \"slice-landing\": {\n        \"level\": \"deny\"\n      },\n      \"slice-mobile-carrier\": {\n        \"level\": \"deny\"\n      },\n      \"slice-offer_id\": {\n        \"level\": \"read\"\n      },\n      \"slice-os\": {\n        \"level\": \"read\"\n      },\n      \"slice-prelanding\": {\n        \"level\": \"deny\"\n      },\n      \"slice-smart_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-sub1\": {\n        \"level\": \"deny\"\n      },\n      \"slice-sub2\": {\n        \"level\": \"deny\"\n      },\n      \"slice-trafficback_reason\": {\n        \"level\": \"read\"\n      },\n      \"stats-export\": {\n        \"level\": \"read\"\n      },\n      \"view-custom\": {\n        \"level\": \"read\"\n      },\n      \"view-kpi\": {\n        \"level\": \"deny\"\n      },\n      \"view-retention-rate\": {\n        \"level\": \"deny\"\n      },\n      \"slice-events\": {\n        \"level\": \"read\"\n      }\n    },\n    \"users\": {\n      \"entity-account-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-advertiser\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-affiliate\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"ints\": {}\n        }\n      },\n      \"entity-affiliate-manager\": {\n        \"level\": \"write\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-common-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-preset\": {\n        \"level\": \"deny\"\n      },\n      \"view-users\": {\n        \"level\": \"deny\"\n      }\n    }\n  }\n}'"
+  /3.1/pub-auth:
+    post:
+      tags:
+      - admin-users
+      summary: Public auth
+      description: '`POST /3.1/pub-auth`
+
+
+        Get user api key by login and password
+
+        '
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: A valid email
+                password:
+                  type: string
+                  description: Password (8 or up to 30 characters with at least one uppercase, at least one lowercase, at least one numeric digit, at least one of the allowed special characters listed _-!@*.$%?&#/|\\~<>^{}[]():;)
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  api_key:
+                    type: string
+              example:
+                status: 1
+                api_key: c740955e768795098c8b91ef40ec008526f3f884
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/pub-auth' \\\n  --form 'email=string' \\\n  --form 'password=string'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

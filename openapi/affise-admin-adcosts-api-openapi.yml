@@ -1,0 +1,412 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Adcosts API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-adcosts
+  x-displayName: Ad Costs
+  description: Ad cost reporting
+paths:
+  /3.1/adcosts:
+    get:
+      tags:
+      - admin-adcosts
+      summary: Get Ad Costs
+      description: '`GET /3.1/adcosts`
+
+
+        Returns ad cost data based on filters.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: offer_id
+        in: query
+        description: Offer ID
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: page with results
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: results per page
+        schema:
+          type: integer
+          default: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  costs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        offer_id:
+                          type: integer
+                        affiliate_id:
+                          type: integer
+                        date:
+                          type: string
+                          format: date
+                        sub8:
+                          type: string
+                        costs:
+                          type: number
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total:
+                        type: integer
+              example:
+                status: 1
+                costs:
+                - offer_id: 2
+                  affiliate_id: 4
+                  date: '2025-02-12'
+                  sub8: sub_example_1
+                  costs: 33.1
+                - offer_id: 2
+                  affiliate_id: 5
+                  date: '2025-02-01'
+                  sub8: sub_example_2
+                  costs: 100.4
+                - offer_id: 2
+                  affiliate_id: 5
+                  date: '2024-01-01'
+                  sub8: testS8
+                  costs: 20
+                pagination:
+                  page: 1
+                  limit: 100
+                  total: 3
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/adcosts?offer_id=<offer_id>&page=1&limit=100' \\\n  --header 'api-key: <api-key>'"
+    post:
+      tags:
+      - admin-adcosts
+      summary: Create or Update Ad Costs
+      description: '`POST /3.1/adcosts`
+
+
+        This method is used to create or update ad costs.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: integer
+                  description: Offer ID
+                affiliate_id:
+                  type: integer
+                  description: Affiliate ID
+                date:
+                  type: string
+                  format: date
+                  description: Date (format YYYY-MM-DD)
+                sub8:
+                  type: string
+                  description: Sub8
+                costs:
+                  type: number
+                  format: float
+                  description: Costs
+              required:
+              - offer_id
+              - affiliate_id
+              - date
+              - sub8
+              - costs
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: adcost has been added successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/adcosts' \\\n  --header 'api-key: <api-key>' \\\n  --form 'offer_id=0' \\\n  --form 'affiliate_id=0' \\\n  --form 'date=string' \\\n  --form 'sub8=string' \\\n  --form 'costs=0'"
+    delete:
+      tags:
+      - admin-adcosts
+      summary: Delete Ad Costs
+      description: '`DELETE /3.1/adcosts`
+
+
+        Method for deleting ad costs.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: integer
+                  description: Offer ID
+                affiliate_id:
+                  type: integer
+                  description: Affiliate ID
+                date:
+                  type: string
+                  format: date
+                  description: Date (format YYYY-MM-DD)
+                sub8:
+                  type: string
+                  description: Sub8
+              required:
+              - offer_id
+              - affiliate_id
+              - date
+              - sub8
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: adcost has been removed successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/adcosts' \\\n  --header 'api-key: <api-key>' \\\n  --form 'offer_id=0' \\\n  --form 'affiliate_id=0' \\\n  --form 'date=string' \\\n  --form 'sub8=string'"
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

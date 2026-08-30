@@ -1,0 +1,602 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Smartlinks API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-smartlinks
+  x-displayName: Smartlinks
+  description: Admin smartlinks — categories management
+paths:
+  /3.0/admin/smartlink/categories:
+    get:
+      tags:
+      - admin-smartlinks
+      summary: SmartLink categories
+      description: '`GET /3.0/admin/smartlink/categories`
+
+
+        SmartLink categories list
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: SmartLink categories ID
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name
+        in: query
+        description: SmartLink title
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        name:
+                          type: string
+                        domain:
+                          type: string
+                        description:
+                          type: string
+                          nullable: true
+                        use_https:
+                          type: boolean
+                        privacy_level:
+                          type: string
+                        excluded_affiliates:
+                          type: array
+                          items: {}
+                        included_affiliates:
+                          type: array
+                          items:
+                            type: integer
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+              example:
+                status: 1
+                data:
+                - _id: 595e3b547e28fede7b8b456c
+                  name: test1
+                  domain: myDomen.com
+                  description: null
+                  use_https: false
+                  privacy_level: premoderated
+                  excluded_affiliates: []
+                  included_affiliates:
+                  - 1
+                  created_at: '2017-07-06 13:29:56'
+                  updated_at: '2017-07-06 13:29:56'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/smartlink/categories?id[0]=string&id[1]=string2' \\\n  --header 'api-key: <api-key>'"
+  /3.0/admin/smartlink/category/{id}/offers-count:
+    get:
+      tags:
+      - admin-smartlinks
+      summary: SmartLink offer count
+      description: '`GET /3.0/admin/smartlink/category/{id}/offers-count`
+
+
+        Get offers'' count
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        example: 23df424b0a53b0899f78685966243ee61
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Category ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+              example:
+                status: 1
+                data:
+                  count: 2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/smartlink/category/{id}/offers-count' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/smartlink/category:
+    post:
+      tags:
+      - admin-smartlinks
+      summary: SmartLink category
+      description: '`POST /3.0/admin/smartlink/category`
+
+
+        Add new SmartLink category
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Category name
+                description:
+                  type: string
+                  description: Category description
+                privacy_level:
+                  type: string
+                  enum:
+                  - public
+                  - premoderated
+                  - private
+                  default: public
+                  description: Privacy level
+                excluded_affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Excluded affiliate IDs
+                included_affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Included affiliate IDs
+                tracking_domain:
+                  type: string
+                  description: The domain name (FQDN) for the tracking URL
+              required:
+              - name
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      domain:
+                        type: string
+                      description:
+                        type: string
+                      use_https:
+                        type: boolean
+                      privacy_level:
+                        type: string
+                      excluded_affiliates:
+                        type: array
+                        items: {}
+                      included_affiliates:
+                        type: array
+                        items:
+                          type: integer
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                data:
+                  _id: 595fd4877e28fee8428b459f
+                  name: test
+                  domain: myDomen.com
+                  description: test
+                  use_https: false
+                  privacy_level: premoderated
+                  excluded_affiliates: []
+                  included_affiliates:
+                  - 1
+                  created_at: '2017-07-07 18:35:51'
+                  updated_at: '2017-07-07 18:35:51'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/smartlink/category' \\\n  --header 'api-key: <api-key>' \\\n  --form 'name=string' \\\n  --form 'description=string' \\\n  --form 'privacy_level=public' \\\n  --form 'excluded_affiliates[0]=0' \\\n  --form 'excluded_affiliates[1]=1' \\\n  --form 'included_affiliates[0]=0' \\\n  --form 'included_affiliates[1]=1' \\\n  --form 'tracking_domain=string'"
+  /3.0/admin/smartlink/category/{id}:
+    post:
+      tags:
+      - admin-smartlinks
+      summary: Smartlink edit category
+      description: '`POST /3.0/admin/smartlink/category/{id}`
+
+
+        Edit a SmartLink category
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Category ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of category
+                description:
+                  type: string
+                  description: Description of the category
+                tracking_domain:
+                  type: string
+                  description: The domain name (FQDN) for the tracking URL
+                privacy_level:
+                  type: string
+                  enum:
+                  - public
+                  - premoderated
+                  - private
+                  description: Privacy level
+                excluded_affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Excluded affiliate IDs
+                included_affiliates:
+                  type: array
+                  items:
+                    type: integer
+                  description: Included affiliate IDs
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      domain:
+                        type: string
+                      description:
+                        type: string
+                      use_https:
+                        type: boolean
+                      privacy_level:
+                        type: string
+                      excluded_affiliates:
+                        type: array
+                        items: {}
+                      included_affiliates:
+                        type: array
+                        items:
+                          type: integer
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                data:
+                  _id: 595fd4877e28fee8428b459f
+                  name: test123
+                  domain: myDomen.com
+                  description: test
+                  use_https: false
+                  privacy_level: premoderated
+                  excluded_affiliates: []
+                  included_affiliates:
+                  - 1
+                  created_at: '2017-07-07 18:35:51'
+                  updated_at: '2017-07-07 18:35:51'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/smartlink/category/{id}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'name=string' \\\n  --form 'description=string' \\\n  --form 'tracking_domain=string' \\\n  --form 'privacy_level=public' \\\n  --form 'excluded_affiliates[0]=0' \\\n  --form 'excluded_affiliates[1]=1' \\\n  --form 'included_affiliates[0]=0' \\\n  --form 'included_affiliates[1]=1'"
+  /3.0/admin/smartlink/category/{id}/remove:
+    post:
+      tags:
+      - admin-smartlinks
+      summary: SmartLink category remove
+      description: '`POST /3.0/admin/smartlink/category/{id}/remove`
+
+
+        Remove a SmartLink category
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Category ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      domain:
+                        type: string
+                      description:
+                        type: string
+                      use_https:
+                        type: boolean
+                      privacy_level:
+                        type: string
+                      excluded_affiliates:
+                        type: array
+                        items: {}
+                      included_affiliates:
+                        type: array
+                        items:
+                          type: integer
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+              example:
+                status: 1
+                data:
+                  _id: 595fd4877e28fee8428b459f
+                  name: test123
+                  domain: myDomen.com
+                  description: test
+                  use_https: false
+                  privacy_level: premoderated
+                  excluded_affiliates: []
+                  included_affiliates:
+                  - 1
+                  created_at: '2017-07-07 18:35:51'
+                  updated_at: '2017-07-07 18:35:51'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/smartlink/category/{id}/remove' \\\n  --header 'api-key: <api-key>'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources

@@ -1,0 +1,1647 @@
+openapi: 3.2.0
+info:
+  title: Documentation Admin Affiliates API
+  version: '3.2'
+  x-logo:
+    altText: Affise API documentation.
+    url: affise_logo.svg
+    backgroundColor: '#fafafa'
+  description: 'API 3.1 documentation.
+
+
+    Authorization
+
+
+    ```shell
+
+    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
+
+    or
+
+    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
+
+    ```
+
+
+
+    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
+
+
+    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
+
+
+    Postman collection
+
+
+    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
+
+
+    <aside class="warning">
+
+    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
+
+    </aside>
+
+    '
+servers:
+- url: https://api-demo.affise.com
+  description: Demo Server
+  variables:
+    api-key:
+      default: 685168e94e6a96fa7c31895e
+      description: Demo Test API Key
+tags:
+- name: admin-affiliates
+  x-displayName: Affiliates
+  description: Admin operations on affiliates (partners)
+paths:
+  /3.0/admin/partners:
+    get:
+      tags:
+      - admin-affiliates
+      summary: Affiliate list
+      description: '`GET /3.0/admin/partners`
+
+
+        Get list of partners
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Search by affiliate IDs
+        schema:
+          type: array
+          items:
+            type: integer
+          example:
+            id[0]: 2
+      - name: with_balance
+        in: query
+        description: Show partners with balance
+        schema:
+          type: integer
+          enum:
+          - 1
+      - name: limit
+        in: query
+        description: Limit of entities (max 500)
+        schema:
+          type: integer
+          default: 50
+          maximum: 500
+      - name: page
+        in: query
+        description: Page of entities
+        schema:
+          type: integer
+      - name: updated_at
+        in: query
+        description: Get partners that have been updated from this date (format YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: status
+        in: query
+        description: Filter by status
+        schema:
+          type: string
+          enum:
+          - active
+          - banned
+          - on moderation
+          - not active
+      - name: search
+        in: query
+        description: Search by affiliate email, login or name
+        schema:
+          type: string
+      - name: manager
+        in: query
+        description: Filter by manager IDs
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            manager[0]: 5cd5fcced596c1280b3b6477
+      - name: field
+        in: query
+        description: Filter by custom field values
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+            field[0]: skype_name
+      - name: order
+        in: query
+        description: Sort by field. Prefix the value with "-" for descending order
+        schema:
+          type: string
+          enum:
+          - id
+          - -id
+          - _id
+          - -_id
+          - created_at
+          - -created_at
+          - updated_at
+          - -updated_at
+      - name: orderType
+        in: query
+        description: Sorting order for the "order" field
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  partners:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                        email:
+                          type: string
+                        login:
+                          type: string
+                        contactPerson:
+                          type: string
+                        ref_percent:
+                          type: string
+                        name:
+                          type: string
+                        notes:
+                          type: string
+                        manager:
+                          type: object
+                        status:
+                          type: string
+                        payment_systems:
+                          type: array
+                          items:
+                            type: object
+                        customFields:
+                          type: array
+                          items:
+                            type: object
+                        balance:
+                          type: object
+                        offersCount:
+                          type: integer
+                        api_key:
+                          type: string
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                        lang:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+                      next_page:
+                        type: integer
+              example:
+                status: 1
+                partners:
+                - id: 5
+                  created_at: '2019-07-16 16:55:45'
+                  updated_at: '2019-07-16 16:55:45'
+                  email: login@gmail.com
+                  login: treva.jones
+                  ref_percent: '2'
+                  name: null
+                  notes: note
+                  status: active
+                  payment_systems:
+                  - id: 10895
+                    active: 0
+                    system: Webmoney WMR
+                    fields:
+                      '1': '...'
+                  customFields:
+                  - name: Skype
+                    value: '1'
+                    label: '1'
+                    id: 1
+                  - name: '....'
+                    value: '2'
+                    label: '2'
+                    id: 2
+                  - name: '...'
+                    value: '3'
+                    label: '3'
+                    id: 3
+                  - name: '...'
+                    value: '9'
+                    label: '9'
+                    id: 15
+                  balance:
+                    CNY:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    USD:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    EUR:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    BTC:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                  offersCount: 0
+                  api_key: eff64a90010faabc92f845a7969a618986478993
+                  address_1: null
+                  address_2: null
+                  city: null
+                  country: null
+                  zip_code: null
+                  phone: null
+                  ref: '2'
+                  lang: es
+                  sub_accounts:
+                    '1':
+                      value: sub1
+                      except: 0
+                    '2':
+                      value: sub2
+                      except: 1
+                  contactPerson: null
+                pagination:
+                  per_page: 1
+                  total_count: 9253
+                  page: 1
+                  next_page: 2
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partners?id[0]=2&with_balance=1&limit=50&status=active&manager[0]=5cd5fcced596c1280b3b6477&field[0]=skype_name&order=id&orderType=asc' \\\n  --header 'api-key: <api-key>'"
+  /3.0/admin/partner:
+    post:
+      tags:
+      - admin-affiliates
+      summary: New affiliate
+      description: '`POST /3.0/admin/partner`
+
+
+        Add new partner
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Partners e-mail
+                password:
+                  type: string
+                  description: Partners password
+                country:
+                  type: string
+                  description: Country ISO name
+                login:
+                  type: string
+                  description: Company name
+                contact_person:
+                  type: string
+                  description: Contact person
+                ref_percent:
+                  type: string
+                  description: Percentage of referral program
+                notes:
+                  type: string
+                  description: Notes
+                status:
+                  type: string
+                  enum:
+                  - not active
+                  - active
+                  - banned
+                  - on moderation
+                  description: Partners status
+                manager_id:
+                  type: string
+                  description: Manager id
+                payment_systems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      system_id:
+                        type: integer
+                        description: Integer ID of partners systems
+                      currency:
+                        type: string
+                        description: String the currency code
+                      fields:
+                        type: object
+                        description: Advanced fields where key is ID from /3.0/admin/payment_systems
+                        additionalProperties:
+                          type: string
+                  description: Array[object] - An array of payments (See PaymentSystems structure and /3.0/admin/payment_systems endpoint). Use form-encoded parameters below for actual implementation.
+                custom_fields:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    '0': field1
+                  description: An array of custom fields
+                ref:
+                  type: integer
+                  description: Referral partner
+                sub_account_1:
+                  type: string
+                  description: Sub1 list, separated by commas
+                sub_account_2:
+                  type: string
+                  description: Sub2 list, separated by commas
+                sub_account_1_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub1 list
+                sub_account_2_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub2 list
+                notify:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Send welcome email to affiliate (login field should be set)
+                tipalti_payee_id:
+                  type: integer
+                  description: Tipalti Payee ID
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of affiliates' tags
+                  example:
+                    '0': tag1
+                    '1': tag2
+                enabledOffers:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of offer IDs
+                disabledOffers:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of offer IDs
+                enabledAdvertisers:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of advertiser IDs
+                disabledAdvertisers:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of advertiser IDs
+                enabledSmartlinks:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of smartlink IDs
+                disabledSmartlinks:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of smartlink IDs
+                level:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  description: Affiliate level
+                default_postback:
+                  type: string
+                  description: Default postback URL. Available when postback autofill is enabled on the network
+                affiliate_trafficback_url:
+                  type: string
+                  description: Affiliate trafficback URL. Available when the affiliate trafficback URL feature is enabled on the network
+                subaccount_id:
+                  type: integer
+                  description: Sub-account ID
+              required:
+              - email
+              - password
+              - country
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  partner:
+                    type: object
+                  id:
+                    type: integer
+              example:
+                status: 1
+                partner:
+                  id: 5
+                  created_at: '2019-07-16 16:55:45'
+                  updated_at: '2019-07-16 16:55:45'
+                  email: login@gmail.com
+                  login: treva.jones
+                  ref_percent: '2'
+                  name: null
+                  notes: note
+                  status: active
+                  manager:
+                    api_key: d6659d76dcce6857a118e2e9890518be
+                    avatar: null
+                    created_at: '2023-04-20 18:20:29'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64414a2d9b70ab801d9b9a72
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_MANAGER_AFFILIATE
+                    skype: skype
+                    telegram: telegram
+                    type: affiliate_manager
+                    updated_at: '2023-04-20 18:20:29'
+                    username: 64414a2d9b70ab801d9b9a72
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  payment_systems:
+                  - id: 10895
+                    active: 0
+                    system: Webmoney WMR
+                    fields:
+                      '1': '...'
+                  customFields:
+                  - name: Skype
+                    value: '1'
+                    label: '1'
+                    id: 1
+                  - name: '....'
+                    value: '2'
+                    label: '2'
+                    id: 2
+                  - name: '...'
+                    value: '3'
+                    label: '3'
+                    id: 3
+                  - name: '...'
+                    value: '9'
+                    label: '9'
+                    id: 15
+                  balance:
+                    CNY:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    USD:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    EUR:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    BTC:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                  offersCount: 0
+                  api_key: eff64a90010faabc92f845a7969a618986478993
+                  address_1: null
+                  address_2: null
+                  city: null
+                  country: null
+                  zip_code: null
+                  phone": null
+                  ref: '2'
+                  lang: es
+                  sub_accounts:
+                    '1':
+                      value: sub1
+                      except: 0
+                    '2':
+                      value: sub2
+                      except: 1
+                  contactPerson: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner' \\\n  --header 'api-key: <api-key>' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'country=string' \\\n  --form 'login=string' \\\n  --form 'contact_person=string' \\\n  --form 'ref_percent=string' \\\n  --form 'notes=string' \\\n  --form 'status=not active' \\\n  --form 'manager_id=string' \\\n  --form 'payment_systems[0][system_id]=0' \\\n  --form 'payment_systems[0][currency]=string' \\\n  --form 'custom_fields[0]=field1' \\\n  --form 'ref=0' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'notify=0' \\\n  --form 'tipalti_payee_id=0' \\\n  --form 'tags[0]=tag1' \\\n  --form 'tags[1]=tag2' \\\n  --form 'enabledOffers[0]=0' \\\n  --form 'enabledOffers[1]=1' \\\n  --form 'disabledOffers[0]=0' \\\n  --form 'disabledOffers[1]=1' \\\n  --form 'enabledAdvertisers[0]=string' \\\n  --form 'enabledAdvertisers[1]=string2' \\\n  --form 'disabledAdvertisers[0]=string' \\\n  --form 'disabledAdvertisers[1]=string2' \\\n  --form 'enabledSmartlinks[0]=string' \\\n  --form 'enabledSmartlinks[1]=string2' \\\n  --form 'disabledSmartlinks[0]=string' \\\n  --form 'disabledSmartlinks[1]=string2' \\\n  --form 'level=0' \\\n  --form 'default_postback=string' \\\n  --form 'affiliate_trafficback_url=string' \\\n  --form 'subaccount_id=0'"
+  /3.0/admin/partner/{id}:
+    get:
+      tags:
+      - admin-affiliates
+      summary: Get affiliate
+      description: '`GET /3.0/admin/partner/{id}`
+
+
+        Get affiliate by ID
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Affiliate ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  partner:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      email:
+                        type: string
+                      login:
+                        type: string
+                      contactPerson:
+                        type: string
+                      ref_percent:
+                        type: string
+                      name:
+                        type: string
+                      notes:
+                        type: string
+                      manager:
+                        type: object
+                      status:
+                        type: string
+                        enum:
+                        - active
+                        - banned
+                        - on moderation
+                        - not active
+                      payment_systems:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            active:
+                              type: integer
+                            system:
+                              type: string
+                            fields:
+                              type: object
+                      customFields:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            value:
+                              type: string
+                            label:
+                              type: string
+                            id:
+                              type: integer
+                      balance:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            balance:
+                              type: number
+                            hold:
+                              type: number
+                            available:
+                              type: number
+                      offersCount:
+                        type: integer
+                      api_key:
+                        type: string
+                      address_1:
+                        type: string
+                      address_2:
+                        type: string
+                      city:
+                        type: string
+                      country:
+                        type: string
+                      zip_code:
+                        type: string
+                      phone:
+                        type: string
+                      work_hours:
+                        type: string
+                      created_by:
+                        type: object
+                      updated_by:
+                        type: object
+                      tipalti_payee_id:
+                        type: string
+                      ref:
+                        type: string
+                      sub_accounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                            except:
+                              type: integer
+                      tags:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                      level:
+                        type: integer
+                      tipalti_status:
+                        type: string
+                      lang:
+                        type: string
+              example:
+                status: 1
+                partner:
+                  id: 5
+                  created_at: '2021-05-15T04:07:42.834Z'
+                  updated_at: '2021-09-08T20:11:15.000Z'
+                  email: partner@affise.com
+                  login: partner
+                  contactPerson: null
+                  ref_percent: null
+                  name: name
+                  notes: notes
+                  manager: null
+                  status: active
+                  payment_systems:
+                  - id: 1
+                    active: 1
+                    system: bank
+                    fields:
+                      banknumber: 555-666888888
+                  - id: 5
+                    active: 0
+                    system: webmoney
+                    fields:
+                      usd: Z166558469854
+                  customFields:
+                  - name: nickname
+                    value: Alias
+                    label: Nickname
+                    id: 1
+                  balance:
+                    USD:
+                      balance: 13.66
+                      hold: 0
+                      available: 13.66
+                    EUR:
+                      balance: 5.74
+                      hold: 1
+                      available: 4.74
+                  offersCount: 1
+                  api_key: 685168e94e6a96fa7c31895e
+                  address_1: 123 Main St
+                  address_2: ''
+                  city: Some City
+                  country: US
+                  zip_code: '12345'
+                  phone: null
+                  work_hours: 8-17
+                  created_by: null
+                  updated_by: null
+                  tipalti_payee_id: 55555-55555-55555
+                  ref: ref
+                  sub_accounts:
+                  - value: sub
+                    except: 1
+                  tags:
+                  - id: 4
+                    name: test
+                  level: 2
+                  tipalti_status: COMPLETED
+                  lang: es
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}' \\\n  --header 'api-key: <api-key>'"
+    post:
+      tags:
+      - admin-affiliates
+      summary: Edit affiliate
+      description: '`POST /3.0/admin/partner/{id}`
+
+
+        Edit a partner
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Affiliate ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: Partners password
+                email:
+                  type: string
+                  description: Partners email
+                login:
+                  type: string
+                  description: Company name
+                country:
+                  type: string
+                  description: Country ISO name
+                contact_person:
+                  type: string
+                  description: Contact person
+                ref_percent:
+                  type: string
+                  description: Percentage of referral program
+                notes:
+                  type: string
+                  description: Notes
+                status:
+                  type: string
+                  enum:
+                  - ''
+                  - not active
+                  - active
+                  - banned
+                  - on moderation
+                  description: Partners status
+                manager_id:
+                  type: string
+                  description: Manager id
+                payment_systems:
+                  type: array
+                  items:
+                    type: object
+                  description: An array of payments (See the add affiliate method and /admin/payment_systems)
+                custom_fields:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of custom fields (See /admin/custom_fields)
+                ref:
+                  type: integer
+                  description: Referral partner
+                sub_account_1:
+                  type: string
+                  description: Sub1 list, separated by commas
+                sub_account_2:
+                  type: string
+                  description: Sub2 list, separated by commas
+                sub_account_1_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub1 list
+                sub_account_2_except:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                  description: Except Sub2 list
+                tipalti_payee_id:
+                  type: integer
+                  description: Tipalti Payee ID
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of tags (Tags will be added to the existing)
+                  example:
+                    '0': tag1
+                enabledOffers:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of offer IDs
+                disabledOffers:
+                  type: array
+                  items:
+                    type: integer
+                  description: An array of offer IDs
+                enabledAdvertisers:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of advertiser IDs
+                  example:
+                    '0': 64414a2d9b70ab801d9b9a00
+                disabledAdvertisers:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of advertiser IDs
+                  example:
+                    '0': 64414a2d9b70ab801d9b9a72
+                enabledSmartlinks:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of smartlink IDs
+                  example:
+                    '0': 64414a2d9b44ab801d9b9a72
+                disabledSmartlinks:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of smartlink IDs
+                  example:
+                    '0': 64414a2d9b70ab801d9b9a23
+                level:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  description: Affiliate level
+                default_postback:
+                  type: string
+                  description: Default postback URL. Available when postback autofill is enabled on the network
+                affiliate_trafficback_url:
+                  type: string
+                  description: Affiliate trafficback URL. Available when the affiliate trafficback URL feature is enabled on the network
+                subaccount_id:
+                  type: integer
+                  description: Sub-account ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  partner:
+                    type: object
+                  id:
+                    type: integer
+              example:
+                status: 1
+                partner:
+                  id: 5
+                  created_at: '2019-07-16 16:55:45'
+                  updated_at: '2019-07-16 17:17:05'
+                  email: login@gmail.com
+                  login: dima.ivanov
+                  ref_percent: '2'
+                  name: null
+                  notes: note
+                  manager:
+                    api_key: d6659d76dcce6857a118e2e9890518be
+                    avatar: null
+                    created_at: '2023-04-20 18:20:29'
+                    email: new-user@gmail.com
+                    facebook: facebook
+                    first_name: John
+                    id: 64414a2d9b70ab801d9b9a72
+                    last_login_at: null
+                    last_name: Doe
+                    roles:
+                    - ROLE_MANAGER_AFFILIATE
+                    skype: skype
+                    telegram: telegram
+                    type: affiliate_manager
+                    updated_at: '2023-04-20 18:20:29'
+                    username: 64414a2d9b70ab801d9b9a72
+                    viber: viber
+                    wechat: wechat
+                    whatsapp: whatsapp
+                    work_hours: null
+                  status: active
+                  payment_systems:
+                  - id: 3
+                    active: 0
+                    system: Webmoney
+                    fields:
+                      '1': BA731035962466786892
+                      '2': PK83DELLCTnbVB5RMU5TL1X4
+                  - id: 4
+                    active: 0
+                    system: Webmoney
+                    fields:
+                      '1': BA731035962466786892
+                      '2': PK83DELLCTnbVB5RMU5TL1X4
+                  customFields:
+                  - name: Skype
+                    value: skype
+                    label: skype
+                    id: 1
+                  balance:
+                    USD:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    EUR:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    BTC:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                  offersCount: 0
+                  api_key: eff64a90010faabc92f845a7969a618986478993
+                  address_1: null
+                  address_2: null
+                  city: null
+                  country: null
+                  zip_code: null
+                  phone: null
+                  ref: '2'
+                  sub_accounts:
+                    '1':
+                      value: sub1
+                      except: 0
+                    '2':
+                      value: sub2
+                      except: 1
+                  lang: es
+                  contactPerson: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'password=string' \\\n  --form 'email=string' \\\n  --form 'login=string' \\\n  --form 'country=string' \\\n  --form 'contact_person=string' \\\n  --form 'ref_percent=string' \\\n  --form 'notes=string' \\\n  --form 'status=' \\\n  --form 'manager_id=string' \\\n  --form 'custom_fields[0]=string' \\\n  --form 'custom_fields[1]=string2' \\\n  --form 'ref=0' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'tipalti_payee_id=0' \\\n  --form 'tags[0]=tag1' \\\n  --form 'enabledOffers[0]=0' \\\n  --form 'enabledOffers[1]=1' \\\n  --form 'disabledOffers[0]=0' \\\n  --form 'disabledOffers[1]=1' \\\n  --form 'enabledAdvertisers[0]=64414a2d9b70ab801d9b9a00' \\\n  --form 'disabledAdvertisers[0]=64414a2d9b70ab801d9b9a72' \\\n  --form 'enabledSmartlinks[0]=64414a2d9b44ab801d9b9a72' \\\n  --form 'disabledSmartlinks[0]=64414a2d9b70ab801d9b9a23' \\\n  --form 'level=0' \\\n  --form 'default_postback=string' \\\n  --form 'affiliate_trafficback_url=string' \\\n  --form 'subaccount_id=0'"
+  /3.0/admin/partners/mass-update:
+    post:
+      tags:
+      - admin-affiliates
+      summary: Mass update
+      description: '`POST /3.0/admin/partners/mass-update`
+
+
+        Update status and manager
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+                  description: Affiliate IDs
+                manager_id:
+                  type: string
+                  description: Manager ID
+                  example: 5ce558efd596c1e4008b4569
+                status:
+                  type: string
+                  enum:
+                  - not active
+                  - active
+                  - banned
+                  - on moderation
+                  description: Status
+              required:
+              - id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+              example:
+                status: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partners/mass-update' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'id[0]=0' \\\n  --form 'id[1]=1' \\\n  --form 'manager_id=5ce558efd596c1e4008b4569' \\\n  --form 'status=not active'"
+  /3.0/admin/partner/password/{id}:
+    post:
+      tags:
+      - admin-affiliates
+      summary: Change affiliate password
+      description: '`POST /3.0/admin/partner/password/{id}`
+
+
+        Change a partner''s password
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+        example: 23df424b0a53b0899f78685966243ee61
+      - name: id
+        in: path
+        description: Affiliate ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  partner:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      password:
+                        type: string
+              example:
+                status: 1
+                partner:
+                  id: 10117
+                  password: 5947c33371
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/password/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+  /3.0/admin/partner/{id}/locale:
+    post:
+      tags:
+      - admin-affiliates
+      summary: Update partner locale
+      description: '`POST /3.0/admin/partner/{id}/locale`
+
+
+        Update a partner''s locale
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Partner ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                lang:
+                  type: string
+                  description: Language
+                timezone:
+                  type: string
+                  description: Timezone
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 1
+                message: Updated successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}/locale' \\\n  --header 'api-key: <api-key>' \\\n  --form 'lang=string' \\\n  --form 'timezone=string'"
+  /3.1/partner/auth:
+    post:
+      tags:
+      - admin-affiliates
+      summary: Check affiliate login credentials
+      description: '`POST /3.1/partner/auth`
+
+
+        Check affiliate login credentials (Can be used for build custom affiliate panel)
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email affiliate
+                password:
+                  type: string
+                  description: Password affiliate
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  url:
+                    type: string
+                  affiliate:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                      status:
+                        type: string
+              example:
+                status: 1
+                url: http://YOUR_WEBMASTER_URL/autologin?hash=****
+                affiliate:
+                  id: 999
+                  email: test@test.com
+                  status: active
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/partner/auth' \\\n  --header 'api-key: <api-key>' \\\n  --form 'email=string' \\\n  --form 'password=string'"
+  /3.0/admin/partner/{id}/referrals:
+    get:
+      tags:
+      - admin-affiliates
+      summary: Get partner referrals
+      description: '`GET /3.0/admin/partner/{id}/referrals`
+
+
+        Get a list of referrals for a specific partner.
+
+        '
+      parameters:
+      - name: api-key
+        in: header
+        description: API key
+        required: true
+        example: 23df424b0a53b0899f78685966243ee61
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Partner ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  referrals:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                        email:
+                          type: string
+                        login:
+                          type: string
+                        ref_percent:
+                          type: number
+                          nullable: true
+                        name:
+                          type: string
+                          nullable: true
+                        notes:
+                          type: string
+                        manager:
+                          type: object
+                          nullable: true
+                        status:
+                          type: string
+                        level:
+                          type: integer
+                        payment_systems:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              active:
+                                type: integer
+                              system:
+                                type: string
+                              fields:
+                                type: object
+                                additionalProperties:
+                                  type: string
+                        customFields:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                              label:
+                                type: string
+                              id:
+                                type: integer
+                        balance:
+                          type: object
+                          additionalProperties:
+                            type: object
+                            properties:
+                              balance:
+                                type: number
+                              hold:
+                                type: number
+                              available:
+                                type: number
+                        offersCount:
+                          type: integer
+                        api_key:
+                          type: string
+                        address_1:
+                          type: string
+                        address_2:
+                          type: string
+                        city:
+                          type: string
+                        country:
+                          type: string
+                        zip_code:
+                          type: string
+                        phone:
+                          type: string
+                        ref:
+                          type: string
+                        sub_accounts:
+                          type: object
+                          additionalProperties:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                              except:
+                                type: integer
+                  pagination:
+                    type: object
+                    properties:
+                      per_page:
+                        type: integer
+                      total_count:
+                        type: integer
+                      page:
+                        type: integer
+              example:
+                status: 1
+                referrals:
+                - id: 2
+                  created_at: '2019-05-04 16:55:58'
+                  updated_at: '2019-05-04 16:57:32'
+                  email: email@domain.aff
+                  login: login
+                  ref_percent: null
+                  name: null
+                  notes: Notes
+                  manager: null
+                  status: active
+                  level: 0
+                  payment_systems:
+                  - id: 1
+                    active: 0
+                    system: Webmoney
+                    fields:
+                      '1': '11111'
+                      '2': '22222'
+                  customFields:
+                  - name: Skype
+                    value: skype
+                    label: skype
+                    id: 1
+                  balance:
+                    RUB:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    USD:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    EUR:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                    BTC:
+                      balance: 0
+                      hold: 0
+                      available: 0
+                  offersCount: 1
+                  api_key: api_key
+                  address_1: adress 1
+                  address_2: adress 2
+                  city: New York
+                  country: US
+                  zip_code: '220089'
+                  phone: '375291111111'
+                  ref: '1'
+                  sub_accounts:
+                    '1':
+                      value: ''
+                      except: 0
+                    '2':
+                      value: ''
+                      except: 0
+                pagination:
+                  per_page: 100
+                  total_count: 1
+                  page: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+      - lang: cURL
+        label: cURL
+        source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}/referrals' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+x-tagGroups:
+- name: Admin API
+  tags:
+  - admin-advertisers
+  - admin-affiliates
+  - admin-offers
+  - admin-stats
+  - admin-conversions
+  - admin-users
+  - admin-presets
+  - admin-payments
+  - admin-billing
+  - admin-smartlinks
+  - admin-tickets
+  - admin-automation
+  - admin-adcosts
+  - admin-other
+- name: Advertiser API
+  tags:
+  - advertiser-auth
+  - advertiser-offers
+  - advertiser-stats
+- name: Affiliate API
+  tags:
+  - affiliate-profile
+  - affiliate-offers
+  - affiliate-stats
+  - affiliate-postbacks
+  - affiliate-conversions
+  - affiliate-pixels
+  - affiliate-smartlinks
+  - affiliate-news
+  - affiliate-other
+- name: Resources
+  tags:
+  - resources
