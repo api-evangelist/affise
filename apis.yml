@@ -766,6 +766,9 @@ apis:
   - type: DataModel
     url: data-model/affise-data-model.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/affise-capability-edges.yml
+    name: Affise Business Capability Map
   - type: Overlay
     url: overlays/affise-openapi-overlay.yaml
   - type: MCPServer
