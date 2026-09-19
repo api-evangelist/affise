@@ -36,7 +36,17 @@ url: https://raw.githubusercontent.com/api-evangelist/affise/refs/heads/main/api
 created: '2026-06-13'
 modified: '2026-08-13'
 specificationVersion: '0.23'
+x-docs-platform: slate
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-17
 tags:
+  - Affiliate Marketing
+  - Performance Marketing
+  - Conversion
+  - Publishers
+  - Analytics
+  - Attribution
+tags_raw:
   - Affiliate Marketing
   - Performance Marketing
   - Conversions
