@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.0/admin/partners`
 
 
-        Get list of partners
-
-        '
+        Get list of partners'
       parameters:
       - name: api-key
         in: header
@@ -317,6 +279,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partners?id[0]=2&with_balance=1&limit=50&status=active&manager[0]=5cd5fcced596c1280b3b6477&field[0]=skype_name&order=id&orderType=asc' \\\n  --header 'api-key: <api-key>'"
+      operationId: get30AdminPartners
+      x-operation-id-source: derived
   /3.0/admin/partner:
     post:
       tags:
@@ -325,9 +289,7 @@ paths:
       description: '`POST /3.0/admin/partner`
 
 
-        Add new partner
-
-        '
+        Add new partner'
       parameters:
       - name: api-key
         in: header
@@ -606,6 +568,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner' \\\n  --header 'api-key: <api-key>' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'country=string' \\\n  --form 'login=string' \\\n  --form 'contact_person=string' \\\n  --form 'ref_percent=string' \\\n  --form 'notes=string' \\\n  --form 'status=not active' \\\n  --form 'manager_id=string' \\\n  --form 'payment_systems[0][system_id]=0' \\\n  --form 'payment_systems[0][currency]=string' \\\n  --form 'custom_fields[0]=field1' \\\n  --form 'ref=0' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'notify=0' \\\n  --form 'tipalti_payee_id=0' \\\n  --form 'tags[0]=tag1' \\\n  --form 'tags[1]=tag2' \\\n  --form 'enabledOffers[0]=0' \\\n  --form 'enabledOffers[1]=1' \\\n  --form 'disabledOffers[0]=0' \\\n  --form 'disabledOffers[1]=1' \\\n  --form 'enabledAdvertisers[0]=string' \\\n  --form 'enabledAdvertisers[1]=string2' \\\n  --form 'disabledAdvertisers[0]=string' \\\n  --form 'disabledAdvertisers[1]=string2' \\\n  --form 'enabledSmartlinks[0]=string' \\\n  --form 'enabledSmartlinks[1]=string2' \\\n  --form 'disabledSmartlinks[0]=string' \\\n  --form 'disabledSmartlinks[1]=string2' \\\n  --form 'level=0' \\\n  --form 'default_postback=string' \\\n  --form 'affiliate_trafficback_url=string' \\\n  --form 'subaccount_id=0'"
+      operationId: post30AdminPartner
+      x-operation-id-source: derived
   /3.0/admin/partner/{id}:
     get:
       tags:
@@ -614,9 +578,7 @@ paths:
       description: '`GET /3.0/admin/partner/{id}`
 
 
-        Get affiliate by ID
-
-        '
+        Get affiliate by ID'
       parameters:
       - name: api-key
         in: header
@@ -830,6 +792,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}' \\\n  --header 'api-key: <api-key>'"
+      operationId: get30AdminPartnerById
+      x-operation-id-source: derived
     post:
       tags:
       - admin-affiliates
@@ -837,9 +801,7 @@ paths:
       description: '`POST /3.0/admin/partner/{id}`
 
 
-        Edit a partner
-
-        '
+        Edit a partner'
       parameters:
       - name: api-key
         in: header
@@ -1098,6 +1060,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'password=string' \\\n  --form 'email=string' \\\n  --form 'login=string' \\\n  --form 'country=string' \\\n  --form 'contact_person=string' \\\n  --form 'ref_percent=string' \\\n  --form 'notes=string' \\\n  --form 'status=' \\\n  --form 'manager_id=string' \\\n  --form 'custom_fields[0]=string' \\\n  --form 'custom_fields[1]=string2' \\\n  --form 'ref=0' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'tipalti_payee_id=0' \\\n  --form 'tags[0]=tag1' \\\n  --form 'enabledOffers[0]=0' \\\n  --form 'enabledOffers[1]=1' \\\n  --form 'disabledOffers[0]=0' \\\n  --form 'disabledOffers[1]=1' \\\n  --form 'enabledAdvertisers[0]=64414a2d9b70ab801d9b9a00' \\\n  --form 'disabledAdvertisers[0]=64414a2d9b70ab801d9b9a72' \\\n  --form 'enabledSmartlinks[0]=64414a2d9b44ab801d9b9a72' \\\n  --form 'disabledSmartlinks[0]=64414a2d9b70ab801d9b9a23' \\\n  --form 'level=0' \\\n  --form 'default_postback=string' \\\n  --form 'affiliate_trafficback_url=string' \\\n  --form 'subaccount_id=0'"
+      operationId: post30AdminPartnerById
+      x-operation-id-source: derived
   /3.0/admin/partners/mass-update:
     post:
       tags:
@@ -1106,9 +1070,7 @@ paths:
       description: '`POST /3.0/admin/partners/mass-update`
 
 
-        Update status and manager
-
-        '
+        Update status and manager'
       parameters:
       - name: api-key
         in: header
@@ -1164,6 +1126,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partners/mass-update' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'id[0]=0' \\\n  --form 'id[1]=1' \\\n  --form 'manager_id=5ce558efd596c1e4008b4569' \\\n  --form 'status=not active'"
+      operationId: post30AdminPartnersMassUpdate
+      x-operation-id-source: derived
   /3.0/admin/partner/password/{id}:
     post:
       tags:
@@ -1172,9 +1136,7 @@ paths:
       description: '`POST /3.0/admin/partner/password/{id}`
 
 
-        Change a partner''s password
-
-        '
+        Change a partner''s password'
       parameters:
       - name: api-key
         in: header
@@ -1221,6 +1183,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/password/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: post30AdminPartnerPasswordById
+      x-operation-id-source: derived
   /3.0/admin/partner/{id}/locale:
     post:
       tags:
@@ -1229,9 +1193,7 @@ paths:
       description: '`POST /3.0/admin/partner/{id}/locale`
 
 
-        Update a partner''s locale
-
-        '
+        Update a partner''s locale'
       parameters:
       - name: api-key
         in: header
@@ -1282,6 +1244,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}/locale' \\\n  --header 'api-key: <api-key>' \\\n  --form 'lang=string' \\\n  --form 'timezone=string'"
+      operationId: post30AdminPartnerByIdLocale
+      x-operation-id-source: derived
   /3.1/partner/auth:
     post:
       tags:
@@ -1290,9 +1254,7 @@ paths:
       description: '`POST /3.1/partner/auth`
 
 
-        Check affiliate login credentials (Can be used for build custom affiliate panel)
-
-        '
+        Check affiliate login credentials (Can be used for build custom affiliate panel)'
       parameters:
       - name: api-key
         in: header
@@ -1353,6 +1315,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/partner/auth' \\\n  --header 'api-key: <api-key>' \\\n  --form 'email=string' \\\n  --form 'password=string'"
+      operationId: post31PartnerAuth
+      x-operation-id-source: derived
   /3.0/admin/partner/{id}/referrals:
     get:
       tags:
@@ -1361,9 +1325,7 @@ paths:
       description: '`GET /3.0/admin/partner/{id}/referrals`
 
 
-        Get a list of referrals for a specific partner.
-
-        '
+        Get a list of referrals for a specific partner.'
       parameters:
       - name: api-key
         in: header
@@ -1568,21 +1530,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/partner/{id}/referrals' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30AdminPartnerByIdReferrals
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -1596,6 +1547,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

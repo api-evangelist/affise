@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.0/admin/advertiser/{id}`
 
 
-        Get advertiser by ID
-
-        '
+        Get advertiser by ID'
       parameters:
       - name: api-key
         in: header
@@ -252,6 +214,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30AdminAdvertiserById
+      x-operation-id-source: derived
     post:
       tags:
       - admin-advertisers
@@ -259,9 +223,7 @@ paths:
       description: '`POST /3.0/admin/advertiser/{id}`
 
 
-        Change an advertiser''s data
-
-        '
+        Change an advertiser''s data'
       parameters:
       - name: api-key
         in: header
@@ -521,6 +483,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}' \\\n  --header 'api-key: <api-key>' \\\n  --form 'title=string' \\\n  --form 'contact=string' \\\n  --form 'skype=string' \\\n  --form 'manager=string' \\\n  --form 'url=string' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'note=string' \\\n  --form 'address_1=string' \\\n  --form 'address_2=string' \\\n  --form 'city=string' \\\n  --form 'country=string' \\\n  --form 'zip_code=string' \\\n  --form 'vat_code=string' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'tags[0]=tag1' \\\n  --form 'tags[1]=tag2' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'hash_password=string' \\\n  --form 'skad_network_id[0]=string' \\\n  --form 'disabled_choice_postback_status=false' \\\n  --form 'affiliates_enabled[0]=0' \\\n  --form 'affiliates_enabled[1]=1' \\\n  --form 'affiliates_disabled[0]=0' \\\n  --form 'affiliates_disabled[1]=1' \\\n  --form 'disallowed_ip=string' \\\n  --form 'logo=string' \\\n  --form 'hide_conversion_status=false' \\\n  --form 'sign_clicks_appsflyer_key=false' \\\n  --form 'status=active' \\\n  --form 'hosts_only=false' \\\n  --form 'subaccounts_encryption=false' \\\n  --form 'host_uniqueness_number_unique_clicks=0' \\\n  --form 'host_uniqueness_time_frame=0'"
+      operationId: post30AdminAdvertiserById
+      x-operation-id-source: derived
   /3.0/admin/advertisers:
     get:
       tags:
@@ -529,9 +493,7 @@ paths:
       description: '`GET /3.0/admin/advertisers`
 
 
-        Get a list of advertisers
-
-        '
+        Get a list of advertisers'
       parameters:
       - name: api-key
         in: header
@@ -795,6 +757,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertisers?limit=100&order=id&orderType=asc&with_offers=1&id[0]=string&id[1]=string2&tags[0]=string&tags[1]=string2' \\\n  --header 'api-key: <api-key>'"
+      operationId: get30AdminAdvertisers
+      x-operation-id-source: derived
   /3.0/admin/advertiser:
     post:
       tags:
@@ -803,9 +767,7 @@ paths:
       description: '`POST /3.0/admin/advertiser`
 
 
-        Add new advertiser
-
-        '
+        Add new advertiser'
       parameters:
       - name: api-key
         in: header
@@ -1056,6 +1018,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser' \\\n  --header 'api-key: <api-key>' \\\n  --form 'title=string' \\\n  --form 'contact=string' \\\n  --form 'skype=string' \\\n  --form 'manager=string' \\\n  --form 'url=string' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'address_1=string' \\\n  --form 'address_2=string' \\\n  --form 'city=string' \\\n  --form 'country=string' \\\n  --form 'zip_code=string' \\\n  --form 'vat_code=string' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'hash_password=string' \\\n  --form 'skad_network_id[0]=string' \\\n  --form 'disabled_choice_postback_status=false' \\\n  --form 'affiliates_enabled[0]=0' \\\n  --form 'affiliates_enabled[1]=1' \\\n  --form 'affiliates_disabled[0]=0' \\\n  --form 'affiliates_disabled[1]=1' \\\n  --form 'note=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'logo=string' \\\n  --form 'hide_conversion_status=false' \\\n  --form 'sign_clicks_appsflyer_key=false' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'status=active' \\\n  --form 'hosts_only=false' \\\n  --form 'subaccounts_encryption=false' \\\n  --form 'host_uniqueness_number_unique_clicks=0' \\\n  --form 'host_uniqueness_time_frame=0'"
+      operationId: post30AdminAdvertiser
+      x-operation-id-source: derived
   /3.0/admin/advertiser/{id}/sendpass:
     post:
       tags:
@@ -1064,9 +1028,7 @@ paths:
       description: '`POST /3.0/admin/advertiser/{id}/sendpass`
 
 
-        Change an advertiser password and send it by email
-
-        '
+        Change an advertiser password and send it by email'
       parameters:
       - name: api-key
         in: header
@@ -1116,6 +1078,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/{id}/sendpass' \\\n  --header 'api-key: <api-key>' \\\n  --form 'password=string'"
+      operationId: post30AdminAdvertiserByIdSendpass
+      x-operation-id-source: derived
   /3.0/admin/advertiser/enable-affiliate:
     post:
       tags:
@@ -1124,9 +1088,7 @@ paths:
       description: '`POST /3.0/admin/advertiser/enable-affiliate`
 
 
-        Un-put affiliate from blacklist for specified advertisers
-
-        '
+        Un-put affiliate from blacklist for specified advertisers'
       parameters:
       - name: api-key
         in: header
@@ -1180,6 +1142,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/enable-affiliate' \\\n  --header 'api-key: <api-key>' \\\n  --form 'advertisers_id[0]=string' \\\n  --form 'pid=0'"
+      operationId: post30AdminAdvertiserEnableAffiliate
+      x-operation-id-source: derived
   /3.0/admin/advertiser/disable-affiliate:
     post:
       tags:
@@ -1188,9 +1152,7 @@ paths:
       description: '`POST /3.0/admin/advertiser/disable-affiliate`
 
 
-        Put affiliate to blacklist for specified advertisers
-
-        '
+        Put affiliate to blacklist for specified advertisers'
       parameters:
       - name: api-key
         in: header
@@ -1244,34 +1206,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/advertiser/disable-affiliate' \\\n  --header 'api-key: <api-key>' \\\n  --form 'advertisers_id[0]=string' \\\n  --form 'pid=0'"
+      operationId: post30AdminAdvertiserDisableAffiliate
+      x-operation-id-source: derived
 components:
   responses:
-    BadRequest:
-      description: Bad Request - The request was malformed or contained invalid parameters
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Bad Request
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
     NotFound:
       description: Not Found - Resource not found
       content:
@@ -1285,19 +1223,6 @@ components:
               message:
                 type: string
                 example: Resource Not Found
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -1311,6 +1236,45 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
 x-tagGroups:
 - name: Admin API
   tags:

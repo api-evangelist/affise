@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.1/automation/kpi`
 
 
-        Get list of kpi automation
-
-        '
+        Get list of kpi automation'
       parameters:
       - name: api-key
         in: header
@@ -127,6 +89,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi?page=1&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31AutomationKpi
+      x-operation-id-source: derived
     post:
       tags:
       - admin-automation
@@ -134,9 +98,7 @@ paths:
       description: '`POST /3.1/automation/kpi`
 
 
-        Create new kpi automation
-
-        '
+        Create new kpi automation'
       parameters:
       - name: api-key
         in: header
@@ -283,6 +245,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offers[0]=0' \\\n  --form 'offers[1]=1' \\\n  --form 'action_type=block' \\\n  --form 'period=hour' \\\n  --form 'sub=sub1' \\\n  --form 'change_to=confirmed' \\\n  --form 'affiliates[0]=0' \\\n  --form 'affiliates[1]=1' \\\n  --form 'goal1=string' \\\n  --form 'goal2=string' \\\n  --form 'kpi=0' \\\n  --form 'notify_manager=0'"
+      operationId: post31AutomationKpi
+      x-operation-id-source: derived
   /3.1/automation/kpi/{id}:
     post:
       tags:
@@ -291,9 +255,7 @@ paths:
       description: '`POST /3.1/automation/kpi/{id}`
 
 
-        Edit kpi automation
-
-        '
+        Edit kpi automation'
       parameters:
       - name: api-key
         in: header
@@ -446,6 +408,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offers[0]=0' \\\n  --form 'offers[1]=1' \\\n  --form 'action_type=block' \\\n  --form 'period=hour' \\\n  --form 'sub=sub1' \\\n  --form 'change_to=confirmed' \\\n  --form 'affiliates[0]=0' \\\n  --form 'affiliates[1]=1' \\\n  --form 'goal1=string' \\\n  --form 'goal2=string' \\\n  --form 'kpi=0' \\\n  --form 'notify_manager=0'"
+      operationId: post31AutomationKpiById
+      x-operation-id-source: derived
     delete:
       tags:
       - admin-automation
@@ -453,9 +417,7 @@ paths:
       description: '`DELETE /3.1/automation/kpi/{id}`
 
 
-        Remove kpi automation
-
-        '
+        Remove kpi automation'
       parameters:
       - name: Api-key
         in: header
@@ -498,6 +460,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/{id}' \\\n  --header 'Api-key: <Api-key>'"
+      operationId: delete31AutomationKpiById
+      x-operation-id-source: derived
   /3.1/automation/kpi/change-logs:
     get:
       tags:
@@ -506,9 +470,7 @@ paths:
       description: '`GET /3.1/automation/kpi/change-logs`
 
 
-        Get list of kpi automation changes
-
-        '
+        Get list of kpi automation changes'
       parameters:
       - name: api-key
         in: header
@@ -608,6 +570,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/change-logs?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&page=1&limit=10&offers[0]=0&offers[1]=1&affiliates[0]=0&affiliates[1]=1&type[0]=add' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31AutomationKpiChangeLogs
+      x-operation-id-source: derived
   /3.1/automation/kpi/block-logs:
     get:
       tags:
@@ -616,9 +580,7 @@ paths:
       description: '`GET /3.1/automation/kpi/block-logs`
 
 
-        Get list of kpi automation block logs
-
-        '
+        Get list of kpi automation block logs'
       parameters:
       - name: api-key
         in: header
@@ -747,6 +709,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/kpi/block-logs?page=1&limit=100&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[offers][0]=0&filter[offers][1]=1&filter[affiliates][0]=0&filter[affiliates][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31AutomationKpiBlockLogs
+      x-operation-id-source: derived
   /3.1/automation/cr-and-sub/block-logs:
     get:
       tags:
@@ -755,9 +719,7 @@ paths:
       description: '`GET /3.1/automation/cr-and-sub/block-logs`
 
 
-        Get list of cr and sub automation block logs
-
-        '
+        Get list of cr and sub automation block logs'
       parameters:
       - name: api-key
         in: header
@@ -910,21 +872,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/automation/cr-and-sub/block-logs?page=1&limit=100&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[advertisers][0]=string&filter[advertisers][1]=string2&filter[offers][0]=0&filter[offers][1]=1&filter[affiliates][0]=0&filter[affiliates][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31AutomationCrAndSubBlockLogs
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -938,6 +889,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

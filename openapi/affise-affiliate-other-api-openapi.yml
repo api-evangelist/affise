@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.0/balance`
 
 
-        Get current affiliate balance
-
-        '
+        Get current affiliate balance'
       parameters:
       - name: api-key
         in: header
@@ -124,6 +86,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/balance' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30Balance
+      x-operation-id-source: derived
   /3.1/product-feed/{product_feed_id}/items:
     get:
       tags:
@@ -132,9 +96,7 @@ paths:
       description: '`GET /3.1/product-feed/{product_feed_id}/items`
 
 
-        Get product feed items
-
-        '
+        Get product feed items'
       parameters:
       - name: API-Key
         in: header
@@ -249,21 +211,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/product-feed/{product_feed_id}/items?affiliate_id=<affiliate_id>&offer_id=<offer_id>' \\\n  --header 'API-Key: <API-Key>'"
+      operationId: get31ProductFeedByProductFeedIdItems
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -277,6 +228,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.1/advertiser/offers`
 
 
-        Retrieves a paginated list of offers available to the authenticated advertiser
-
-        '
+        Retrieves a paginated list of offers available to the authenticated advertiser'
       parameters:
       - name: Api-Key
         in: header
@@ -241,6 +203,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/advertiser/offers?page=1&limit=100' \\\n  --header 'Api-Key: <Api-Key>'"
+      operationId: get31AdvertiserOffers
+      x-operation-id-source: derived
   /3.1/advertiser/offers/{id}:
     get:
       tags:
@@ -249,9 +213,7 @@ paths:
       description: '`GET /3.1/advertiser/offers/{id}`
 
 
-        Retrieves an offer by ID for the authenticated advertiser
-
-        '
+        Retrieves an offer by ID for the authenticated advertiser'
       parameters:
       - name: api-key
         in: header
@@ -406,6 +368,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/advertiser/offers/{id}' \\\n  --header 'api-key: 86cf36ea9f74d822c64ebcccc4ee2c09'"
+      operationId: get31AdvertiserOffersById
+      x-operation-id-source: derived
   /3.0/offers:
     get:
       tags:
@@ -414,9 +378,7 @@ paths:
       description: '`GET /3.0/offers`
 
 
-        Get a list of offers
-
-        '
+        Get a list of offers'
       parameters:
       - name: api-key
         in: header
@@ -608,6 +570,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offers?int_id[0]=234&countries[0]=US&os[0]=&categories[0]=5368afb23b7d9b4d5d505342&caps_type=clicks&sort[id]=asc&limit=100&status[0]=active&advertiser[0]=55b204663b7d9b460b8b45b2&privacy[0]=0&is_top=0&smartlink_categories[0]=55b204663b7d9b460b8b45b2&advertiser_manager_id[0]=55b204663b7d9b460b8b45b2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30Offers
+      x-operation-id-source: derived
   /3.0/offer/{id}:
     get:
       tags:
@@ -616,9 +580,7 @@ paths:
       description: '`GET /3.0/offer/{id}`
 
 
-        Get full information of an offer
-
-        '
+        Get full information of an offer'
       parameters:
       - name: api-key
         in: header
@@ -650,6 +612,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30OfferById
+      x-operation-id-source: derived
   /3.0/offer/categories:
     get:
       tags:
@@ -658,9 +622,7 @@ paths:
       description: '`GET /3.0/offer/categories`
 
 
-        List of a categories
-
-        '
+        List of a categories'
       parameters:
       - name: api-key
         in: header
@@ -756,8 +718,78 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/categories?ids[0]=string&ids[1]=string2&limit=99999&orderType=asc&order=id' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30OfferCategories
+      x-operation-id-source: derived
 components:
   schemas:
+    offer_caps_structure:
+      type: object
+      description: Cap item structure
+      properties:
+        period:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          - all
+          description: 'Possible values: hour (if enabled), day, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          - clicks
+          - impressions
+          description: 'Possible values: budget, conversions, clicks, impressions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
+        goal_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
+        country:
+          type: array
+          items:
+            type: string
+          description: 'Array[string]. Values: Country codes.'
+        country_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
+        sub_number:
+          type: integer
+          description: '[integer]. Possible values: 2.'
+          enum:
+          - 2
+        sub_value:
+          type: array
+          items:
+            type: string
     targeting_browser_version_structure:
       type: object
       description: Browser version structure for targeting
@@ -777,25 +809,393 @@ components:
         version:
           type: string
           description: Browser's version for comparison.
-    targeting_os_structure:
+    offer_tier_structure:
       type: object
-      description: OS structure for targeting
+      description: Commission tier item structure
       properties:
-        name:
-          type: string
-          description: OS name that could be found at OSes list method.
-        comparison:
+        timeframe:
           type: string
           enum:
-          - LT
-          - LTE
-          - EQ
-          - GT
-          - GTE
-          description: Comparison operation for OS version.
-        version:
+          - day
+          - week
+          - month
+          - all
+          description: 'Possible values: day, week, month, all'
+        type:
           type: string
-          description: OS version for comparison.
+          enum:
+          - budget
+          - conversions
+          description: 'Possible values: budget, conversions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        modifier_value:
+          type: number
+          format: float
+          description: The float value.
+        modifier_type:
+          type: string
+          enum:
+          - by_fix
+          - by_percent
+          - to_fix
+          - to_percent
+          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty.
+        target_goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies target goal value or is empty.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          default: each
+          description: 'Possible values: all, each, exact. Default: each.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed.
+        modifier_payment_type:
+          type: string
+          enum:
+          - payout
+          - total
+          - payout_and_total
+          default: payout
+          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
+        countries:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Countries ISO codes
+        conversion_status:
+          type: array
+          items:
+            type: string
+            enum:
+            - confirmed
+            - pending
+            - declined
+            - hold
+          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
+    targeting_group_structure:
+      type: object
+      description: Targeting group structure
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: id in UUID format
+        enabled:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable targeting group
+        name:
+          type: string
+          description: name for targeting group
+        condition:
+          type: string
+          enum:
+          - and
+          - or
+          description: condition for rules in targeting group
+        country:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied countries. Example: country[allow][]=US'
+        region:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied regions for chosen country(ISO). Example: region[allow][US]=33'
+        city:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied cities for chosen country(ISO). Example: city[allow][US]=57'
+        os:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_os_structure'
+          description: list of allowed OSes and them versions.
+        os_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in os
+        isp:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+          description: 'list of allowed/denied ISP for chosen country(ISO). Example: isp[allow][US]=Att'
+        isp_organization:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed ISP organizations. Set deny_empty to block empty isp organizations.
+        ip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            ipv6_deny:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied ip ranges (IPv4 , IPv6).
+        device_type:
+          type: array
+          items:
+            type: string
+            enum:
+            - mobile
+            - tablet
+            - desktop
+            - mediahub
+            - ereader
+            - console
+            - tv
+            - smartwatch
+          description: list of allowed device types.
+        device_type_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in device_type
+        device_model:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of allowed/denied device models.
+        browser_version:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+            deny:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+          description: list of allowed/denied browsers and their versions.
+        browser:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied browsers. Example: browser[deny][] = "Edge"'
+        brand:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied device brands. Example: brand[deny][] = "SAMTEL"'
+        sub:
+          type: object
+          description: Complex sub-account targeting rules.
+        connection:
+          type: array
+          items:
+            type: string
+            enum:
+            - wi-fi
+            - cellular
+          description: list of allowed connection types.
+        connection_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in connection
+        block_proxy:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable "Click-level Anti-fraud" feature
+        block_known_bots:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable blocking of known bots
+        affiliate_id:
+          type: array
+          items:
+            type: integer
+          description: list of affiliates for personal targeting groups.
+        url:
+          type: string
+          description: Additional Tracking URL
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/targeting_url_weight'
+          description: URLs with weights for traffic redistribution between several track-links
+        referrer:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+            is_regexp:
+              type: integer
+              enum:
+              - 0
+              - 1
+              description: Set to 1 to enable regular expressions in allow or deny values
+          description: list of allowed/denied referrers. Set deny_empty to block empty referrers. Set is_regexp to enable regular expressions in allow or deny values.
+        ua:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_crawlers:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied user agents. Set deny_crawlers to block known crawlers.
+        zip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of zip codes
+        macros_replacement:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: 'Available if the Macros Replacement feature is enabled. Example of the structure: macros_replacement[sub1][]=value'
+        macros_replacement_enabled:
+          type: array
+          items:
+            type: string
+          description: Available if the Macros Replacement feature is enabled.
     offer_affiliate:
       type: object
       properties:
@@ -1159,314 +1559,165 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    targeting_group_structure:
+    offer_payment_structure:
       type: object
-      description: Targeting group structure
+      description: Payment item structure
       properties:
         id:
-          type: string
-          format: uuid
-          description: id in UUID format
-        enabled:
           type: integer
-          enum:
-          - 0
-          - 1
-          description: enable/disable targeting group
-        name:
+          description: Payment id
+        title:
           type: string
-          description: name for targeting group
-        condition:
-          type: string
-          enum:
-          - and
-          - or
-          description: condition for rules in targeting group
-        country:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied countries. Example: country[allow][]=US'
-        region:
-          type: object
-          properties:
-            allow:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-          description: 'list of allowed/denied regions for chosen country(ISO). Example: region[allow][US]=33'
-        city:
-          type: object
-          properties:
-            allow:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-          description: 'list of allowed/denied cities for chosen country(ISO). Example: city[allow][US]=57'
-        os:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_os_structure'
-          description: list of allowed OSes and them versions.
-        os_deny:
-          type: integer
-          enum:
-          - 0
-          - 1
-          default: 0
-          description: When set to 1 blocks values listed in os
-        isp:
-          type: object
-          properties:
-            allow:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-          description: 'list of allowed/denied ISP for chosen country(ISO). Example: isp[allow][US]=Att'
-        isp_organization:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_empty:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed ISP organizations. Set deny_empty to block empty isp organizations.
-        ip:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            ipv6_deny:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed/denied ip ranges (IPv4 , IPv6).
-        device_type:
+          description: Payment title
+        countries:
           type: array
           items:
             type: string
-            enum:
-            - mobile
-            - tablet
-            - desktop
-            - mediahub
-            - ereader
-            - console
-            - tv
-            - smartwatch
-          description: list of allowed device types.
-        device_type_deny:
+          description: An array of countries in ISO format (or put empty string to clear existing items)
+        country_exclude:
           type: integer
           enum:
           - 0
           - 1
-          default: 0
-          description: When set to 1 blocks values listed in device_type
-        device_model:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: list of allowed/denied device models.
-        browser_version:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_browser_version_structure'
-            deny:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_browser_version_structure'
-          description: list of allowed/denied browsers and their versions.
-        browser:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied browsers. Example: browser[deny][] = "Edge"'
-        brand:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied device brands. Example: brand[deny][] = "SAMTEL"'
-        sub:
-          type: object
-          description: Complex sub-account targeting rules.
-        connection:
-          type: array
-          items:
-            type: string
-            enum:
-            - wi-fi
-            - cellular
-          description: list of allowed connection types.
-        connection_deny:
-          type: integer
-          enum:
-          - 0
-          - 1
-          default: 0
-          description: When set to 1 blocks values listed in connection
-        block_proxy:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: enable/disable "Click-level Anti-fraud" feature
-        block_known_bots:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: enable/disable blocking of known bots
-        affiliate_id:
+          description: Exclude these countries. Available:0,1
+        cities:
           type: array
           items:
             type: integer
-          description: list of affiliates for personal targeting groups.
-        url:
-          type: string
-          description: Additional Tracking URL
-        urls:
-          type: array
-          items:
-            $ref: '#/components/schemas/targeting_url_weight'
-          description: URLs with weights for traffic redistribution between several track-links
-        referrer:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_empty:
-              type: integer
-              enum:
-              - 0
-              - 1
-            is_regexp:
-              type: integer
-              enum:
-              - 0
-              - 1
-              description: Set to 1 to enable regular expressions in allow or deny values
-          description: list of allowed/denied referrers. Set deny_empty to block empty referrers. Set is_regexp to enable regular expressions in allow or deny values.
-        ua:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_crawlers:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed/denied user agents. Set deny_crawlers to block known crawlers.
-        zip:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: list of zip codes
-        macros_replacement:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: 'Available if the Macros Replacement feature is enabled. Example of the structure: macros_replacement[sub1][]=value'
-        macros_replacement_enabled:
+          description: An array of id cities (or put empty string to clear existing items)
+        devices:
           type: array
           items:
             type: string
-          description: Available if the Macros Replacement feature is enabled.
+            enum:
+            - mediahub
+            - mobile
+            - ereader
+            - console
+            - tv
+            - tablet
+            - desktop
+            - smartwatch
+          description: The array of devices. (or put empty string to clear existing items)
+        os:
+          type: string
+          description: Possible values can be found in oses-list
+        goal:
+          type: string
+          description: Value targets
+        total:
+          type: number
+          description: The amount of payment
+        revenue:
+          type: number
+          description: Payment webmaster
+        currency:
+          type: string
+          description: Currency (Code in ECB format)
+        type:
+          type: string
+          enum:
+          - fixed
+          - percent
+          - mixed
+          - cpc
+          - cpm
+          - first_cpa
+          - first_cps
+          - baseline_onetime
+          - baseline_accumulating
+          description: Type of payment.
+        sub1:
+          type: string
+          description: Comma-separated sub values for sub1
+        sub2:
+          type: string
+          description: Comma-separated sub values for sub2
+        sub3:
+          type: string
+          description: Comma-separated sub values for sub3
+        sub4:
+          type: string
+          description: Comma-separated sub values for sub4
+        sub5:
+          type: string
+          description: Comma-separated sub values for sub5
+        sub6:
+          type: string
+          description: Comma-separated sub values for sub6
+        sub7:
+          type: string
+          description: Comma-separated sub values for sub7
+        sub8:
+          type: string
+          description: Comma-separated sub values for sub8
+        custom_field1:
+          type: string
+        custom_field2:
+          type: string
+        custom_field3:
+          type: string
+        custom_field4:
+          type: string
+        custom_field5:
+          type: string
+        custom_field6:
+          type: string
+        custom_field7:
+          type: string
+        custom_field8:
+          type: string
+        custom_field9:
+          type: string
+        custom_field10:
+          type: string
+        custom_field11:
+          type: string
+        custom_field12:
+          type: string
+        custom_field13:
+          type: string
+        custom_field14:
+          type: string
+        custom_field15:
+          type: string
+        baseline_value:
+          type: number
+          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
+      required:
+      - currency
+      - type
+    targeting_os_structure:
+      type: object
+      description: OS structure for targeting
+      properties:
+        name:
+          type: string
+          description: OS name that could be found at OSes list method.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for OS version.
+        version:
+          type: string
+          description: OS version for comparison.
+    targeting_url_weight:
+      type: object
+      description: URL with weight for traffic redistribution
+      properties:
+        url:
+          type: string
+          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
+        weight:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
     offer_landing_structure:
       type: object
       properties:
@@ -1493,86 +1744,6 @@ components:
       - title
       - url
       - url_preview
-    targeting_url_weight:
-      type: object
-      description: URL with weight for traffic redistribution
-      properties:
-        url:
-          type: string
-          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
-        weight:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
-    offer_caps_structure:
-      type: object
-      description: Cap item structure
-      properties:
-        period:
-          type: string
-          enum:
-          - hour
-          - day
-          - month
-          - all
-          description: 'Possible values: hour (if enabled), day, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          - clicks
-          - impressions
-          description: 'Possible values: budget, conversions, clicks, impressions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
-        goal_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
-        country:
-          type: array
-          items:
-            type: string
-          description: 'Array[string]. Values: Country codes.'
-        country_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
-        sub_number:
-          type: integer
-          description: '[integer]. Possible values: 2.'
-          enum:
-          - 2
-        sub_value:
-          type: array
-          items:
-            type: string
     offer:
       type: object
       properties:
@@ -1829,214 +2000,20 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    offer_tier_structure:
-      type: object
-      description: Commission tier item structure
-      properties:
-        timeframe:
-          type: string
-          enum:
-          - day
-          - week
-          - month
-          - all
-          description: 'Possible values: day, week, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          description: 'Possible values: budget, conversions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        modifier_value:
-          type: number
-          format: float
-          description: The float value.
-        modifier_type:
-          type: string
-          enum:
-          - by_fix
-          - by_percent
-          - to_fix
-          - to_percent
-          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty.
-        target_goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies target goal value or is empty.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          default: each
-          description: 'Possible values: all, each, exact. Default: each.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed.
-        modifier_payment_type:
-          type: string
-          enum:
-          - payout
-          - total
-          - payout_and_total
-          default: payout
-          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
-        countries:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Countries ISO codes
-        conversion_status:
-          type: array
-          items:
-            type: string
-            enum:
-            - confirmed
-            - pending
-            - declined
-            - hold
-          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
-    offer_payment_structure:
-      type: object
-      description: Payment item structure
-      properties:
-        id:
-          type: integer
-          description: Payment id
-        title:
-          type: string
-          description: Payment title
-        countries:
-          type: array
-          items:
-            type: string
-          description: An array of countries in ISO format (or put empty string to clear existing items)
-        country_exclude:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: Exclude these countries. Available:0,1
-        cities:
-          type: array
-          items:
-            type: integer
-          description: An array of id cities (or put empty string to clear existing items)
-        devices:
-          type: array
-          items:
-            type: string
-            enum:
-            - mediahub
-            - mobile
-            - ereader
-            - console
-            - tv
-            - tablet
-            - desktop
-            - smartwatch
-          description: The array of devices. (or put empty string to clear existing items)
-        os:
-          type: string
-          description: Possible values can be found in oses-list
-        goal:
-          type: string
-          description: Value targets
-        total:
-          type: number
-          description: The amount of payment
-        revenue:
-          type: number
-          description: Payment webmaster
-        currency:
-          type: string
-          description: Currency (Code in ECB format)
-        type:
-          type: string
-          enum:
-          - fixed
-          - percent
-          - mixed
-          - cpc
-          - cpm
-          - first_cpa
-          - first_cps
-          - baseline_onetime
-          - baseline_accumulating
-          description: Type of payment.
-        sub1:
-          type: string
-          description: Comma-separated sub values for sub1
-        sub2:
-          type: string
-          description: Comma-separated sub values for sub2
-        sub3:
-          type: string
-          description: Comma-separated sub values for sub3
-        sub4:
-          type: string
-          description: Comma-separated sub values for sub4
-        sub5:
-          type: string
-          description: Comma-separated sub values for sub5
-        sub6:
-          type: string
-          description: Comma-separated sub values for sub6
-        sub7:
-          type: string
-          description: Comma-separated sub values for sub7
-        sub8:
-          type: string
-          description: Comma-separated sub values for sub8
-        custom_field1:
-          type: string
-        custom_field2:
-          type: string
-        custom_field3:
-          type: string
-        custom_field4:
-          type: string
-        custom_field5:
-          type: string
-        custom_field6:
-          type: string
-        custom_field7:
-          type: string
-        custom_field8:
-          type: string
-        custom_field9:
-          type: string
-        custom_field10:
-          type: string
-        custom_field11:
-          type: string
-        custom_field12:
-          type: string
-        custom_field13:
-          type: string
-        custom_field14:
-          type: string
-        custom_field15:
-          type: string
-        baseline_value:
-          type: number
-          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
-      required:
-      - currency
-      - type
   responses:
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -2063,19 +2040,6 @@ components:
               message:
                 type: string
                 example: Auth Denied
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Token is necessary
 x-tagGroups:
 - name: Admin API
   tags:

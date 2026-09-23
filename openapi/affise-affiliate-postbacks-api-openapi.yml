@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.0/admin/postbacks`
 
 
-        Get a list of partner postbacks
-
-        '
+        Get a list of partner postbacks'
       parameters:
       - name: api-key
         in: header
@@ -195,6 +157,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/postbacks?partner_id=<partner_id>&limit=100&offer_ids[0]=906&only_global=0&verbose=0' \\\n  --header 'api-key: <api-key>'"
+      operationId: get30AdminPostbacks
+      x-operation-id-source: derived
   /3.0/partner/postback:
     post:
       tags:
@@ -203,9 +167,7 @@ paths:
       description: '`POST /3.0/partner/postback`
 
 
-        Add a partner''s postback
-
-        '
+        Add a partner''s postback'
       parameters:
       - name: api-key
         in: header
@@ -432,6 +394,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id=0' \\\n  --form 'url=string' \\\n  --form 'status=by_creating' \\\n  --form 'goal=string' \\\n  --form 'pid=0' \\\n  --form 'integration_method=all' \\\n  --form 'forced=0' \\\n  --form 'meta[action_source]=string' \\\n  --form 'meta[city]=string' \\\n  --form 'meta[click_date]=string' \\\n  --form 'meta[comment]=string' \\\n  --form 'meta[currency]=string' \\\n  --form 'meta[custom_event_currency]=string' \\\n  --form 'meta[custom_event_value]=string' \\\n  --form 'meta[custom_field1]=string' \\\n  --form 'meta[custom_field2]=string' \\\n  --form 'meta[custom_field3]=string' \\\n  --form 'meta[custom_field4]=string' \\\n  --form 'meta[custom_field5]=string' \\\n  --form 'meta[custom_field6]=string' \\\n  --form 'meta[custom_field7]=string' \\\n  --form 'meta[date]=string' \\\n  --form 'meta[date_only]=string' \\\n  --form 'meta[device_type]=string' \\\n  --form 'meta[event_name]=string' \\\n  --form 'meta[event_url]=string' \\\n  --form 'meta[ext1]=string' \\\n  --form 'meta[ext2]=string' \\\n  --form 'meta[ext3]=string' \\\n  --form 'meta[fbclid]=string' \\\n  --form 'meta[geo]=string' \\\n  --form 'meta[ip]=string' \\\n  --form 'meta[meta_access_token]=string' \\\n  --form 'meta[meta_pixel_id]=string' \\\n  --form 'meta[order_currency]=string' \\\n  --form 'meta[order_sum]=string' \\\n  --form 'meta[os]=string' \\\n  --form 'meta[os_id]=string' \\\n  --form 'meta[promo_code]=string' \\\n  --form 'meta[rand]=string' \\\n  --form 'meta[ref_id]=string' \\\n  --form 'meta[referrer]=string' \\\n  --form 'meta[sub1]=string' \\\n  --form 'meta[sub2]=string' \\\n  --form 'meta[sub3]=string' \\\n  --form 'meta[sub4]=string' \\\n  --form 'meta[sub5]=string' \\\n  --form 'meta[sub6]=string' \\\n  --form 'meta[sub7]=string' \\\n  --form 'meta[sub8]=string' \\\n  --form 'meta[sum]=string' \\\n  --form 'meta[time]=string' \\\n  --form 'meta[timestamp]=string' \\\n  --form 'meta[transaction_id]=string' \\\n  --form 'meta[user_agent]=string' \\\n  --form 'meta[user_id]=string' \\\n  --form 'meta[status]=string' \\\n  --form 'meta[offer_id]=string' \\\n  --form 'meta[offer_name]=string' \\\n  --form 'meta[goal]=string' \\\n  --form 'custom_filter_field=string' \\\n  --form 'custom_filter_text=string'"
+      operationId: post30PartnerPostback
+      x-operation-id-source: derived
   /3.0/partner/postback/{id}:
     post:
       tags:
@@ -440,9 +404,7 @@ paths:
       description: '`POST /3.0/partner/postback/{id}`
 
 
-        Edit a partner''s postback
-
-        '
+        Edit a partner''s postback'
       parameters:
       - name: api-key
         in: header
@@ -652,6 +614,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'url=string' \\\n  --form 'status=by_creating' \\\n  --form 'goal=string' \\\n  --form 'integration_method=all' \\\n  --form 'forced=0' \\\n  --form 'meta[action_source]=string' \\\n  --form 'meta[city]=string' \\\n  --form 'meta[click_date]=string' \\\n  --form 'meta[comment]=string' \\\n  --form 'meta[currency]=string' \\\n  --form 'meta[custom_event_currency]=string' \\\n  --form 'meta[custom_event_value]=string' \\\n  --form 'meta[custom_field1]=string' \\\n  --form 'meta[custom_field2]=string' \\\n  --form 'meta[custom_field3]=string' \\\n  --form 'meta[custom_field4]=string' \\\n  --form 'meta[custom_field5]=string' \\\n  --form 'meta[custom_field6]=string' \\\n  --form 'meta[custom_field7]=string' \\\n  --form 'meta[date]=string' \\\n  --form 'meta[date_only]=string' \\\n  --form 'meta[device_type]=string' \\\n  --form 'meta[event_name]=string' \\\n  --form 'meta[event_url]=string' \\\n  --form 'meta[ext1]=string' \\\n  --form 'meta[ext2]=string' \\\n  --form 'meta[ext3]=string' \\\n  --form 'meta[fbclid]=string' \\\n  --form 'meta[geo]=string' \\\n  --form 'meta[ip]=string' \\\n  --form 'meta[meta_access_token]=string' \\\n  --form 'meta[meta_pixel_id]=string' \\\n  --form 'meta[order_currency]=string' \\\n  --form 'meta[order_sum]=string' \\\n  --form 'meta[os]=string' \\\n  --form 'meta[os_id]=string' \\\n  --form 'meta[promo_code]=string' \\\n  --form 'meta[rand]=string' \\\n  --form 'meta[ref_id]=string' \\\n  --form 'meta[referrer]=string' \\\n  --form 'meta[sub1]=string' \\\n  --form 'meta[sub2]=string' \\\n  --form 'meta[sub3]=string' \\\n  --form 'meta[sub4]=string' \\\n  --form 'meta[sub5]=string' \\\n  --form 'meta[sub6]=string' \\\n  --form 'meta[sub7]=string' \\\n  --form 'meta[sub8]=string' \\\n  --form 'meta[sum]=string' \\\n  --form 'meta[time]=string' \\\n  --form 'meta[timestamp]=string' \\\n  --form 'meta[transaction_id]=string' \\\n  --form 'meta[user_agent]=string' \\\n  --form 'meta[user_id]=string' \\\n  --form 'meta[status]=string' \\\n  --form 'meta[offer_id]=string' \\\n  --form 'meta[offer_name]=string' \\\n  --form 'meta[goal]=string' \\\n  --form 'custom_filter_field=string' \\\n  --form 'custom_filter_text=string' \\\n  --form 'offer_id=0' \\\n  --form 'pid=0'"
+      operationId: post30PartnerPostbackById
+      x-operation-id-source: derived
   /3.0/partner/postback/{id}/remove:
     delete:
       tags:
@@ -660,9 +624,7 @@ paths:
       description: '`DELETE /3.0/partner/postback/{id}/remove`
 
 
-        Delete a partner''s postback
-
-        '
+        Delete a partner''s postback'
       parameters:
       - name: api-key
         in: header
@@ -711,6 +673,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postback/{id}/remove' \\\n  --header 'api-key: <api-key>'"
+      operationId: delete30PartnerPostbackByIdRemove
+      x-operation-id-source: derived
   /3.0/partner/postbacks/by-offers:
     delete:
       tags:
@@ -719,9 +683,7 @@ paths:
       description: '`DELETE /3.0/partner/postbacks/by-offers`
 
 
-        Delete partners postbacks by offers ids
-
-        '
+        Delete partners postbacks by offers ids'
       parameters:
       - name: api-key
         in: header
@@ -748,6 +710,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postbacks/by-offers?ids=<ids>' \\\n  --header 'api-key: <api-key>'"
+      operationId: delete30PartnerPostbacksByOffers
+      x-operation-id-source: derived
   /3.0/partner/postbacks/by-affiliates:
     delete:
       tags:
@@ -756,9 +720,7 @@ paths:
       description: '`DELETE /3.0/partner/postbacks/by-affiliates`
 
 
-        Delete partners postbacks by affiliates ids
-
-        '
+        Delete partners postbacks by affiliates ids'
       parameters:
       - name: api-key
         in: header
@@ -785,21 +747,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/partner/postbacks/by-affiliates?ids=<ids>' \\\n  --header 'api-key: <api-key>'"
+      operationId: delete30PartnerPostbacksByAffiliates
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -813,6 +764,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -51,21 +15,19 @@ servers:
       default: 685168e94e6a96fa7c31895e
       description: Demo Test API Key
 tags:
-- name: admin-offers
+- name: Admin - Offers
   x-displayName: Offers
   description: Admin offer management — create, edit, delete, mass-update, categories, sources, creatives
 paths:
   /3.0/admin/offer:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Add offer
       description: '`POST /3.0/admin/offer`
 
 
-        Add new offer
-
-        '
+        Add new offer'
       parameters:
       - name: API-Key
         in: header
@@ -772,17 +734,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer' \\\n  --header 'API-Key: <API-Key>' \\\n  --form 'title=string' \\\n  --form 'advertiser=string' \\\n  --form 'url=string' \\\n  --form 'parallel_tracking_url=string' \\\n  --form 'cross_postback_url=string' \\\n  --form 'cross_postback_method=get' \\\n  --form 'cross_postback_body=string' \\\n  --form 'macro_url=string' \\\n  --form 'url_preview=string' \\\n  --form 'trafficback_url=string' \\\n  --form 'description_lang[en]=string' \\\n  --form 'description_lang[ru]=string' \\\n  --form 'stopDate=string' \\\n  --form 'creativeFiles[0]=string' \\\n  --form 'creativeFiles[1]=string2' \\\n  --form 'creativeUrls[0]=string' \\\n  --form 'creativeUrls[1]=string2' \\\n  --form 'creativeDownloads[0]=string' \\\n  --form 'creativeDownloads[1]=string2' \\\n  --form 'creativeAssets[0]=string' \\\n  --form 'creativeAssets[1]=string2' \\\n  --form 'sources[0]=string' \\\n  --form 'sources[1]=string2' \\\n  --form 'logo=string' \\\n  --form 'status=stopped' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'privacy=public' \\\n  --form 'is_top=0' \\\n  --form 'is_cpi=0' \\\n  --form 'partner_payments[0][partners][0]=0' \\\n  --form 'partner_payments[0][partners][1]=1' \\\n  --form 'notice_percent_overcap=0' \\\n  --form 'strictly_country=0' \\\n  --form 'strictly_connection_type=' \\\n  --form 'strictly_devices[0]=string' \\\n  --form 'strictly_devices[1]=string2' \\\n  --form 'strictly_brands[0]=string' \\\n  --form 'strictly_brands[1]=string2' \\\n  --form 'caps_status[0]=confirmed' \\\n  --form 'caps_timezone=string' \\\n  --form 'enabled_commission_tiers=0' \\\n  --form 'hold_period=0' \\\n  --form 'hold_type=days' \\\n  --form 'categories[0]=string' \\\n  --form 'categories[1]=string2' \\\n  --form 'notes=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'hash_password=string' \\\n  --form 'allow_deeplink=0' \\\n  --form 'hide_referer=0' \\\n  --form 'redirect_type=http302' \\\n  --form 'schedule[date_start]=string' \\\n  --form 'is_redirect_overcap=0' \\\n  --form 'hide_payments=0' \\\n  --form 'click_session=1y' \\\n  --form 'minimal_click_session=0s' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'smartlink_categories[0]=string' \\\n  --form 'smartlink_categories[1]=string2' \\\n  --form 'kpi[en]=string' \\\n  --form 'kpi[ru]=string' \\\n  --form 'uniqIpOnly=0' \\\n  --form 'rejectNotUniqIp=0' \\\n  --form 'external_offer_id=string' \\\n  --form 'bundle_id=string' \\\n  --form 'note_aff=string' \\\n  --form 'note_sales=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'hide_caps=0' \\\n  --form 'search_empty_sub=0' \\\n  --form 'caps_goal_overcap=string' \\\n  --form 'allow_impressions=0' \\\n  --form 'impressions_url=string' \\\n  --form 'additional_impression_destination_urls=string' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'tracking_domain=string' \\\n  --form 'duplicate_clicks_threshold=0' \\\n  --form 'macros_replacement_enabled[0]=sub1' \\\n  --form 'auto_offer_connect=0' \\\n  --form 'creatives[0][file_name]=string' \\\n  --form 'creatives[0][width]=0' \\\n  --form 'creatives[0][height]=0' \\\n  --form 'creativeFileTitles[0]=string' \\\n  --form 'creativeFileTitles[1]=string2' \\\n  --form 'creativeUrlTitles[0]=string' \\\n  --form 'creativeUrlTitles[1]=string2' \\\n  --form 'creativeDownloadTitles[0]=string' \\\n  --form 'creativeDownloadTitles[1]=string2' \\\n  --form 'freshness=default' \\\n  --form 'privacy_level=0' \\\n  --form 'start_at=string' \\\n  --form 'send_emails=0' \\\n  --form 'overcap=0' \\\n  --form 'is_impression_overcap=0' \\\n  --form 'skad_app_id=string' \\\n  --form 'redirect_param=string' \\\n  --form 'managers[0]=string' \\\n  --form 'managers[1]=string2' \\\n  --form 'hosts_only=0' \\\n  --form 'host_uniqueness_type=cookie' \\\n  --form 'product_feed_id=string'"
+      operationId: post30AdminOffer
+      x-operation-id-source: derived
   /3.0/admin/offer/{id}:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Edit offer
       description: '`POST /3.0/admin/offer/{id}`
 
 
-        Change an offer settings
-
-        '
+        Change an offer settings'
       parameters:
       - name: api-key
         in: header
@@ -1480,17 +1442,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string' \\\n  --form 'advertiser=string' \\\n  --form 'url=string' \\\n  --form 'parallel_tracking_url=string' \\\n  --form 'cross_postback_url=string' \\\n  --form 'cross_postback_method=get' \\\n  --form 'cross_postback_body=string' \\\n  --form 'macro_url=string' \\\n  --form 'url_preview=string' \\\n  --form 'trafficback_url=string' \\\n  --form 'description_lang[en]=string' \\\n  --form 'description_lang[ru]=string' \\\n  --form 'kpi[en]=string' \\\n  --form 'kpi[ru]=string' \\\n  --form 'stopDate=string' \\\n  --form 'creativeFiles[0]=string' \\\n  --form 'creativeFiles[1]=string2' \\\n  --form 'creativeUrls[0]=string' \\\n  --form 'creativeUrls[1]=string2' \\\n  --form 'creativeDownloads[0]=string' \\\n  --form 'creativeDownloads[1]=string2' \\\n  --form 'creativeAssets[0]=string' \\\n  --form 'creativeAssets[1]=string2' \\\n  --form 'creativeFileTitles[0]=string' \\\n  --form 'creativeFileTitles[1]=string2' \\\n  --form 'creativeUrlTitles[0]=string' \\\n  --form 'creativeUrlTitles[1]=string2' \\\n  --form 'creativeDownloadTitles[0]=string' \\\n  --form 'creativeDownloadTitles[1]=string2' \\\n  --form 'sources[0]=string' \\\n  --form 'sources[1]=string2' \\\n  --form 'logo=string' \\\n  --form 'status=stopped' \\\n  --form 'tags[0]=string' \\\n  --form 'tags[1]=string2' \\\n  --form 'privacy=public' \\\n  --form 'is_top=0' \\\n  --form 'is_cpi=0' \\\n  --form 'partner_payments[0][partners][0]=0' \\\n  --form 'partner_payments[0][partners][1]=1' \\\n  --form 'notice_percent_overcap=0' \\\n  --form 'strictly_country=0' \\\n  --form 'strictly_connection_type=' \\\n  --form 'strictly_devices[0]=string' \\\n  --form 'strictly_devices[1]=string2' \\\n  --form 'caps_status[0]=confirmed' \\\n  --form 'caps_timezone=string' \\\n  --form 'enabled_commission_tiers=0' \\\n  --form 'hold_period=0' \\\n  --form 'hold_type=days' \\\n  --form 'categories[0]=string' \\\n  --form 'categories[1]=string2' \\\n  --form 'notes=string' \\\n  --form 'allowed_ip=string' \\\n  --form 'hash_password=string' \\\n  --form 'allow_deeplink=0' \\\n  --form 'hide_referer=0' \\\n  --form 'redirect_type=http302' \\\n  --form 'is_redirect_overcap=0' \\\n  --form 'hide_payments=0' \\\n  --form 'click_session=1y' \\\n  --form 'minimal_click_session=0s' \\\n  --form 'sub_account_1=string' \\\n  --form 'sub_account_2=string' \\\n  --form 'sub_account_1_except=0' \\\n  --form 'sub_account_2_except=0' \\\n  --form 'smartlink_categories[0]=string' \\\n  --form 'smartlink_categories[1]=string2' \\\n  --form 'uniqIpOnly=0' \\\n  --form 'rejectNotUniqIp=0' \\\n  --form 'external_offer_id=string' \\\n  --form 'bundle_id=string' \\\n  --form 'hide_caps=0' \\\n  --form 'search_empty_sub=0' \\\n  --form 'caps_goal_overcap=string' \\\n  --form 'allow_impressions=0' \\\n  --form 'impressions_url=string' \\\n  --form 'additional_impression_destination_urls=string' \\\n  --form 'consider_personal_targeting_only=true' \\\n  --form 'sign_clicks_integration=no_sign' \\\n  --form 'tracking_domain=string' \\\n  --form 'duplicate_clicks_threshold=0' \\\n  --form 'macros_replacement_enabled[0]=sub1' \\\n  --form 'auto_offer_connect=0' \\\n  --form 'creatives[0][file_name]=string' \\\n  --form 'creatives[0][width]=0' \\\n  --form 'creatives[0][height]=0' \\\n  --form 'freshness=default' \\\n  --form 'privacy_level=0' \\\n  --form 'note_aff=string' \\\n  --form 'note_sales=string' \\\n  --form 'disallowed_ip=string' \\\n  --form 'start_at=string' \\\n  --form 'send_emails=0' \\\n  --form 'overcap=0' \\\n  --form 'is_impression_overcap=0' \\\n  --form 'skad_app_id=string' \\\n  --form 'redirect_param=string' \\\n  --form 'managers[0]=string' \\\n  --form 'managers[1]=string2' \\\n  --form 'hosts_only=0' \\\n  --form 'host_uniqueness_type=cookie' \\\n  --form 'product_feed_id=string'"
+      operationId: post30AdminOfferById
+      x-operation-id-source: derived
   /3.0/offers/count:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Count of active offers
       description: '`GET /3.0/offers/count`
 
 
-        Get count of offers in status ''active''
-
-        '
+        Get count of offers in status ''active'''
       parameters:
       - name: api-key
         in: header
@@ -1524,10 +1486,12 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offers/count' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30OffersCount
+      x-operation-id-source: derived
   /ui/offers/available-for/{affiliate_id}:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Offers available for affiliate
       description: '`GET /ui/offers/available-for/{affiliate_id}`
 
@@ -1535,9 +1499,7 @@ paths:
         Returns the offers available for the given affiliate — the same list the affiliate would see on the partner panel with their own API key, but requested with an admin API key.
 
 
-        Available only for an admin (common-manager) or root API key that has read access to the offers section.
-
-        '
+        Available only for an admin (common-manager) or root API key that has read access to the offers section.'
       parameters:
       - name: api-key
         in: header
@@ -1607,17 +1569,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/ui/offers/available-for/{affiliate_id}?limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: getUiOffersAvailableForByAffiliateId
+      x-operation-id-source: derived
   /3.0/admin/offer/delete:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Delete offer
       description: '`POST /3.0/admin/offer/delete`
 
 
-        Delete the offer
-
-        '
+        Delete the offer'
       parameters:
       - name: api-key
         in: header
@@ -1666,17 +1628,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/delete' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=1'"
+      operationId: post30AdminOfferDelete
+      x-operation-id-source: derived
   /3.1/offers/{id}/privacy:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Enabled/disabled affiliates list
       description: '`GET /3.1/offers/{id}/privacy`
 
 
-        Get list of enabled/disabled affiliates and offer''s privacy
-
-        '
+        Get list of enabled/disabled affiliates and offer''s privacy'
       parameters:
       - name: API-Key
         in: header
@@ -1723,17 +1685,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/offers/{id}/privacy' \\\n  --header 'API-Key: <API-Key>'"
+      operationId: get31OffersByIdPrivacy
+      x-operation-id-source: derived
   /3.0/admin/offer/sources:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Sources
       description: '`GET /3.0/admin/offer/sources`
 
 
-        Get list of sources
-
-        '
+        Get list of sources'
       parameters:
       - name: api-key
         in: header
@@ -1787,17 +1749,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/sources' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30AdminOfferSources
+      x-operation-id-source: derived
   /3.0/admin/offer/source:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Source add
       description: '`POST /3.0/admin/offer/source`
 
 
-        Add new source
-
-        '
+        Add new source'
       parameters:
       - name: api-key
         in: header
@@ -1871,17 +1833,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title_lang[en]=string' \\\n  --form 'title_lang[ru]=string' \\\n  --form 'title_lang[es]=string' \\\n  --form 'title_lang[ka]=string' \\\n  --form 'title_lang[vi]=string'"
+      operationId: post30AdminOfferSource
+      x-operation-id-source: derived
   /3.0/admin/offer/source/{id}:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Source edit
       description: '`POST /3.0/admin/offer/source/{id}`
 
 
-        Edit source
-
-        '
+        Edit source'
       parameters:
       - name: api-key
         in: header
@@ -1961,16 +1923,16 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title_lang[en]=string' \\\n  --form 'title_lang[ru]=string' \\\n  --form 'title_lang[es]=string' \\\n  --form 'title_lang[ka]=string' \\\n  --form 'title_lang[vi]=string'"
+      operationId: post30AdminOfferSourceById
+      x-operation-id-source: derived
     delete:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Source remove
       description: '`DELETE /3.0/admin/offer/source/{id}`
 
 
-        Remove source
-
-        '
+        Remove source'
       parameters:
       - name: api-key
         in: header
@@ -2027,17 +1989,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/source/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: delete30AdminOfferSourceById
+      x-operation-id-source: derived
   /3.0/admin/category:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Category add
       description: '`POST /3.0/admin/category`
 
 
-        Add new category
-
-        '
+        Add new category'
       parameters:
       - name: api-key
         in: header
@@ -2089,17 +2051,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/category' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string'"
+      operationId: post30AdminCategory
+      x-operation-id-source: derived
   /3.0/admin/category/{id}:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Category edit
       description: '`POST /3.0/admin/category/{id}`
 
 
-        Change a category
-
-        '
+        Change a category'
       parameters:
       - name: api-key
         in: header
@@ -2157,17 +2119,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/category/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'title=string'"
+      operationId: post30AdminCategoryById
+      x-operation-id-source: derived
   /3.0/offer/enable-affiliate:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Enable affiliate
       description: '`POST /3.0/offer/enable-affiliate`
 
 
-        Connection an affiliate to offer
-
-        '
+        Connection an affiliate to offer'
       parameters:
       - name: api-key
         in: header
@@ -2229,17 +2191,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/offer/enable-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=2' \\\n  --form 'pid=0' \\\n  --form 'notice=1'"
+      operationId: post30OfferEnableAffiliate
+      x-operation-id-source: derived
   /3.0/offer/disable-affiliate:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Disable affiliate
       description: '`POST /3.0/offer/disable-affiliate`
 
 
-        Disconnect an affiliate from offer
-
-        '
+        Disconnect an affiliate from offer'
       parameters:
       - name: api-key
         in: header
@@ -2301,17 +2263,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/offer/disable-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=2' \\\n  --form 'pid=0' \\\n  --form 'notice=1'"
+      operationId: post30OfferDisableAffiliate
+      x-operation-id-source: derived
   /3.0/admin/offer/mass-update:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Update offer's status
       description: '`POST /3.0/admin/offer/mass-update`
 
 
-        Update offers status
-
-        '
+        Update offers status'
       parameters:
       - name: api-key
         in: header
@@ -2372,17 +2334,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/mass-update' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer_id[0]=0' \\\n  --form 'offer_id[1]=1' \\\n  --form 'status=active' \\\n  --form 'privacy=public'"
+      operationId: post30AdminOfferMassUpdate
+      x-operation-id-source: derived
   /3.0/admin/offer/{id}/disable-affiliates:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Disable affiliates
       description: '`POST /3.0/admin/offer/{id}/disable-affiliates`
 
 
-        Disconnect all affiliates from private or protected offer
-
-        '
+        Disconnect all affiliates from private or protected offer'
       parameters:
       - name: api-key
         in: header
@@ -2422,17 +2384,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}/disable-affiliates' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: post30AdminOfferByIdDisableAffiliates
+      x-operation-id-source: derived
   /3.0/admin/affiliate/{id}/disable-offers:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Disable offers
       description: '`POST /3.0/admin/affiliate/{id}/disable-offers`
 
 
-        Disconnect all private or protected offers from affiliate
-
-        '
+        Disconnect all private or protected offers from affiliate'
       parameters:
       - name: api-key
         in: header
@@ -2472,19 +2434,19 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/affiliate/{id}/disable-offers' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: post30AdminAffiliateByIdDisableOffers
+      x-operation-id-source: derived
   /3.0/admin/offer/{offerId}/tracking-link:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Generate tracking link
       description: '`POST /3.0/admin/offer/{offerId}/tracking-link`
 
 
         Generate a tracking link for a specific offer and affiliate. Only available for admin and manager roles.
 
-        Validates that the affiliate has access to the offer based on its privacy settings.
-
-        '
+        Validates that the affiliate has access to the offer based on its privacy settings.'
       parameters:
       - name: api-key
         in: header
@@ -2559,17 +2521,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offerId}/tracking-link' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'affiliate_id=0' \\\n  --form 'sub1=string' \\\n  --form 'sub2=string' \\\n  --form 'sub3=string' \\\n  --form 'sub4=string' \\\n  --form 'sub5=string' \\\n  --form 'sub6=string' \\\n  --form 'sub7=string' \\\n  --form 'sub8=string'"
+      operationId: post30AdminOfferByOfferIdTrackingLink
+      x-operation-id-source: derived
   /3.0/admin/offer/{id}/remove-creative:
     delete:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Remove creative from offer
       description: '`DELETE /3.0/admin/offer/{id}/remove-creative`
 
 
-        Remove creative from offer by creative id
-
-        '
+        Remove creative from offer by creative id'
       parameters:
       - name: api-key
         in: header
@@ -2628,17 +2590,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{id}/remove-creative' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'creatives[0]=12345'"
+      operationId: delete30AdminOfferByIdRemoveCreative
+      x-operation-id-source: derived
   /3.0/admin/offer/{offer_id}/creative/html/{creative_id}:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Change HTML creatives
       description: '`POST /3.0/admin/offer/{offer_id}/creative/html/{creative_id}`
 
 
-        Change html creative from offer by creative id
-
-        '
+        Change html creative from offer by creative id'
       parameters:
       - name: api-key
         in: header
@@ -2747,16 +2709,16 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offer_id}/creative/html/{creative_id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'code=string' \\\n  --form 'name=string' \\\n  --form 'width=0' \\\n  --form 'height=0'"
+      operationId: post30AdminOfferByOfferIdCreativeHtmlByCreativeId
+      x-operation-id-source: derived
     delete:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Delete HTML creatives
       description: '`DELETE /3.0/admin/offer/{offer_id}/creative/html/{creative_id}`
 
 
-        Delete html creative from offer by creative id
-
-        '
+        Delete html creative from offer by creative id'
       parameters:
       - name: api-key
         in: header
@@ -2799,17 +2761,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.0/admin/offer/{offer_id}/creative/html/{creative_id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: delete30AdminOfferByOfferIdCreativeHtmlByCreativeId
+      x-operation-id-source: derived
   /3.1/offers/promocodes:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: List of promocodes
       description: '`GET /3.1/offers/promocodes`
 
 
-        List of promocodes
-
-        '
+        List of promocodes'
       parameters:
       - name: api-key
         in: header
@@ -2929,17 +2891,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/offers/promocodes?page=1&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31OffersPromocodes
+      x-operation-id-source: derived
   /3.1/offers/promocodes/bulk:
     post:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Promocodes bulk creation
       description: '`POST /3.1/offers/promocodes/bulk`
 
 
-        Promocodes bulk creation (Available if the Promocode feature is enabled)
-
-        '
+        Promocodes bulk creation (Available if the Promocode feature is enabled)'
       parameters:
       - name: api-key
         in: header
@@ -3065,17 +3027,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/offers/promocodes/bulk' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'promocodes[0][type]=manual' \\\n  --form 'promocodes[0][code]=string' \\\n  --form 'promocodes[0][offer_id]=0' \\\n  --form 'promocodes[0][affiliate_id]=0' \\\n  --form 'promocodes[0][description]=string' \\\n  --form 'promocodes[0][usage_limit]=0' \\\n  --form 'promocodes[0][date_from]=string' \\\n  --form 'promocodes[0][date_to]=string'"
+      operationId: post31OffersPromocodesBulk
+      x-operation-id-source: derived
   /3.0/offers:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Offers list
       description: '`GET /3.0/offers`
 
 
-        Get a list of offers
-
-        '
+        Get a list of offers'
       parameters:
       - name: api-key
         in: header
@@ -3267,17 +3229,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offers?int_id[0]=234&countries[0]=US&os[0]=&categories[0]=5368afb23b7d9b4d5d505342&caps_type=clicks&sort[id]=asc&limit=100&status[0]=active&advertiser[0]=55b204663b7d9b460b8b45b2&privacy[0]=0&is_top=0&smartlink_categories[0]=55b204663b7d9b460b8b45b2&advertiser_manager_id[0]=55b204663b7d9b460b8b45b2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30Offers
+      x-operation-id-source: derived
   /3.0/offer/{id}:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Offer by id
       description: '`GET /3.0/offer/{id}`
 
 
-        Get full information of an offer
-
-        '
+        Get full information of an offer'
       parameters:
       - name: api-key
         in: header
@@ -3309,17 +3271,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30OfferById
+      x-operation-id-source: derived
   /3.0/offer/categories:
     get:
       tags:
-      - admin-offers
+      - Admin - Offers
       summary: Categories
       description: '`GET /3.0/offer/categories`
 
 
-        List of a categories
-
-        '
+        List of a categories'
       parameters:
       - name: api-key
         in: header
@@ -3415,8 +3377,99 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/offer/categories?ids[0]=string&ids[1]=string2&limit=99999&orderType=asc&order=id' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30OfferCategories
+      x-operation-id-source: derived
 components:
   schemas:
+    offer_caps_structure:
+      type: object
+      description: Cap item structure
+      properties:
+        period:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          - all
+          description: 'Possible values: hour (if enabled), day, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          - clicks
+          - impressions
+          description: 'Possible values: budget, conversions, clicks, impressions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
+        goal_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
+        country:
+          type: array
+          items:
+            type: string
+          description: 'Array[string]. Values: Country codes.'
+        country_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
+        sub_number:
+          type: integer
+          description: '[integer]. Possible values: 2.'
+          enum:
+          - 2
+        sub_value:
+          type: array
+          items:
+            type: string
+    offer_creative_html_structure:
+      type: object
+      description: HTML creative item structure
+      properties:
+        name:
+          type: string
+          description: Creative name
+        width:
+          type: integer
+          description: Creative width
+        height:
+          type: integer
+          description: Creative height
+        code:
+          type: string
+          description: Creative html code with macroses
+        asset_mapping:
+          type: object
+          description: 'How to map macros and asset. For example: {"aaa":0}. Macros {aaa} match to 0 asset'
+          additionalProperties:
+            type: integer
     targeting_browser_version_structure:
       type: object
       description: Browser version structure for targeting
@@ -3436,64 +3489,393 @@ components:
         version:
           type: string
           description: Browser's version for comparison.
-    offer_schedule_structure:
+    offer_tier_structure:
       type: object
-      description: Offer schedule structure
+      description: Commission tier item structure
       properties:
+        timeframe:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - all
+          description: 'Possible values: day, week, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          description: 'Possible values: budget, conversions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        modifier_value:
+          type: number
+          format: float
+          description: The float value.
+        modifier_type:
+          type: string
+          enum:
+          - by_fix
+          - by_percent
+          - to_fix
+          - to_percent
+          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty.
+        target_goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies target goal value or is empty.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          default: each
+          description: 'Possible values: all, each, exact. Default: each.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed.
+        modifier_payment_type:
+          type: string
+          enum:
+          - payout
+          - total
+          - payout_and_total
+          default: payout
+          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
+        countries:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Countries ISO codes
+        conversion_status:
+          type: array
+          items:
+            type: string
+            enum:
+            - confirmed
+            - pending
+            - declined
+            - hold
+          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
+    targeting_group_structure:
+      type: object
+      description: Targeting group structure
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: id in UUID format
         enabled:
           type: integer
           enum:
           - 0
           - 1
-          description: Enable/Disable offer schedule.
-        date_start:
-          type: string
-          format: date
-          description: Date of launch, YYYY-MM-DD. Offer activation does not depend on `enabled` field.
-        date_to:
-          type: string
-          format: date
-          description: Date of deactivation, YYYY-MM-DD
-        timezone:
-          type: string
-          description: 'Timezone. Example: Europe/London'
-        intervals:
-          type: array
-          description: 'Array of schedule intervals. Example: [weekday_number(0-6)][interval_number(0,1,2,...)][from]=hour(0-23)'
-          items:
-            type: array
-            items:
-              type: object
-              properties:
-                From:
-                  type: integer
-                  description: Start hour (0-23)
-                  minimum: 0
-                  maximum: 23
-                To:
-                  type: integer
-                  description: End hour (0-23)
-                  minimum: 0
-                  maximum: 23
-    targeting_os_structure:
-      type: object
-      description: OS structure for targeting
-      properties:
+          description: enable/disable targeting group
         name:
           type: string
-          description: OS name that could be found at OSes list method.
-        comparison:
+          description: name for targeting group
+        condition:
           type: string
           enum:
-          - LT
-          - LTE
-          - EQ
-          - GT
-          - GTE
-          description: Comparison operation for OS version.
-        version:
+          - and
+          - or
+          description: condition for rules in targeting group
+        country:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied countries. Example: country[allow][]=US'
+        region:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied regions for chosen country(ISO). Example: region[allow][US]=33'
+        city:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+          description: 'list of allowed/denied cities for chosen country(ISO). Example: city[allow][US]=57'
+        os:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_os_structure'
+          description: list of allowed OSes and them versions.
+        os_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in os
+        isp:
+          type: object
+          properties:
+            allow:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            deny:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+          description: 'list of allowed/denied ISP for chosen country(ISO). Example: isp[allow][US]=Att'
+        isp_organization:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed ISP organizations. Set deny_empty to block empty isp organizations.
+        ip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            ipv6_deny:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied ip ranges (IPv4 , IPv6).
+        device_type:
+          type: array
+          items:
+            type: string
+            enum:
+            - mobile
+            - tablet
+            - desktop
+            - mediahub
+            - ereader
+            - console
+            - tv
+            - smartwatch
+          description: list of allowed device types.
+        device_type_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in device_type
+        device_model:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of allowed/denied device models.
+        browser_version:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+            deny:
+              type: array
+              items:
+                $ref: '#/components/schemas/targeting_browser_version_structure'
+          description: list of allowed/denied browsers and their versions.
+        browser:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied browsers. Example: browser[deny][] = "Edge"'
+        brand:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: 'list of allowed/denied device brands. Example: brand[deny][] = "SAMTEL"'
+        sub:
+          type: object
+          description: Complex sub-account targeting rules.
+        connection:
+          type: array
+          items:
+            type: string
+            enum:
+            - wi-fi
+            - cellular
+          description: list of allowed connection types.
+        connection_deny:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+          description: When set to 1 blocks values listed in connection
+        block_proxy:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable "Click-level Anti-fraud" feature
+        block_known_bots:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: enable/disable blocking of known bots
+        affiliate_id:
+          type: array
+          items:
+            type: integer
+          description: list of affiliates for personal targeting groups.
+        url:
           type: string
-          description: OS version for comparison.
+          description: Additional Tracking URL
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/targeting_url_weight'
+          description: URLs with weights for traffic redistribution between several track-links
+        referrer:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_empty:
+              type: integer
+              enum:
+              - 0
+              - 1
+            is_regexp:
+              type: integer
+              enum:
+              - 0
+              - 1
+              description: Set to 1 to enable regular expressions in allow or deny values
+          description: list of allowed/denied referrers. Set deny_empty to block empty referrers. Set is_regexp to enable regular expressions in allow or deny values.
+        ua:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+            deny_crawlers:
+              type: integer
+              enum:
+              - 0
+              - 1
+          description: list of allowed/denied user agents. Set deny_crawlers to block known crawlers.
+        zip:
+          type: object
+          properties:
+            allow:
+              type: array
+              items:
+                type: string
+            deny:
+              type: array
+              items:
+                type: string
+          description: list of zip codes
+        macros_replacement:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: 'Available if the Macros Replacement feature is enabled. Example of the structure: macros_replacement[sub1][]=value'
+        macros_replacement_enabled:
+          type: array
+          items:
+            type: string
+          description: Available if the Macros Replacement feature is enabled.
     offer_affiliate:
       type: object
       properties:
@@ -3857,314 +4239,204 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    targeting_group_structure:
+    offer_schedule_structure:
       type: object
-      description: Targeting group structure
+      description: Offer schedule structure
       properties:
-        id:
-          type: string
-          format: uuid
-          description: id in UUID format
         enabled:
           type: integer
           enum:
           - 0
           - 1
-          description: enable/disable targeting group
-        name:
+          description: Enable/Disable offer schedule.
+        date_start:
           type: string
-          description: name for targeting group
-        condition:
+          format: date
+          description: Date of launch, YYYY-MM-DD. Offer activation does not depend on `enabled` field.
+        date_to:
           type: string
-          enum:
-          - and
-          - or
-          description: condition for rules in targeting group
-        country:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied countries. Example: country[allow][]=US'
-        region:
-          type: object
-          properties:
-            allow:
+          format: date
+          description: Date of deactivation, YYYY-MM-DD
+        timezone:
+          type: string
+          description: 'Timezone. Example: Europe/London'
+        intervals:
+          type: array
+          description: 'Array of schedule intervals. Example: [weekday_number(0-6)][interval_number(0,1,2,...)][from]=hour(0-23)'
+          items:
+            type: array
+            items:
               type: object
-              additionalProperties:
-                type: array
-                items:
+              properties:
+                From:
                   type: integer
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
+                  description: Start hour (0-23)
+                  minimum: 0
+                  maximum: 23
+                To:
                   type: integer
-          description: 'list of allowed/denied regions for chosen country(ISO). Example: region[allow][US]=33'
-        city:
-          type: object
-          properties:
-            allow:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: integer
-          description: 'list of allowed/denied cities for chosen country(ISO). Example: city[allow][US]=57'
-        os:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_os_structure'
-          description: list of allowed OSes and them versions.
-        os_deny:
+                  description: End hour (0-23)
+                  minimum: 0
+                  maximum: 23
+    offer_payment_structure:
+      type: object
+      description: Payment item structure
+      properties:
+        id:
           type: integer
-          enum:
-          - 0
-          - 1
-          default: 0
-          description: When set to 1 blocks values listed in os
-        isp:
-          type: object
-          properties:
-            allow:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            deny:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-          description: 'list of allowed/denied ISP for chosen country(ISO). Example: isp[allow][US]=Att'
-        isp_organization:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_empty:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed ISP organizations. Set deny_empty to block empty isp organizations.
-        ip:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            ipv6_deny:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed/denied ip ranges (IPv4 , IPv6).
-        device_type:
+          description: Payment id
+        title:
+          type: string
+          description: Payment title
+        countries:
           type: array
           items:
             type: string
-            enum:
-            - mobile
-            - tablet
-            - desktop
-            - mediahub
-            - ereader
-            - console
-            - tv
-            - smartwatch
-          description: list of allowed device types.
-        device_type_deny:
+          description: An array of countries in ISO format (or put empty string to clear existing items)
+        country_exclude:
           type: integer
           enum:
           - 0
           - 1
-          default: 0
-          description: When set to 1 blocks values listed in device_type
-        device_model:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: list of allowed/denied device models.
-        browser_version:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_browser_version_structure'
-            deny:
-              type: array
-              items:
-                $ref: '#/components/schemas/targeting_browser_version_structure'
-          description: list of allowed/denied browsers and their versions.
-        browser:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied browsers. Example: browser[deny][] = "Edge"'
-        brand:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: 'list of allowed/denied device brands. Example: brand[deny][] = "SAMTEL"'
-        sub:
-          type: object
-          description: Complex sub-account targeting rules.
-        connection:
-          type: array
-          items:
-            type: string
-            enum:
-            - wi-fi
-            - cellular
-          description: list of allowed connection types.
-        connection_deny:
-          type: integer
-          enum:
-          - 0
-          - 1
-          default: 0
-          description: When set to 1 blocks values listed in connection
-        block_proxy:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: enable/disable "Click-level Anti-fraud" feature
-        block_known_bots:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: enable/disable blocking of known bots
-        affiliate_id:
+          description: Exclude these countries. Available:0,1
+        cities:
           type: array
           items:
             type: integer
-          description: list of affiliates for personal targeting groups.
-        url:
-          type: string
-          description: Additional Tracking URL
-        urls:
-          type: array
-          items:
-            $ref: '#/components/schemas/targeting_url_weight'
-          description: URLs with weights for traffic redistribution between several track-links
-        referrer:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_empty:
-              type: integer
-              enum:
-              - 0
-              - 1
-            is_regexp:
-              type: integer
-              enum:
-              - 0
-              - 1
-              description: Set to 1 to enable regular expressions in allow or deny values
-          description: list of allowed/denied referrers. Set deny_empty to block empty referrers. Set is_regexp to enable regular expressions in allow or deny values.
-        ua:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-            deny_crawlers:
-              type: integer
-              enum:
-              - 0
-              - 1
-          description: list of allowed/denied user agents. Set deny_crawlers to block known crawlers.
-        zip:
-          type: object
-          properties:
-            allow:
-              type: array
-              items:
-                type: string
-            deny:
-              type: array
-              items:
-                type: string
-          description: list of zip codes
-        macros_replacement:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: 'Available if the Macros Replacement feature is enabled. Example of the structure: macros_replacement[sub1][]=value'
-        macros_replacement_enabled:
+          description: An array of id cities (or put empty string to clear existing items)
+        devices:
           type: array
           items:
             type: string
-          description: Available if the Macros Replacement feature is enabled.
+            enum:
+            - mediahub
+            - mobile
+            - ereader
+            - console
+            - tv
+            - tablet
+            - desktop
+            - smartwatch
+          description: The array of devices. (or put empty string to clear existing items)
+        os:
+          type: string
+          description: Possible values can be found in oses-list
+        goal:
+          type: string
+          description: Value targets
+        total:
+          type: number
+          description: The amount of payment
+        revenue:
+          type: number
+          description: Payment webmaster
+        currency:
+          type: string
+          description: Currency (Code in ECB format)
+        type:
+          type: string
+          enum:
+          - fixed
+          - percent
+          - mixed
+          - cpc
+          - cpm
+          - first_cpa
+          - first_cps
+          - baseline_onetime
+          - baseline_accumulating
+          description: Type of payment.
+        sub1:
+          type: string
+          description: Comma-separated sub values for sub1
+        sub2:
+          type: string
+          description: Comma-separated sub values for sub2
+        sub3:
+          type: string
+          description: Comma-separated sub values for sub3
+        sub4:
+          type: string
+          description: Comma-separated sub values for sub4
+        sub5:
+          type: string
+          description: Comma-separated sub values for sub5
+        sub6:
+          type: string
+          description: Comma-separated sub values for sub6
+        sub7:
+          type: string
+          description: Comma-separated sub values for sub7
+        sub8:
+          type: string
+          description: Comma-separated sub values for sub8
+        custom_field1:
+          type: string
+        custom_field2:
+          type: string
+        custom_field3:
+          type: string
+        custom_field4:
+          type: string
+        custom_field5:
+          type: string
+        custom_field6:
+          type: string
+        custom_field7:
+          type: string
+        custom_field8:
+          type: string
+        custom_field9:
+          type: string
+        custom_field10:
+          type: string
+        custom_field11:
+          type: string
+        custom_field12:
+          type: string
+        custom_field13:
+          type: string
+        custom_field14:
+          type: string
+        custom_field15:
+          type: string
+        baseline_value:
+          type: number
+          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
+      required:
+      - currency
+      - type
+    targeting_os_structure:
+      type: object
+      description: OS structure for targeting
+      properties:
+        name:
+          type: string
+          description: OS name that could be found at OSes list method.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for OS version.
+        version:
+          type: string
+          description: OS version for comparison.
+    targeting_url_weight:
+      type: object
+      description: URL with weight for traffic redistribution
+      properties:
+        url:
+          type: string
+          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
+        weight:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
     offer_landing_structure:
       type: object
       properties:
@@ -4191,39 +4463,6 @@ components:
       - title
       - url
       - url_preview
-    targeting_url_weight:
-      type: object
-      description: URL with weight for traffic redistribution
-      properties:
-        url:
-          type: string
-          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
-        weight:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
-    offer_creative_html_structure:
-      type: object
-      description: HTML creative item structure
-      properties:
-        name:
-          type: string
-          description: Creative name
-        width:
-          type: integer
-          description: Creative width
-        height:
-          type: integer
-          description: Creative height
-        code:
-          type: string
-          description: Creative html code with macroses
-        asset_mapping:
-          type: object
-          description: 'How to map macros and asset. For example: {"aaa":0}. Macros {aaa} match to 0 asset'
-          additionalProperties:
-            type: integer
     offer:
       type: object
       properties:
@@ -4480,295 +4719,7 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    offer_tier_structure:
-      type: object
-      description: Commission tier item structure
-      properties:
-        timeframe:
-          type: string
-          enum:
-          - day
-          - week
-          - month
-          - all
-          description: 'Possible values: day, week, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          description: 'Possible values: budget, conversions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        modifier_value:
-          type: number
-          format: float
-          description: The float value.
-        modifier_type:
-          type: string
-          enum:
-          - by_fix
-          - by_percent
-          - to_fix
-          - to_percent
-          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty.
-        target_goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies target goal value or is empty.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          default: each
-          description: 'Possible values: all, each, exact. Default: each.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed.
-        modifier_payment_type:
-          type: string
-          enum:
-          - payout
-          - total
-          - payout_and_total
-          default: payout
-          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
-        countries:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Countries ISO codes
-        conversion_status:
-          type: array
-          items:
-            type: string
-            enum:
-            - confirmed
-            - pending
-            - declined
-            - hold
-          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
-    offer_payment_structure:
-      type: object
-      description: Payment item structure
-      properties:
-        id:
-          type: integer
-          description: Payment id
-        title:
-          type: string
-          description: Payment title
-        countries:
-          type: array
-          items:
-            type: string
-          description: An array of countries in ISO format (or put empty string to clear existing items)
-        country_exclude:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: Exclude these countries. Available:0,1
-        cities:
-          type: array
-          items:
-            type: integer
-          description: An array of id cities (or put empty string to clear existing items)
-        devices:
-          type: array
-          items:
-            type: string
-            enum:
-            - mediahub
-            - mobile
-            - ereader
-            - console
-            - tv
-            - tablet
-            - desktop
-            - smartwatch
-          description: The array of devices. (or put empty string to clear existing items)
-        os:
-          type: string
-          description: Possible values can be found in oses-list
-        goal:
-          type: string
-          description: Value targets
-        total:
-          type: number
-          description: The amount of payment
-        revenue:
-          type: number
-          description: Payment webmaster
-        currency:
-          type: string
-          description: Currency (Code in ECB format)
-        type:
-          type: string
-          enum:
-          - fixed
-          - percent
-          - mixed
-          - cpc
-          - cpm
-          - first_cpa
-          - first_cps
-          - baseline_onetime
-          - baseline_accumulating
-          description: Type of payment.
-        sub1:
-          type: string
-          description: Comma-separated sub values for sub1
-        sub2:
-          type: string
-          description: Comma-separated sub values for sub2
-        sub3:
-          type: string
-          description: Comma-separated sub values for sub3
-        sub4:
-          type: string
-          description: Comma-separated sub values for sub4
-        sub5:
-          type: string
-          description: Comma-separated sub values for sub5
-        sub6:
-          type: string
-          description: Comma-separated sub values for sub6
-        sub7:
-          type: string
-          description: Comma-separated sub values for sub7
-        sub8:
-          type: string
-          description: Comma-separated sub values for sub8
-        custom_field1:
-          type: string
-        custom_field2:
-          type: string
-        custom_field3:
-          type: string
-        custom_field4:
-          type: string
-        custom_field5:
-          type: string
-        custom_field6:
-          type: string
-        custom_field7:
-          type: string
-        custom_field8:
-          type: string
-        custom_field9:
-          type: string
-        custom_field10:
-          type: string
-        custom_field11:
-          type: string
-        custom_field12:
-          type: string
-        custom_field13:
-          type: string
-        custom_field14:
-          type: string
-        custom_field15:
-          type: string
-        baseline_value:
-          type: number
-          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
-      required:
-      - currency
-      - type
-    offer_caps_structure:
-      type: object
-      description: Cap item structure
-      properties:
-        period:
-          type: string
-          enum:
-          - hour
-          - day
-          - month
-          - all
-          description: 'Possible values: hour (if enabled), day, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          - clicks
-          - impressions
-          description: 'Possible values: budget, conversions, clicks, impressions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
-        goal_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
-        country:
-          type: array
-          items:
-            type: string
-          description: 'Array[string]. Values: Country codes.'
-        country_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
-        sub_number:
-          type: integer
-          description: '[integer]. Possible values: 2.'
-          enum:
-          - 2
-        sub_value:
-          type: array
-          items:
-            type: string
   responses:
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
     NotFound:
       description: Not Found - Resource not found
       content:
@@ -4795,6 +4746,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:

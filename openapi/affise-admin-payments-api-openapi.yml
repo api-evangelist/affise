@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.1/payments`
 
 
-        Get payments list
-
-        '
+        Get payments list'
       parameters:
       - name: api-key
         in: header
@@ -259,6 +221,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/payments?date_from=<date_from>&date_to=<date_to>&id[0]=3&status[0]=1&aid[0]=2&manager_id[0]=62164a9a5a8b7e788f752f13&payment_system[0]=62164a9a5a8b7e788f752f13&payment_account[0]=62164a9a5a8b7e788f752f13&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Payments
+      x-operation-id-source: derived
   /3.1/payments/{id}:
     get:
       tags:
@@ -267,9 +231,7 @@ paths:
       description: '`GET /3.1/payments/{id}`
 
 
-        Get payment invoice info
-
-        '
+        Get payment invoice info'
       parameters:
       - name: api-key
         in: header
@@ -330,6 +292,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31PaymentsById
+      x-operation-id-source: derived
     post:
       tags:
       - admin-payments
@@ -337,9 +301,7 @@ paths:
       description: '`POST /3.1/payments/{id}`
 
 
-        Update payment invoice
-
-        '
+        Update payment invoice'
       parameters:
       - name: API-Key
         in: header
@@ -402,6 +364,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}' \\\n  --header 'API-Key: <API-Key>' \\\n  --form 'payment_account=string' \\\n  --form 'status=-1' \\\n  --form 'comment=string' \\\n  --form 'note=string'"
+      operationId: post31PaymentsById
+      x-operation-id-source: derived
   /3.1/payments/create-for-affiliate:
     post:
       tags:
@@ -410,9 +374,7 @@ paths:
       description: '`POST /3.1/payments/create-for-affiliate`
 
 
-        Create payment invoice
-
-        '
+        Create payment invoice'
       parameters:
       - name: api-key
         in: header
@@ -468,6 +430,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/create-for-affiliate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'aid=0' \\\n  --form 'sum=0' \\\n  --form 'currency=0' \\\n  --form 'note=string'"
+      operationId: post31PaymentsCreateForAffiliate
+      x-operation-id-source: derived
   /3.1/payments/generate:
     post:
       tags:
@@ -476,9 +440,7 @@ paths:
       description: '`POST /3.1/payments/generate`
 
 
-        Generate payment invoices for affiliates
-
-        '
+        Generate payment invoices for affiliates'
       parameters:
       - name: api-key
         in: header
@@ -578,6 +540,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/generate' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'date=string' \\\n  --form 'date_from=string' \\\n  --form 'date_to=string' \\\n  --form 'aid=0' \\\n  --form 'note=string' \\\n  --form 'exclude_aids[0]=0' \\\n  --form 'exclude_aids[1]=1' \\\n  --form 'include_aids[0]=0' \\\n  --form 'include_aids[1]=1' \\\n  --form 'by_last_unpaid_conversion=false' \\\n  --form 'by_last_invoice=false' \\\n  --form 'offer_ids[0]=0' \\\n  --form 'offer_ids[1]=1' \\\n  --form 'advertiser_ids[0]=62164a9a5a8b7e788f752f13' \\\n  --form 'currencies[0]=USD' \\\n  --form 'countries[0]=USA'"
+      operationId: post31PaymentsGenerate
+      x-operation-id-source: derived
   /3.1/payments/{id}/add-correction:
     post:
       tags:
@@ -586,9 +550,7 @@ paths:
       description: '`POST /3.1/payments/{id}/add-correction`
 
 
-        Add correction value for payment invoice
-
-        '
+        Add correction value for payment invoice'
       parameters:
       - name: api-key
         in: header
@@ -643,6 +605,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{id}/add-correction' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'revenue=0' \\\n  --form 'comment=string'"
+      operationId: post31PaymentsByIdAddCorrection
+      x-operation-id-source: derived
   /3.1/payments/del-correction/{id}:
     delete:
       tags:
@@ -651,9 +615,7 @@ paths:
       description: '`DELETE /3.1/payments/del-correction/{id}`
 
 
-        Remove correction value for payment invoice
-
-        '
+        Remove correction value for payment invoice'
       parameters:
       - name: api-key
         in: header
@@ -693,6 +655,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/payments/del-correction/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: delete31PaymentsDelCorrectionById
+      x-operation-id-source: derived
   /3.1/payments/delete/{id}:
     delete:
       tags:
@@ -701,9 +665,7 @@ paths:
       description: '`DELETE /3.1/payments/delete/{id}`
 
 
-        Remove payment invoice
-
-        '
+        Remove payment invoice'
       parameters:
       - name: api-key
         in: header
@@ -743,6 +705,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request DELETE \\\n  --url 'https://api-demo.affise.com/3.1/payments/delete/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: delete31PaymentsDeleteById
+      x-operation-id-source: derived
   /3.1/payments/bulk-delete:
     post:
       tags:
@@ -751,9 +715,7 @@ paths:
       description: '`POST /3.1/payments/bulk-delete`
 
 
-        Remove several payment invoices
-
-        '
+        Remove several payment invoices'
       parameters:
       - name: api-key
         in: header
@@ -807,6 +769,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/bulk-delete' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'ids[0]=2' \\\n  --form 'ids[1]=3'"
+      operationId: post31PaymentsBulkDelete
+      x-operation-id-source: derived
   /3.1/payments/{invoice_id}/conversions/delete:
     post:
       tags:
@@ -870,19 +834,6 @@ paths:
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{invoice_id}/conversions/delete' \\\n  --header 'Api-Key: <Api-Key>' \\\n  --form 'conversion_ids[0]=string' \\\n  --form 'conversion_ids[1]=string2' \\\n  --form 'offer_ids[0]=0' \\\n  --form 'offer_ids[1]=1'"
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -896,6 +847,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

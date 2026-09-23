@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`POST /3.0/admin/conversion/edit`
 
 
-        Edit a conversion
-
-        '
+        Edit a conversion'
       parameters:
       - name: api-key
         in: header
@@ -219,6 +181,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/conversion/edit' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'ids[0]=59359e1d7e28feb7568b456a' \\\n  --form 'status=confirmed' \\\n  --form 'currency=USD' \\\n  --form 'payouts=0' \\\n  --form 'revenue=0' \\\n  --form 'comment=string' \\\n  --form 'sum=0' \\\n  --form 'custom_field_1=string' \\\n  --form 'custom_field_2=string' \\\n  --form 'custom_field_3=string' \\\n  --form 'custom_field_4=string' \\\n  --form 'custom_field_5=string' \\\n  --form 'custom_field_6=string' \\\n  --form 'custom_field_7=string' \\\n  --form 'custom_field_8=string' \\\n  --form 'custom_field_9=string' \\\n  --form 'custom_field_10=string' \\\n  --form 'custom_field_11=string' \\\n  --form 'custom_field_12=string' \\\n  --form 'custom_field_13=string' \\\n  --form 'custom_field_14=string' \\\n  --form 'custom_field_15=string' \\\n  --form 'all=0' \\\n  --form 'params[date_from]=2026-06-01' \\\n  --form 'params[date_to]=2026-06-10' \\\n  --form 'params[status]=pending'"
+      operationId: post30AdminConversionEdit
+      x-operation-id-source: derived
   /3.0/admin/conversion/edit-by-advertiser:
     post:
       tags:
@@ -227,9 +191,7 @@ paths:
       description: '`POST /3.0/admin/conversion/edit-by-advertiser`
 
 
-        Edit multiple conversions with advertiser ownership validation. All specified conversions must belong to the given advertiser.
-
-        '
+        Edit multiple conversions with advertiser ownership validation. All specified conversions must belong to the given advertiser.'
       parameters:
       - name: api-key
         in: header
@@ -376,6 +338,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/conversion/edit-by-advertiser' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'ids[0]=59359e1d7e28feb7568b456a' \\\n  --form 'advertiser_id=56cc49dc3b7d9b89058b45f0' \\\n  --form 'status=confirmed' \\\n  --form 'currency=USD' \\\n  --form 'payouts=0' \\\n  --form 'revenue=0' \\\n  --form 'comment=string' \\\n  --form 'sum=0' \\\n  --form 'custom_field_1=string' \\\n  --form 'custom_field_2=string' \\\n  --form 'custom_field_3=string' \\\n  --form 'custom_field_4=string' \\\n  --form 'custom_field_5=string' \\\n  --form 'custom_field_6=string' \\\n  --form 'custom_field_7=string' \\\n  --form 'custom_field_8=string' \\\n  --form 'custom_field_9=string' \\\n  --form 'custom_field_10=string' \\\n  --form 'custom_field_11=string' \\\n  --form 'custom_field_12=string' \\\n  --form 'custom_field_13=string' \\\n  --form 'custom_field_14=string' \\\n  --form 'custom_field_15=string'"
+      operationId: post30AdminConversionEditByAdvertiser
+      x-operation-id-source: derived
   /3.0/admin/conversion/import:
     post:
       tags:
@@ -384,9 +348,7 @@ paths:
       description: '`POST /3.0/admin/conversion/import`
 
 
-        Import a single conversion
-
-        '
+        Import a single conversion'
       parameters:
       - name: api-key
         in: header
@@ -524,6 +486,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/conversion/import' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'offer=0' \\\n  --form 'pid=0' \\\n  --form 'action_id=string' \\\n  --form 'click_id=string' \\\n  --form 'goal=0' \\\n  --form 'ip=string' \\\n  --form 'ua=string' \\\n  --form 'comment=string' \\\n  --form 'sum=0' \\\n  --form 'status=confirmed' \\\n  --form 'custom_field_1=string' \\\n  --form 'custom_field_2=string' \\\n  --form 'custom_field_3=string' \\\n  --form 'custom_field_4=string' \\\n  --form 'custom_field_5=string' \\\n  --form 'custom_field_6=string' \\\n  --form 'custom_field_7=string' \\\n  --form 'created_at=string' \\\n  --form 'send_affiliate_postbacks=0'"
+      operationId: post30AdminConversionImport
+      x-operation-id-source: derived
   /3.0/admin/conversions/import:
     post:
       tags:
@@ -532,9 +496,7 @@ paths:
       description: '`POST /3.0/admin/conversions/import`
 
 
-        Import multiple conversions
-
-        '
+        Import multiple conversions'
       parameters:
       - name: api-key
         in: header
@@ -687,21 +649,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/conversions/import' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'list[0][offer]=0' \\\n  --form 'list[0][pid]=0' \\\n  --form 'list[0][action_id]=string' \\\n  --form 'list[0][click_id]=string' \\\n  --form 'list[0][goal]=0' \\\n  --form 'list[0][ip]=string' \\\n  --form 'list[0][ua]=string' \\\n  --form 'list[0][comment]=string' \\\n  --form 'list[0][sum]=0' \\\n  --form 'list[0][status]=confirmed' \\\n  --form 'list[0][custom_field_1]=string' \\\n  --form 'list[0][custom_field_2]=string' \\\n  --form 'list[0][custom_field_3]=string' \\\n  --form 'list[0][custom_field_4]=string' \\\n  --form 'list[0][custom_field_5]=string' \\\n  --form 'list[0][custom_field_6]=string' \\\n  --form 'list[0][custom_field_7]=string' \\\n  --form 'list[0][created_at]=string' \\\n  --form 'send_affiliate_postbacks=0'"
+      operationId: post30AdminConversionsImport
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -715,6 +666,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -63,9 +27,7 @@ paths:
       description: '`GET /3.0/stats/custom`
 
 
-        Get custom statistics
-
-        '
+        Get custom statistics'
       parameters:
       - name: api-key
         in: header
@@ -608,6 +570,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/custom?slice[0]=hour&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&filter[nonzero]=0&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2&filter[payment_status]=opened&locale=en&conversionTypes[0]=total&page=1&limit=100&orderType=asc&order[0]=hour&fields[0]=clicks' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsCustom
+      x-operation-id-source: derived
   /3.0/stats/conversions:
     get:
       tags:
@@ -616,9 +580,7 @@ paths:
       description: '`GET /3.0/stats/conversions`
 
 
-        Get conversions
-
-        '
+        Get conversions'
       parameters:
       - name: api-key
         in: header
@@ -1181,6 +1143,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/conversions?status[0]=1&offer[0]=0&offer[1]=1&advertiser[0]=string&advertiser[1]=string2&country[0]=string&country[1]=string2&goal_id[0]=0&goal_id[1]=1&device=tablet&payment_status=opened&partner[0]=0&partner[1]=1&page=1&limit=100&raw_export=0&decline_reason[0]=anti_fraud&fraud_risk_level[0]=not_analyzed&fraud_type[0]=string&fraud_type[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsConversions
+      x-operation-id-source: derived
   /3.0/stats/getbydate:
     get:
       tags:
@@ -1189,9 +1153,7 @@ paths:
       description: '`GET /3.0/stats/getbydate`
 
 
-        Get statistics by date
-
-        '
+        Get statistics by date'
       parameters:
       - name: api-key
         in: header
@@ -1599,6 +1561,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbydate?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&orderType=asc&locale=en&limit=100&filter[currency][0]=string&filter[currency][1]=string2&page=1&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbydate
+      x-operation-id-source: derived
   /3.0/stats/getbyhour:
     get:
       tags:
@@ -1607,9 +1571,7 @@ paths:
       description: '`GET /3.0/stats/getbyhour`
 
 
-        Get hourly statistics
-
-        '
+        Get hourly statistics'
       parameters:
       - name: api-key
         in: header
@@ -2021,6 +1983,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyhour?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyhour
+      x-operation-id-source: derived
   /3.0/stats/getbysub:
     get:
       tags:
@@ -2029,9 +1993,7 @@ paths:
       description: '`GET /3.0/stats/getbysub`
 
 
-        Get statistics by sub (Available only for partner API-Key)
-
-        '
+        Get statistics by sub (Available only for partner API-Key)'
       parameters:
       - name: api-key
         in: header
@@ -2362,6 +2324,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbysub?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[offer][0]=0&filter[offer][1]=1&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbysub
+      x-operation-id-source: derived
   /3.0/stats/getbyprogram:
     get:
       tags:
@@ -2370,9 +2334,7 @@ paths:
       description: '`GET /3.0/stats/getbyprogram`
 
 
-        Get statistics by offer
-
-        '
+        Get statistics by offer'
       parameters:
       - name: api-key
         in: header
@@ -2785,6 +2747,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyprogram?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyprogram
+      x-operation-id-source: derived
   /3.0/stats/getbycountries:
     get:
       tags:
@@ -2793,9 +2757,7 @@ paths:
       description: '`GET /3.0/stats/getbycountries`
 
 
-        Get statistics by country
-
-        '
+        Get statistics by country'
       parameters:
       - name: api-key
         in: header
@@ -3198,6 +3160,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbycountries?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbycountries
+      x-operation-id-source: derived
   /3.0/stats/getbybrowsers:
     get:
       tags:
@@ -3206,9 +3170,7 @@ paths:
       description: '`GET /3.0/stats/getbybrowsers`
 
 
-        Get statistics by browser
-
-        '
+        Get statistics by browser'
       parameters:
       - name: api-key
         in: header
@@ -3547,6 +3509,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbybrowsers?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbybrowsers
+      x-operation-id-source: derived
   /3.0/stats/getbybrowsersversion:
     get:
       tags:
@@ -3555,9 +3519,7 @@ paths:
       description: '`GET /3.0/stats/getbybrowsersversion`
 
 
-        Get statistics by browser version
-
-        '
+        Get statistics by browser version'
       parameters:
       - name: api-key
         in: header
@@ -3896,6 +3858,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbybrowsersversion?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbybrowsersversion
+      x-operation-id-source: derived
   /3.0/stats/getbylanding:
     get:
       tags:
@@ -3904,9 +3868,7 @@ paths:
       description: '`GET /3.0/stats/getbylanding`
 
 
-        Get statistics by landing
-
-        '
+        Get statistics by landing'
       parameters:
       - name: api-key
         in: header
@@ -4330,6 +4292,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbylanding?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[offer]=<filter[offer]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbylanding
+      x-operation-id-source: derived
   /3.0/stats/getbyprelanding:
     get:
       tags:
@@ -4338,9 +4302,7 @@ paths:
       description: '`GET /3.0/stats/getbyprelanding`
 
 
-        Get statistics by prelanding
-
-        '
+        Get statistics by prelanding'
       parameters:
       - name: api-key
         in: header
@@ -4700,6 +4662,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyprelanding?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[offer]=<filter[offer]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyprelanding
+      x-operation-id-source: derived
   /3.0/stats/getbymobilecarrier:
     get:
       tags:
@@ -4708,9 +4672,7 @@ paths:
       description: '`GET /3.0/stats/getbymobilecarrier`
 
 
-        Get statistics by mobile carrier
-
-        '
+        Get statistics by mobile carrier'
       parameters:
       - name: api-key
         in: header
@@ -5119,6 +5081,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbymobilecarrier?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbymobilecarrier
+      x-operation-id-source: derived
   /3.0/stats/getbyconnectiontype:
     get:
       tags:
@@ -5127,9 +5091,7 @@ paths:
       description: '`GET /3.0/stats/getbyconnectiontype`
 
 
-        Get statistics by connection type
-
-        '
+        Get statistics by connection type'
       parameters:
       - name: api-key
         in: header
@@ -5538,6 +5500,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyconnectiontype?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyconnectiontype
+      x-operation-id-source: derived
   /3.0/stats/getbyos:
     get:
       tags:
@@ -5546,9 +5510,7 @@ paths:
       description: '`GET /3.0/stats/getbyos`
 
 
-        Get statistics by OS
-
-        '
+        Get statistics by OS'
       parameters:
       - name: api-key
         in: header
@@ -5951,6 +5913,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyos?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyos
+      x-operation-id-source: derived
   /3.0/stats/getbyversions:
     get:
       tags:
@@ -5959,9 +5923,7 @@ paths:
       description: '`GET /3.0/stats/getbyversions`
 
 
-        Get statistics by OS version
-
-        '
+        Get statistics by OS version'
       parameters:
       - name: api-key
         in: header
@@ -6303,6 +6265,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbyversions?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbyversions
+      x-operation-id-source: derived
   /3.0/stats/getbygoal:
     get:
       tags:
@@ -6311,9 +6275,7 @@ paths:
       description: '`GET /3.0/stats/getbygoal`
 
 
-        Get statistics by goal
-
-        '
+        Get statistics by goal'
       parameters:
       - name: api-key
         in: header
@@ -6652,6 +6614,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbygoal?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbygoal
+      x-operation-id-source: derived
   /3.0/stats/getbycities:
     get:
       tags:
@@ -6660,9 +6624,7 @@ paths:
       description: '`GET /3.0/stats/getbycities`
 
 
-        Get statistics by city
-
-        '
+        Get statistics by city'
       parameters:
       - name: api-key
         in: header
@@ -7065,6 +7027,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbycities?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbycities
+      x-operation-id-source: derived
   /3.0/stats/getbydevices:
     get:
       tags:
@@ -7073,9 +7037,7 @@ paths:
       description: '`GET /3.0/stats/getbydevices`
 
 
-        Get statistics by device
-
-        '
+        Get statistics by device'
       parameters:
       - name: api-key
         in: header
@@ -7478,6 +7440,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbydevices?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1&not_offer_id[0]=0&not_offer_id[1]=1&not_advertiser_id[0]=string&not_advertiser_id[1]=string2&not_affiliate_id[0]=0&not_affiliate_id[1]=1&not_advertiser_manager_id[0]=string&not_advertiser_manager_id[1]=string2&not_affiliate_manager_id[0]=string&not_affiliate_manager_id[1]=string2&not_smartlink_id[0]=string&not_smartlink_id[1]=string2&not_country[0]=string&not_country[1]=string2' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbydevices
+      x-operation-id-source: derived
   /3.0/stats/getbydevicemodels:
     get:
       tags:
@@ -7486,9 +7450,7 @@ paths:
       description: '`GET /3.0/stats/getbydevicemodels`
 
 
-        Get statistics by device model
-
-        '
+        Get statistics by device model'
       parameters:
       - name: api-key
         in: header
@@ -7827,6 +7789,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbydevicemodels?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[currency][0]=string&filter[currency][1]=string2&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbydevicemodels
+      x-operation-id-source: derived
   /3.0/stats/getreferralpayments:
     get:
       tags:
@@ -7835,9 +7799,7 @@ paths:
       description: '`GET /3.0/stats/getreferralpayments`
 
 
-        Get statistics by referral payments
-
-        '
+        Get statistics by referral payments'
       parameters:
       - name: api-key
         in: header
@@ -8016,6 +7978,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getreferralpayments?date_from=31-05-2017&date_to=31-05-2017&pids[0]=0&pids[1]=1&refs[0]=0&refs[1]=1&is_paid=0&payment_statuses[0]=0&status=0&page=1&limit=100&currencies[0]=0&currencies[1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetreferralpayments
+      x-operation-id-source: derived
   /3.0/stats/find-subs:
     get:
       tags:
@@ -8024,9 +7988,7 @@ paths:
       description: '`GET /3.0/stats/find-subs`
 
 
-        Get sub accounts (Available only for partner API-Key)
-
-        '
+        Get sub accounts (Available only for partner API-Key)'
       parameters:
       - name: api-key
         in: header
@@ -8148,6 +8110,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/find-subs?page=1&limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsFindSubs
+      x-operation-id-source: derived
   /3.0/stats/getbytrafficback:
     get:
       tags:
@@ -8156,9 +8120,7 @@ paths:
       description: '`GET /3.0/stats/getbytrafficback`
 
 
-        Get statistics by trafficback
-
-        '
+        Get statistics by trafficback'
       parameters:
       - name: api-key
         in: header
@@ -8349,6 +8311,8 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/stats/getbytrafficback?filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&locale=en&page=1&limit=100&orderType=asc&filter[offer][0]=0&filter[offer][1]=1' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30StatsGetbytrafficback
+      x-operation-id-source: derived
   /3.0/appsflyer_stats/getbyslice:
     get:
       tags:
@@ -8357,9 +8321,7 @@ paths:
       description: '`GET /3.0/appsflyer_stats/getbyslice`
 
 
-        Get Appsflyer stats by slice
-
-        '
+        Get Appsflyer stats by slice'
       parameters:
       - name: API-Key
         in: header
@@ -8586,21 +8548,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/appsflyer_stats/getbyslice?slice[0]=date&filter[date_from]=<filter[date_from]>&filter[date_to]=<filter[date_to]>&filter[app_id][0]=string&filter[app_id][1]=string2&filter[event_name][0]=string&filter[event_name][1]=string2&filter[country_code][0]=string&filter[country_code][1]=string2&filter[city_id][0]=0&filter[city_id][1]=1&filter[os][0]=string&filter[os][1]=string2&filter[device_type][0]=string&filter[device_type][1]=string2&filter[isp][0]=string&filter[isp][1]=string2&filter[campaign_id][0]=string&filter[campaign_id][1]=string2&filter[language][0]=string&filter[language][1]=string2&filter[sub1][0]=string&filter[sub1][1]=string2&filter[sub2][0]=string&filter[sub2][1]=string2&filter[sub3][0]=string&filter[sub3][1]=string2&filter[sub4][0]=string&filter[sub4][1]=string2&filter[sub5][0]=string&filter[sub5][1]=string2&order=asc' \\\n  --header 'API-Key: <API-Key>'"
+      operationId: get30AppsflyerStatsGetbyslice
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -8614,19 +8565,6 @@ components:
               message:
                 type: string
                 example: Token is necessary
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
     BadRequest:
       description: Bad Request - The request was malformed or contained invalid parameters
       content:
@@ -8640,6 +8578,32 @@ components:
               message:
                 type: string
                 example: Bad Request
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
 x-tagGroups:
 - name: Admin API
   tags:

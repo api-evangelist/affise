@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -51,21 +15,19 @@ servers:
       default: 685168e94e6a96fa7c31895e
       description: Demo Test API Key
 tags:
-- name: admin-users
+- name: Admin Users
   x-displayName: Users
   description: Admin user management
 paths:
   /3.0/admin/users:
     get:
       tags:
-      - admin-users
+      - Admin Users
       summary: Users list
       description: '`GET /3.0/admin/users`
 
 
-        Get a list of users
-
-        '
+        Get a list of users'
       parameters:
       - name: api-key
         in: header
@@ -205,17 +167,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/users?limit=100' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30AdminUsers
+      x-operation-id-source: derived
   /3.0/admin/user:
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Add user
       description: '`POST /3.0/admin/user`
 
 
-        Add a new user
-
-        '
+        Add a new user'
       parameters:
       - name: api-key
         in: header
@@ -391,17 +353,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'first_name=string' \\\n  --form 'last_name=string' \\\n  --form 'roles[0][0]=ROLE_ADMIN' \\\n  --form 'type=common_manager' \\\n  --form 'skype=string' \\\n  --form 'whatsapp=string' \\\n  --form 'telegram=string' \\\n  --form 'viber=string' \\\n  --form 'facebook=string' \\\n  --form 'wechat=string' \\\n  --form 'work_hours=string' \\\n  --form 'avatar=string' \\\n  --form 'internal_telegram_username=string'"
+      operationId: post30AdminUser
+      x-operation-id-source: derived
   /3.0/admin/user/{id}:
     get:
       tags:
-      - admin-users
+      - Admin Users
       summary: Read user
       description: '`GET /3.0/admin/user/{id}`
 
 
-        Read single user
-
-        '
+        Read single user'
       parameters:
       - name: api-key
         in: header
@@ -612,16 +574,16 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30AdminUserById
+      x-operation-id-source: derived
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Edit user
       description: '`POST /3.0/admin/user/{id}`
 
 
-        Change the user
-
-        '
+        Change the user'
       parameters:
       - name: api-key
         in: header
@@ -753,17 +715,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'email=string' \\\n  --form 'password=string' \\\n  --form 'first_name=string' \\\n  --form 'last_name=string' \\\n  --form 'roles[0][0]=ROLE_MANAGER_AFFILIATE' \\\n  --form 'skype=string' \\\n  --form 'whatsapp=string' \\\n  --form 'telegram=string' \\\n  --form 'viber=string' \\\n  --form 'facebook=string' \\\n  --form 'wechat=string' \\\n  --form 'work_hours=string' \\\n  --form 'type=common_manager' \\\n  --form 'avatar=string' \\\n  --form 'internal_telegram_username=string'"
+      operationId: post30AdminUserById
+      x-operation-id-source: derived
   /3.0/admin/user/api_key/{id}:
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Change user api key
       description: '`POST /3.0/admin/user/api_key/{id}`
 
 
-        Change user api key
-
-        '
+        Change user api key'
       parameters:
       - name: api-key
         in: header
@@ -809,17 +771,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/api_key/{id}' \\\n  --header 'api-key: <api-key>'"
+      operationId: post30AdminUserApiKeyById
+      x-operation-id-source: derived
   /3.0/admin/user/{id}/password:
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Change user password
       description: '`POST /3.0/admin/user/{id}/password`
 
 
-        Change user password
-
-        '
+        Change user password'
       parameters:
       - name: api-key
         in: header
@@ -877,17 +839,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.0/admin/user/{id}/password' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --form 'password=string'"
+      operationId: post30AdminUserByIdPassword
+      x-operation-id-source: derived
   /3.1/user/{id}/permissions:
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Update user permissions
       description: '`POST /3.1/user/{id}/permissions`
 
 
-        Update user permissions
-
-        '
+        Update user permissions'
       parameters:
       - name: api-key
         in: header
@@ -2234,17 +2196,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/user/{id}/permissions' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"permissions\": {\n    \"automation\": {\n      \"affise-checker\": {\n        \"level\": \"deny\"\n      }\n    },\n    \"general\": {\n      \"marketplace\": {\n        \"level\": \"read\"\n      },\n      \"settings\": {\n        \"level\": \"deny\"\n      },\n      \"billing\": {\n        \"level\": \"write\"\n      }\n    },\n    \"notificator\": {\n      \"client-subscription\": {\n        \"level\": \"write\"\n      },\n      \"transport-configuration\": {\n        \"level\": \"write\"\n      },\n      \"user-subscription\": {\n        \"level\": \"write\"\n      }\n    },\n    \"stats\": {\n      \"affiliate-postback\": {\n        \"level\": \"read\"\n      },\n      \"clicks-list\": {\n        \"level\": \"read\"\n      },\n      \"comparison-report\": {\n        \"level\": \"read\"\n      },\n      \"conversions-export\": {\n        \"level\": \"read\"\n      },\n      \"conversions-import\": {\n        \"level\": \"write\"\n      },\n      \"conversions-list\": {\n        \"level\": \"read\"\n      },\n      \"entity-account-manager\": {\n        \"level\": \"read\",\n        \"default_level\": \"read\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-affiliate-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"referral\": {\n        \"level\": \"deny\"\n      },\n      \"server-postback\": {\n        \"level\": \"read\"\n      },\n      \"slice-account_manager_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-advertiser_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-affiliate_id\": {\n        \"level\": \"read\"\n      },\n      \"slice-affiliate_manager_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-browser\": {\n        \"level\": \"deny\"\n      },\n      \"slice-city\": {\n        \"level\": \"read\"\n      },\n      \"slice-connection-type\": {\n        \"level\": \"deny\"\n      },\n      \"slice-country\": {\n        \"level\": \"read\"\n      },\n      \"slice-day\": {\n        \"level\": \"read\"\n      },\n      \"slice-device\": {\n        \"level\": \"read\"\n      },\n      \"slice-goal\": {\n        \"level\": \"read\"\n      },\n      \"slice-landing\": {\n        \"level\": \"deny\"\n      },\n      \"slice-mobile-carrier\": {\n        \"level\": \"deny\"\n      },\n      \"slice-offer_id\": {\n        \"level\": \"read\"\n      },\n      \"slice-os\": {\n        \"level\": \"read\"\n      },\n      \"slice-prelanding\": {\n        \"level\": \"deny\"\n      },\n      \"slice-smart_id\": {\n        \"level\": \"deny\"\n      },\n      \"slice-sub1\": {\n        \"level\": \"deny\"\n      },\n      \"slice-sub2\": {\n        \"level\": \"deny\"\n      },\n      \"slice-trafficback_reason\": {\n        \"level\": \"read\"\n      },\n      \"stats-export\": {\n        \"level\": \"read\"\n      },\n      \"view-custom\": {\n        \"level\": \"read\"\n      },\n      \"view-kpi\": {\n        \"level\": \"deny\"\n      },\n      \"view-retention-rate\": {\n        \"level\": \"deny\"\n      },\n      \"slice-events\": {\n        \"level\": \"read\"\n      }\n    },\n    \"users\": {\n      \"entity-account-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-advertiser\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-affiliate\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"ints\": {}\n        }\n      },\n      \"entity-affiliate-manager\": {\n        \"level\": \"write\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-common-manager\": {\n        \"level\": \"deny\",\n        \"exceptions\": {\n          \"strings\": {}\n        }\n      },\n      \"entity-preset\": {\n        \"level\": \"deny\"\n      },\n      \"view-users\": {\n        \"level\": \"deny\"\n      }\n    }\n  }\n}'"
+      operationId: post31UserByIdPermissions
+      x-operation-id-source: derived
   /3.1/pub-auth:
     post:
       tags:
-      - admin-users
+      - Admin Users
       summary: Public auth
       description: '`POST /3.1/pub-auth`
 
 
-        Get user api key by login and password
-
-        '
+        Get user api key by login and password'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -2286,21 +2248,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/pub-auth' \\\n  --form 'email=string' \\\n  --form 'password=string'"
+      operationId: post31PubAuth
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -2314,6 +2265,19 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:

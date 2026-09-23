@@ -6,43 +6,7 @@ info:
     altText: Affise API documentation.
     url: affise_logo.svg
     backgroundColor: '#fafafa'
-  description: 'API 3.1 documentation.
-
-
-    Authorization
-
-
-    ```shell
-
-    curl --header "API-Key:23df424b0a53b0899f78685966243ee61" http://YOUR_API_DOMAIN/
-
-    or
-
-    curl http://YOUR_API_DOMAIN/some_path?API-Key=23df424b0a53b0899f78685966243ee61
-
-    ```
-
-
-
-    For data exchange using authentication public key passed as parameter in the header API-Key. As the key, a hash generated for your site. API key, you can see in your profile.
-
-
-    Find out more about where you can get your API URL, API-key and personal API-key for Affiliate here - [Getting Started with API](https://help-center.affise.com/en/articles/6463675-start-with-api-networks)
-
-
-    Postman collection
-
-
-    A ready-to-use Postman collection covering all endpoints of this documentation is available in the [affise-postman-api-collection](https://github.com/affise/affise-postman-api-collection) repository. Import the collection together with the Demo environment, set your `baseUrl` and API keys in the environment variables, and you are ready to send requests.
-
-
-    <aside class="warning">
-
-    All API requests must include an API-Key header or API-Key GET parameter for client authentication.
-
-    </aside>
-
-    '
+  description: API 3.1 documentation.
 servers:
 - url: https://api-demo.affise.com
   description: Demo Server
@@ -51,21 +15,19 @@ servers:
       default: 685168e94e6a96fa7c31895e
       description: Demo Test API Key
 tags:
-- name: resources
+- name: Resources
   x-displayName: Lookup
   description: Public lookup data — countries, regions, ISPs, OSes, goals, browsers, cities, etc.
 paths:
   /3.1/isp:
     get:
       tags:
-      - resources
+      - Resources
       summary: ISP list
       description: '`GET /3.1/isp`
 
 
-        Get ISP list
-
-        '
+        Get ISP list'
       parameters:
       - name: api-key
         in: header
@@ -136,17 +98,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/isp?country=<country>' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Isp
+      x-operation-id-source: derived
   /3.1/countries:
     get:
       tags:
-      - resources
+      - Resources
       summary: Countries list
       description: '`GET /3.1/countries`
 
 
-        Get countries list
-
-        '
+        Get countries list'
       parameters:
       - name: api-key
         in: header
@@ -197,17 +159,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/countries' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Countries
+      x-operation-id-source: derived
   /3.1/regions:
     get:
       tags:
-      - resources
+      - Resources
       summary: Regions list
       description: '`GET /3.1/regions`
 
 
-        Get regions list
-
-        '
+        Get regions list'
       parameters:
       - name: api-key
         in: header
@@ -275,17 +237,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/regions?country[0]=FR&code[0]=FR' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Regions
+      x-operation-id-source: derived
   /3.1/connection-types:
     get:
       tags:
-      - resources
+      - Resources
       summary: Connection types list
       description: '`GET /3.1/connection-types`
 
 
-        Get connection types list
-
-        '
+        Get connection types list'
       parameters:
       - name: api-key
         in: header
@@ -324,17 +286,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/connection-types' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31ConnectionTypes
+      x-operation-id-source: derived
   /3.1/vendors:
     get:
       tags:
-      - resources
+      - Resources
       summary: Vendors list
       description: '`GET /3.1/vendors`
 
 
-        Get vendors list
-
-        '
+        Get vendors list'
       parameters:
       - name: api-key
         in: header
@@ -383,17 +345,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/vendors' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Vendors
+      x-operation-id-source: derived
   /3.1/oses:
     get:
       tags:
-      - resources
+      - Resources
       summary: Oses list
       description: '`GET /3.1/oses`
 
 
-        Get oses list
-
-        '
+        Get oses list'
       parameters:
       - name: api-key
         in: header
@@ -452,17 +414,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/oses' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31Oses
+      x-operation-id-source: derived
   /3.1/oses/{os}:
     get:
       tags:
-      - resources
+      - Resources
       summary: OS versions list
       description: '`GET /3.1/oses/{os}`
 
 
-        Get os versions list
-
-        '
+        Get os versions list'
       parameters:
       - name: api-key
         in: header
@@ -542,17 +504,17 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.1/oses/{os}' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get31OsesByOs
+      x-operation-id-source: derived
   /3.0/goals:
     get:
       tags:
-      - resources
+      - Resources
       summary: Goals list
       description: '`GET /3.0/goals`
 
 
-        Get goals list
-
-        '
+        Get goals list'
       parameters:
       - name: api-key
         in: header
@@ -597,34 +559,10 @@ paths:
       - lang: cURL
         label: cURL
         source: "curl --request GET \\\n  --url 'https://api-demo.affise.com/3.0/goals' \\\n  --header 'api-key: 23df424b0a53b0899f78685966243ee61'"
+      operationId: get30Goals
+      x-operation-id-source: derived
 components:
   responses:
-    BadRequest:
-      description: Bad Request - The request was malformed or contained invalid parameters
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Bad Request
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
     NotFound:
       description: Not Found - Resource not found
       content:
@@ -638,19 +576,6 @@ components:
               message:
                 type: string
                 example: Resource Not Found
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -664,6 +589,45 @@ components:
               message:
                 type: string
                 example: Token is necessary
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
 x-tagGroups:
 - name: Admin API
   tags:
