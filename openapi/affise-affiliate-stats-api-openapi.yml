@@ -8552,6 +8552,32 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -8578,32 +8604,6 @@ components:
               message:
                 type: string
                 example: Bad Request
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
 x-tagGroups:
 - name: Admin API
   tags:

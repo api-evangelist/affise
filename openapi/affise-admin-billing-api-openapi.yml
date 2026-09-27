@@ -517,8 +517,8 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    NotFound:
-      description: Not Found - Resource not found
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
       content:
         application/json:
           schema:
@@ -529,7 +529,7 @@ components:
                 example: 2
               message:
                 type: string
-                example: Resource Not Found
+                example: Bad Request
     Unauthorized:
       description: Unauthorized - API key is missing or invalid
       content:
@@ -556,8 +556,8 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
-    BadRequest:
-      description: Bad Request - The request was malformed or contained invalid parameters
+    NotFound:
+      description: Not Found - Resource not found
       content:
         application/json:
           schema:
@@ -568,7 +568,7 @@ components:
                 example: 2
               message:
                 type: string
-                example: Bad Request
+                example: Resource Not Found
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:

@@ -834,32 +834,6 @@ paths:
         source: "curl --request POST \\\n  --url 'https://api-demo.affise.com/3.1/payments/{invoice_id}/conversions/delete' \\\n  --header 'Api-Key: <Api-Key>' \\\n  --form 'conversion_ids[0]=string' \\\n  --form 'conversion_ids[1]=string2' \\\n  --form 'offer_ids[0]=0' \\\n  --form 'offer_ids[1]=1'"
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Token is necessary
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Auth Denied
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -873,6 +847,32 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
   schemas:
     payment:
       type: object
