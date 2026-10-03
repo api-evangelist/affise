@@ -3744,6 +3744,165 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
+    targeting_browser_version_structure:
+      type: object
+      description: Browser version structure for targeting
+      properties:
+        name:
+          type: string
+          description: Browser's name.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for browser's version.
+        version:
+          type: string
+          description: Browser's version for comparison.
+    offer_payment_structure:
+      type: object
+      description: Payment item structure
+      properties:
+        id:
+          type: integer
+          description: Payment id
+        title:
+          type: string
+          description: Payment title
+        countries:
+          type: array
+          items:
+            type: string
+          description: An array of countries in ISO format (or put empty string to clear existing items)
+        country_exclude:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: Exclude these countries. Available:0,1
+        cities:
+          type: array
+          items:
+            type: integer
+          description: An array of id cities (or put empty string to clear existing items)
+        devices:
+          type: array
+          items:
+            type: string
+            enum:
+            - mediahub
+            - mobile
+            - ereader
+            - console
+            - tv
+            - tablet
+            - desktop
+            - smartwatch
+          description: The array of devices. (or put empty string to clear existing items)
+        os:
+          type: string
+          description: Possible values can be found in oses-list
+        goal:
+          type: string
+          description: Value targets
+        total:
+          type: number
+          description: The amount of payment
+        revenue:
+          type: number
+          description: Payment webmaster
+        currency:
+          type: string
+          description: Currency (Code in ECB format)
+        type:
+          type: string
+          enum:
+          - fixed
+          - percent
+          - mixed
+          - cpc
+          - cpm
+          - first_cpa
+          - first_cps
+          - baseline_onetime
+          - baseline_accumulating
+          description: Type of payment.
+        sub1:
+          type: string
+          description: Comma-separated sub values for sub1
+        sub2:
+          type: string
+          description: Comma-separated sub values for sub2
+        sub3:
+          type: string
+          description: Comma-separated sub values for sub3
+        sub4:
+          type: string
+          description: Comma-separated sub values for sub4
+        sub5:
+          type: string
+          description: Comma-separated sub values for sub5
+        sub6:
+          type: string
+          description: Comma-separated sub values for sub6
+        sub7:
+          type: string
+          description: Comma-separated sub values for sub7
+        sub8:
+          type: string
+          description: Comma-separated sub values for sub8
+        custom_field1:
+          type: string
+        custom_field2:
+          type: string
+        custom_field3:
+          type: string
+        custom_field4:
+          type: string
+        custom_field5:
+          type: string
+        custom_field6:
+          type: string
+        custom_field7:
+          type: string
+        custom_field8:
+          type: string
+        custom_field9:
+          type: string
+        custom_field10:
+          type: string
+        custom_field11:
+          type: string
+        custom_field12:
+          type: string
+        custom_field13:
+          type: string
+        custom_field14:
+          type: string
+        custom_field15:
+          type: string
+        baseline_value:
+          type: number
+          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
+      required:
+      - currency
+      - type
+    targeting_url_weight:
+      type: object
+      description: URL with weight for traffic redistribution
+      properties:
+        url:
+          type: string
+          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
+        weight:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
     offer_caps_structure:
       type: object
       description: Cap item structure
@@ -3812,6 +3971,51 @@ components:
           type: array
           items:
             type: string
+    offer_landing_structure:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Landing id. Pass an existing landing's id to update that landing in place; omit to create a new landing. Not required.
+        title:
+          type: string
+          description: Title
+        url:
+          type: string
+          description: Tracking URL
+        url_preview:
+          type: string
+          description: View URL
+        type:
+          type: string
+          enum:
+          - landing
+          - transit
+          default: landing
+          description: Type
+      required:
+      - title
+      - url
+      - url_preview
+    targeting_os_structure:
+      type: object
+      description: OS structure for targeting
+      properties:
+        name:
+          type: string
+          description: OS name that could be found at OSes list method.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for OS version.
+        version:
+          type: string
+          description: OS version for comparison.
     targeting_group_structure:
       type: object
       description: Targeting group structure
@@ -4120,57 +4324,6 @@ components:
           items:
             type: string
           description: Available if the Macros Replacement feature is enabled.
-    offer_schedule_structure:
-      type: object
-      description: Offer schedule structure
-      properties:
-        enabled:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: Enable/Disable offer schedule.
-        date_start:
-          type: string
-          format: date
-          description: Date of launch, YYYY-MM-DD. Offer activation does not depend on `enabled` field.
-        date_to:
-          type: string
-          format: date
-          description: Date of deactivation, YYYY-MM-DD
-        timezone:
-          type: string
-          description: 'Timezone. Example: Europe/London'
-        intervals:
-          type: array
-          description: 'Array of schedule intervals. Example: [weekday_number(0-6)][interval_number(0,1,2,...)][from]=hour(0-23)'
-          items:
-            type: array
-            items:
-              type: object
-              properties:
-                From:
-                  type: integer
-                  description: Start hour (0-23)
-                  minimum: 0
-                  maximum: 23
-                To:
-                  type: integer
-                  description: End hour (0-23)
-                  minimum: 0
-                  maximum: 23
-    targeting_url_weight:
-      type: object
-      description: URL with weight for traffic redistribution
-      properties:
-        url:
-          type: string
-          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
-        weight:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
     offer_tier_structure:
       type: object
       description: Commission tier item structure
@@ -4250,51 +4403,66 @@ components:
             - declined
             - hold
           description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
-    offer_landing_structure:
+    offer_creative_html_structure:
       type: object
-      properties:
-        id:
-          type: integer
-          description: Landing id. Pass an existing landing's id to update that landing in place; omit to create a new landing. Not required.
-        title:
-          type: string
-          description: Title
-        url:
-          type: string
-          description: Tracking URL
-        url_preview:
-          type: string
-          description: View URL
-        type:
-          type: string
-          enum:
-          - landing
-          - transit
-          default: landing
-          description: Type
-      required:
-      - title
-      - url
-      - url_preview
-    targeting_browser_version_structure:
-      type: object
-      description: Browser version structure for targeting
+      description: HTML creative item structure
       properties:
         name:
           type: string
-          description: Browser's name.
-        comparison:
+          description: Creative name
+        width:
+          type: integer
+          description: Creative width
+        height:
+          type: integer
+          description: Creative height
+        code:
           type: string
+          description: Creative html code with macroses
+        asset_mapping:
+          type: object
+          description: 'How to map macros and asset. For example: {"aaa":0}. Macros {aaa} match to 0 asset'
+          additionalProperties:
+            type: integer
+    offer_schedule_structure:
+      type: object
+      description: Offer schedule structure
+      properties:
+        enabled:
+          type: integer
           enum:
-          - LT
-          - LTE
-          - EQ
-          - GT
-          - GTE
-          description: Comparison operation for browser's version.
-        version:
+          - 0
+          - 1
+          description: Enable/Disable offer schedule.
+        date_start:
           type: string
-          description: Browser's version for comparison.
+          format: date
+          description: Date of launch, YYYY-MM-DD. Offer activation does not depend on `enabled` field.
+        date_to:
+          type: string
+          format: date
+          description: Date of deactivation, YYYY-MM-DD
+        timezone:
+          type: string
+          description: 'Timezone. Example: Europe/London'
+        intervals:
+          type: array
+          description: 'Array of schedule intervals. Example: [weekday_number(0-6)][interval_number(0,1,2,...)][from]=hour(0-23)'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                From:
+                  type: integer
+                  description: Start hour (0-23)
+                  minimum: 0
+                  maximum: 23
+                To:
+                  type: integer
+                  description: End hour (0-23)
+                  minimum: 0
+                  maximum: 23
     offer:
       type: object
       properties:
@@ -4551,174 +4719,6 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    offer_payment_structure:
-      type: object
-      description: Payment item structure
-      properties:
-        id:
-          type: integer
-          description: Payment id
-        title:
-          type: string
-          description: Payment title
-        countries:
-          type: array
-          items:
-            type: string
-          description: An array of countries in ISO format (or put empty string to clear existing items)
-        country_exclude:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: Exclude these countries. Available:0,1
-        cities:
-          type: array
-          items:
-            type: integer
-          description: An array of id cities (or put empty string to clear existing items)
-        devices:
-          type: array
-          items:
-            type: string
-            enum:
-            - mediahub
-            - mobile
-            - ereader
-            - console
-            - tv
-            - tablet
-            - desktop
-            - smartwatch
-          description: The array of devices. (or put empty string to clear existing items)
-        os:
-          type: string
-          description: Possible values can be found in oses-list
-        goal:
-          type: string
-          description: Value targets
-        total:
-          type: number
-          description: The amount of payment
-        revenue:
-          type: number
-          description: Payment webmaster
-        currency:
-          type: string
-          description: Currency (Code in ECB format)
-        type:
-          type: string
-          enum:
-          - fixed
-          - percent
-          - mixed
-          - cpc
-          - cpm
-          - first_cpa
-          - first_cps
-          - baseline_onetime
-          - baseline_accumulating
-          description: Type of payment.
-        sub1:
-          type: string
-          description: Comma-separated sub values for sub1
-        sub2:
-          type: string
-          description: Comma-separated sub values for sub2
-        sub3:
-          type: string
-          description: Comma-separated sub values for sub3
-        sub4:
-          type: string
-          description: Comma-separated sub values for sub4
-        sub5:
-          type: string
-          description: Comma-separated sub values for sub5
-        sub6:
-          type: string
-          description: Comma-separated sub values for sub6
-        sub7:
-          type: string
-          description: Comma-separated sub values for sub7
-        sub8:
-          type: string
-          description: Comma-separated sub values for sub8
-        custom_field1:
-          type: string
-        custom_field2:
-          type: string
-        custom_field3:
-          type: string
-        custom_field4:
-          type: string
-        custom_field5:
-          type: string
-        custom_field6:
-          type: string
-        custom_field7:
-          type: string
-        custom_field8:
-          type: string
-        custom_field9:
-          type: string
-        custom_field10:
-          type: string
-        custom_field11:
-          type: string
-        custom_field12:
-          type: string
-        custom_field13:
-          type: string
-        custom_field14:
-          type: string
-        custom_field15:
-          type: string
-        baseline_value:
-          type: number
-          description: Baseline value for the payment with the type 'baseline_onetime' and 'baseline_accumulating'.
-      required:
-      - currency
-      - type
-    offer_creative_html_structure:
-      type: object
-      description: HTML creative item structure
-      properties:
-        name:
-          type: string
-          description: Creative name
-        width:
-          type: integer
-          description: Creative width
-        height:
-          type: integer
-          description: Creative height
-        code:
-          type: string
-          description: Creative html code with macroses
-        asset_mapping:
-          type: object
-          description: 'How to map macros and asset. For example: {"aaa":0}. Macros {aaa} match to 0 asset'
-          additionalProperties:
-            type: integer
-    targeting_os_structure:
-      type: object
-      description: OS structure for targeting
-      properties:
-        name:
-          type: string
-          description: OS name that could be found at OSes list method.
-        comparison:
-          type: string
-          enum:
-          - LT
-          - LTE
-          - EQ
-          - GT
-          - GTE
-          description: Comparison operation for OS version.
-        version:
-          type: string
-          description: OS version for comparison.
   responses:
     NotFound:
       description: Not Found - Resource not found
@@ -4733,19 +4733,6 @@ components:
               message:
                 type: string
                 example: Resource Not Found
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Token is necessary
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -4759,6 +4746,19 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:

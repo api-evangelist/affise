@@ -738,6 +738,32 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    NotFound:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Resource Not Found
+    InternalServerError:
+      description: Internal Server Error - Server error, please contact administrator
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Server error, Please contact your administrator
     BadRequest:
       description: Bad Request - The request was malformed or contained invalid parameters
       content:
@@ -764,32 +790,6 @@ components:
               message:
                 type: string
                 example: Token is necessary
-    InternalServerError:
-      description: Internal Server Error - Server error, please contact administrator
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Server error, Please contact your administrator
-    NotFound:
-      description: Not Found - Resource not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Resource Not Found
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:

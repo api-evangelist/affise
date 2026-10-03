@@ -8552,6 +8552,32 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Bad Request
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -8578,32 +8604,6 @@ components:
               message:
                 type: string
                 example: Auth Denied
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Token is necessary
-    BadRequest:
-      description: Bad Request - The request was malformed or contained invalid parameters
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Bad Request
 x-tagGroups:
 - name: Admin API
   tags:

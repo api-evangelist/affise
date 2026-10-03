@@ -1565,191 +1565,6 @@ components:
           type: boolean
         enable_impression_sub3_uniqueness:
           type: boolean
-    offer_caps_structure:
-      type: object
-      description: Cap item structure
-      properties:
-        period:
-          type: string
-          enum:
-          - hour
-          - day
-          - month
-          - all
-          description: 'Possible values: hour (if enabled), day, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          - clicks
-          - impressions
-          description: 'Possible values: budget, conversions, clicks, impressions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
-        goal_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
-        country:
-          type: array
-          items:
-            type: string
-          description: 'Array[string]. Values: Country codes.'
-        country_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
-        sub_number:
-          type: integer
-          description: '[integer]. Possible values: 2.'
-          enum:
-          - 2
-        sub_value:
-          type: array
-          items:
-            type: string
-    targeting_url_weight:
-      type: object
-      description: URL with weight for traffic redistribution
-      properties:
-        url:
-          type: string
-          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
-        weight:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
-    offer_tier_structure:
-      type: object
-      description: Commission tier item structure
-      properties:
-        timeframe:
-          type: string
-          enum:
-          - day
-          - week
-          - month
-          - all
-          description: 'Possible values: day, week, month, all'
-        type:
-          type: string
-          enum:
-          - budget
-          - conversions
-          description: 'Possible values: budget, conversions'
-        value:
-          type: number
-          description: The integer value for the type of conversion and the float value for the budget type.
-        modifier_value:
-          type: number
-          format: float
-          description: The float value.
-        modifier_type:
-          type: string
-          enum:
-          - by_fix
-          - by_percent
-          - to_fix
-          - to_percent
-          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
-        goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies goal value or is empty.
-        target_goals:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Either specifies target goal value or is empty.
-        affiliate_type:
-          type: string
-          enum:
-          - all
-          - each
-          - exact
-          default: each
-          description: 'Possible values: all, each, exact. Default: each.'
-        affiliates:
-          type: array
-          items:
-            type: integer
-          description: Array[integer]. Either specifies affiliate ID or is empty filed.
-        modifier_payment_type:
-          type: string
-          enum:
-          - payout
-          - total
-          - payout_and_total
-          default: payout
-          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
-        countries:
-          type: array
-          items:
-            type: string
-          description: Array[string]. Countries ISO codes
-        conversion_status:
-          type: array
-          items:
-            type: string
-            enum:
-            - confirmed
-            - pending
-            - declined
-            - hold
-          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
-    offer_landing_structure:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Landing id. Pass an existing landing's id to update that landing in place; omit to create a new landing. Not required.
-        title:
-          type: string
-          description: Title
-        url:
-          type: string
-          description: Tracking URL
-        url_preview:
-          type: string
-          description: View URL
-        type:
-          type: string
-          enum:
-          - landing
-          - transit
-          default: landing
-          description: Type
-      required:
-      - title
-      - url
-      - url_preview
     targeting_browser_version_structure:
       type: object
       description: Browser version structure for targeting
@@ -1769,262 +1584,6 @@ components:
         version:
           type: string
           description: Browser's version for comparison.
-    offer:
-      type: object
-      properties:
-        id:
-          type: integer
-        offer_id:
-          type: string
-        advertiser:
-          type: string
-        external_offer_id:
-          type: string
-        bundle_id:
-          type: string
-        hide_payments:
-          type: boolean
-        title:
-          type: string
-        macro_url:
-          type: string
-        url:
-          type: string
-        cross_postback_url:
-          type: string
-        cross_postback_method:
-          type: string
-        cross_postback_body:
-          type: string
-        url_preview:
-          type: string
-        preview_url:
-          type: string
-        domain_url:
-          type: string
-        parallel_tracking_url:
-          type: string
-        trafficback_url:
-          type: string
-        use_https:
-          type: boolean
-        use_http:
-          type: boolean
-        description_lang:
-          type: object
-          additionalProperties:
-            type: string
-        sources:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              title:
-                type: string
-              allowed:
-                type: integer
-        logo:
-          type: string
-        logo_source:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - stopped
-          - suspended
-        privacy:
-          type: string
-          enum:
-          - public
-          - private
-          - premoderated
-        is_top:
-          type: integer
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/offer_payment_structure'
-        partner_payments:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/offer_payment_structure'
-            - type: object
-              properties:
-                partners:
-                  type: array
-                  items:
-                    type: integer
-        landings:
-          type: array
-          items:
-            $ref: '#/components/schemas/offer_landing_structure'
-        strictly_country:
-          type: integer
-        strictly_os:
-          type: array
-          items:
-            type: string
-          nullable: true
-        strictly_brands:
-          type: array
-          items:
-            type: string
-        strictly_connection_type:
-          type: string
-          nullable: true
-        restriction_isp:
-          type: array
-          items:
-            type: object
-          nullable: true
-        is_redirect_overcap:
-          type: boolean
-        is_impression_overcap:
-          type: boolean
-        notice_percent_overcap:
-          type: integer
-        hold_period:
-          type: integer
-        hold_type:
-          type: string
-        categories:
-          type: array
-          items:
-            type: string
-        full_categories:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              title:
-                type: string
-        cr:
-          type: number
-        epc:
-          type: number
-        affiliate_epc:
-          type: number
-        notes:
-          type: string
-        allowed_ip:
-          type: string
-        disallowed_ip:
-          type: string
-        hash_password:
-          type: string
-        allow_deeplink:
-          type: boolean
-        hide_referer:
-          type: boolean
-        start_at:
-          type: string
-          format: date-time
-        stop_at:
-          type: string
-          format: date-time
-          nullable: true
-        auto_offer_connect:
-          type: integer
-        required_approval:
-          type: boolean
-        is_cpi:
-          type: boolean
-        creatives:
-          type: array
-          items:
-            type: object
-        creatives_zip:
-          type: string
-          nullable: true
-        created_at:
-          type: string
-          format: date-time
-        sub_accounts:
-          type: object
-          properties:
-            '1':
-              type: object
-              properties:
-                value:
-                  type: string
-                except:
-                  type: boolean
-            '2':
-              type: object
-              properties:
-                value:
-                  type: string
-                except:
-                  type: boolean
-        disabled_by:
-          type: string
-        kpi:
-          type: object
-          additionalProperties:
-            type: string
-        strictly_isp:
-          type: array
-          items:
-            type: string
-        caps:
-          type: array
-          items:
-            $ref: '#/components/schemas/offer_caps_structure'
-        updated_at:
-          type: string
-          format: date-time
-        caps_goal_overcap:
-          type: string
-        targeting:
-          type: array
-          items:
-            $ref: '#/components/schemas/targeting_group_structure'
-        commission_tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/offer_tier_structure'
-        enabled_commission_tiers:
-          type: boolean
-        consider_personal_targeting_only:
-          type: boolean
-        hosts_only:
-          type: boolean
-        allow_impressions:
-          type: boolean
-        impressions_url:
-          type: string
-        smartlink_categories:
-          type: array
-          items:
-            type: string
-        uniq_ip_only:
-          type: boolean
-        reject_not_uniq_ip:
-          type: integer
-        countries:
-          type: array
-          items:
-            type: string
-          description: Offer countries
-        tags:
-          type: array
-          items:
-            type: string
-        duplicate_clicks_threshold:
-          type: integer
-        sign_clicks_integration:
-          type: string
-          description: Sign clicks integration setting
-        allow_duplicate_conversions:
-          type: boolean
-        enable_impression_sub3_uniqueness:
-          type: boolean
     offer_payment_structure:
       type: object
       description: Payment item structure
@@ -2153,6 +1712,131 @@ components:
       required:
       - currency
       - type
+    targeting_url_weight:
+      type: object
+      description: URL with weight for traffic redistribution
+      properties:
+        url:
+          type: string
+          description: 'Tracking URL. Example: additional_impression_destination_urls[0][url]=example.com'
+        weight:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'track-link weight. Example: additional_impression_destination_urls[0][weight]=50'
+    offer_caps_structure:
+      type: object
+      description: Cap item structure
+      properties:
+        period:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          - all
+          description: 'Possible values: hour (if enabled), day, month, all'
+        type:
+          type: string
+          enum:
+          - budget
+          - conversions
+          - clicks
+          - impressions
+          description: 'Possible values: budget, conversions, clicks, impressions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty. Empty field requires 'goal_type' values of 'all'/'each'.
+        goal_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''goals'' field is mandatory to be specified for ''exact'' value.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed. Empty field requires 'affiliate_type' values of 'all'/'each'.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''affiliates'' field is mandatory to be specified for ''exact'' value.'
+        country:
+          type: array
+          items:
+            type: string
+          description: 'Array[string]. Values: Country codes.'
+        country_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          description: '[string]. Values: ''all'' , ''each'', ''exact''. ''country'' field is mandatory to be specified for ''exact'' value.'
+        sub_number:
+          type: integer
+          description: '[integer]. Possible values: 2.'
+          enum:
+          - 2
+        sub_value:
+          type: array
+          items:
+            type: string
+    offer_landing_structure:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Landing id. Pass an existing landing's id to update that landing in place; omit to create a new landing. Not required.
+        title:
+          type: string
+          description: Title
+        url:
+          type: string
+          description: Tracking URL
+        url_preview:
+          type: string
+          description: View URL
+        type:
+          type: string
+          enum:
+          - landing
+          - transit
+          default: landing
+          description: Type
+      required:
+      - title
+      - url
+      - url_preview
+    targeting_os_structure:
+      type: object
+      description: OS structure for targeting
+      properties:
+        name:
+          type: string
+          description: OS name that could be found at OSes list method.
+        comparison:
+          type: string
+          enum:
+          - LT
+          - LTE
+          - EQ
+          - GT
+          - GTE
+          description: Comparison operation for OS version.
+        version:
+          type: string
+          description: OS version for comparison.
     targeting_group_structure:
       type: object
       description: Targeting group structure
@@ -2461,39 +2145,342 @@ components:
           items:
             type: string
           description: Available if the Macros Replacement feature is enabled.
-    targeting_os_structure:
+    offer_tier_structure:
       type: object
-      description: OS structure for targeting
+      description: Commission tier item structure
       properties:
-        name:
-          type: string
-          description: OS name that could be found at OSes list method.
-        comparison:
+        timeframe:
           type: string
           enum:
-          - LT
-          - LTE
-          - EQ
-          - GT
-          - GTE
-          description: Comparison operation for OS version.
-        version:
+          - day
+          - week
+          - month
+          - all
+          description: 'Possible values: day, week, month, all'
+        type:
           type: string
-          description: OS version for comparison.
-  responses:
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
+          enum:
+          - budget
+          - conversions
+          description: 'Possible values: budget, conversions'
+        value:
+          type: number
+          description: The integer value for the type of conversion and the float value for the budget type.
+        modifier_value:
+          type: number
+          format: float
+          description: The float value.
+        modifier_type:
+          type: string
+          enum:
+          - by_fix
+          - by_percent
+          - to_fix
+          - to_percent
+          description: 'Possible values: by_fix, by_percent, to_fix, to_percent.'
+        goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies goal value or is empty.
+        target_goals:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Either specifies target goal value or is empty.
+        affiliate_type:
+          type: string
+          enum:
+          - all
+          - each
+          - exact
+          default: each
+          description: 'Possible values: all, each, exact. Default: each.'
+        affiliates:
+          type: array
+          items:
+            type: integer
+          description: Array[integer]. Either specifies affiliate ID or is empty filed.
+        modifier_payment_type:
+          type: string
+          enum:
+          - payout
+          - total
+          - payout_and_total
+          default: payout
+          description: 'Possible values: payout, total, payout_and_total. Default: payout.'
+        countries:
+          type: array
+          items:
+            type: string
+          description: Array[string]. Countries ISO codes
+        conversion_status:
+          type: array
+          items:
+            type: string
+            enum:
+            - confirmed
+            - pending
+            - declined
+            - hold
+          description: 'Array[string]. Possible values: confirmed, pending, declined, hold.'
+    offer:
+      type: object
+      properties:
+        id:
+          type: integer
+        offer_id:
+          type: string
+        advertiser:
+          type: string
+        external_offer_id:
+          type: string
+        bundle_id:
+          type: string
+        hide_payments:
+          type: boolean
+        title:
+          type: string
+        macro_url:
+          type: string
+        url:
+          type: string
+        cross_postback_url:
+          type: string
+        cross_postback_method:
+          type: string
+        cross_postback_body:
+          type: string
+        url_preview:
+          type: string
+        preview_url:
+          type: string
+        domain_url:
+          type: string
+        parallel_tracking_url:
+          type: string
+        trafficback_url:
+          type: string
+        use_https:
+          type: boolean
+        use_http:
+          type: boolean
+        description_lang:
+          type: object
+          additionalProperties:
+            type: string
+        sources:
+          type: array
+          items:
             type: object
             properties:
-              status:
-                type: integer
-                example: 2
-              message:
+              id:
                 type: string
-                example: Token is necessary
+              title:
+                type: string
+              allowed:
+                type: integer
+        logo:
+          type: string
+        logo_source:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - stopped
+          - suspended
+        privacy:
+          type: string
+          enum:
+          - public
+          - private
+          - premoderated
+        is_top:
+          type: integer
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_payment_structure'
+        partner_payments:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/offer_payment_structure'
+            - type: object
+              properties:
+                partners:
+                  type: array
+                  items:
+                    type: integer
+        landings:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_landing_structure'
+        strictly_country:
+          type: integer
+        strictly_os:
+          type: array
+          items:
+            type: string
+          nullable: true
+        strictly_brands:
+          type: array
+          items:
+            type: string
+        strictly_connection_type:
+          type: string
+          nullable: true
+        restriction_isp:
+          type: array
+          items:
+            type: object
+          nullable: true
+        is_redirect_overcap:
+          type: boolean
+        is_impression_overcap:
+          type: boolean
+        notice_percent_overcap:
+          type: integer
+        hold_period:
+          type: integer
+        hold_type:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        full_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+        cr:
+          type: number
+        epc:
+          type: number
+        affiliate_epc:
+          type: number
+        notes:
+          type: string
+        allowed_ip:
+          type: string
+        disallowed_ip:
+          type: string
+        hash_password:
+          type: string
+        allow_deeplink:
+          type: boolean
+        hide_referer:
+          type: boolean
+        start_at:
+          type: string
+          format: date-time
+        stop_at:
+          type: string
+          format: date-time
+          nullable: true
+        auto_offer_connect:
+          type: integer
+        required_approval:
+          type: boolean
+        is_cpi:
+          type: boolean
+        creatives:
+          type: array
+          items:
+            type: object
+        creatives_zip:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        sub_accounts:
+          type: object
+          properties:
+            '1':
+              type: object
+              properties:
+                value:
+                  type: string
+                except:
+                  type: boolean
+            '2':
+              type: object
+              properties:
+                value:
+                  type: string
+                except:
+                  type: boolean
+        disabled_by:
+          type: string
+        kpi:
+          type: object
+          additionalProperties:
+            type: string
+        strictly_isp:
+          type: array
+          items:
+            type: string
+        caps:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_caps_structure'
+        updated_at:
+          type: string
+          format: date-time
+        caps_goal_overcap:
+          type: string
+        targeting:
+          type: array
+          items:
+            $ref: '#/components/schemas/targeting_group_structure'
+        commission_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer_tier_structure'
+        enabled_commission_tiers:
+          type: boolean
+        consider_personal_targeting_only:
+          type: boolean
+        hosts_only:
+          type: boolean
+        allow_impressions:
+          type: boolean
+        impressions_url:
+          type: string
+        smartlink_categories:
+          type: array
+          items:
+            type: string
+        uniq_ip_only:
+          type: boolean
+        reject_not_uniq_ip:
+          type: integer
+        countries:
+          type: array
+          items:
+            type: string
+          description: Offer countries
+        tags:
+          type: array
+          items:
+            type: string
+        duplicate_clicks_threshold:
+          type: integer
+        sign_clicks_integration:
+          type: string
+          description: Sign clicks integration setting
+        allow_duplicate_conversions:
+          type: boolean
+        enable_impression_sub3_uniqueness:
+          type: boolean
+  responses:
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -2507,6 +2494,19 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:
