@@ -402,19 +402,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - API key is missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Token is necessary
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -428,6 +415,19 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
+    Unauthorized:
+      description: Unauthorized - API key is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Token is necessary
     Forbidden:
       description: Forbidden - Access denied, insufficient permissions
       content:

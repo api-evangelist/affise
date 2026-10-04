@@ -563,19 +563,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    NotFound:
-      description: Not Found - Resource not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 2
-              message:
-                type: string
-                example: Resource Not Found
     InternalServerError:
       description: Internal Server Error - Server error, please contact administrator
       content:
@@ -589,6 +576,19 @@ components:
               message:
                 type: string
                 example: Server error, Please contact your administrator
+    Forbidden:
+      description: Forbidden - Access denied, insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: Auth Denied
     BadRequest:
       description: Bad Request - The request was malformed or contained invalid parameters
       content:
@@ -615,8 +615,8 @@ components:
               message:
                 type: string
                 example: Token is necessary
-    Forbidden:
-      description: Forbidden - Access denied, insufficient permissions
+    NotFound:
+      description: Not Found - Resource not found
       content:
         application/json:
           schema:
@@ -627,7 +627,7 @@ components:
                 example: 2
               message:
                 type: string
-                example: Auth Denied
+                example: Resource Not Found
 x-tagGroups:
 - name: Admin API
   tags:
