@@ -1,0 +1,48 @@
+slug: affise
+provider: Affise
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Admin Users
+  spec_file: affise-admin-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /3.0/admin/user 'Add user'; POST /3.0/admin/user/api_key/{id} 'Change user api key';
+    POST /3.0/admin/user/{id}/password 'Change user password'; POST /3.1/user/{id}/permissions 'Update
+    user permissions'
+  reason: Platform user account CRUD, credential rotation and permission assignment — identity and access
+    administration, not a business-domain capability.
+- tag: admin-billing
+  spec_file: affise-admin-billing-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.8
+  evidence: GET /3.0/admin/advertiser-invoices 'Invoices list'; POST /3.0/admin/advertiser-invoice 'Add
+    invoice'; POST /3.0/admin/advertiser-invoice/{number} 'Edit invoice'
+  reason: Creation, listing and editing of invoices issued to advertisers (customers) — customer invoicing,
+    i.e. accounts receivable.
+- tag: affiliate-stats
+  spec_file: affise-affiliate-stats-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.7
+  evidence: 'GET /3.0/stats/conversions ''Conversions''; GET /3.0/stats/getbyprogram ''By offer''; GET
+    /3.0/stats/getbylanding ''By landing''; vendor: ''performance marketing platform ... accessing detailed
+    campaign analytics'''
+  reason: Performance-marketing campaign reporting sliced by offer, landing page, country and device —
+    marketing performance measurement. Evidence does not clearly single out one sub-capability between
+    marketing operations measurement and digital marketing.
