@@ -166,3 +166,61 @@ plans:
       - All enterprise features
       - Personalized support
       - Contact for pricing
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units:
+  - period
+  plans:
+  - name: Affise Performance - Beginner
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise Performance - Core
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise Performance - Expand
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise Performance - Custom
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise MMP - Scale
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise MMP - Enterprise
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Affise MMP - Custom
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
