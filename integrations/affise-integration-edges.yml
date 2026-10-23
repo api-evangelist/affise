@@ -59,6 +59,171 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/affise_attribution_lib
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: affise_attribution_lib
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_lib
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_adservice
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_adservice
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_advertising
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_advertising
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_androidid
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_androidid
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_appsflyer
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_appsflyer
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_google
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_google
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_huawei
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_huawei
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_link
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_link
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_meta
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_meta
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_network
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_network
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_persistent
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_persistent
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_phone
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_phone
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_rustore
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_rustore
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_status
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_status
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_subscription
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_subscription
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    - name: affise_attribution_module_tiktok
+      version: 1.7.17
+      released: '2026-10-16'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/affise_attribution_module_tiktok
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:affise.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 generated: '2026-10-18'
 method: searched
 source:
@@ -77,3 +242,6 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
