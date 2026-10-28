@@ -1,4 +1,4 @@
-# Affise (affise)
+# Affise
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,50 +64,174 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Affise is a performance marketing platform with a REST API for managing affiliate offers, publishers, conversions, payouts, and accessing detailed campaign analytics. The platform serves affiliate networks, agencies, and advertisers with tools for tracking, attribution, automation, and partner management across its Performance, MMP, and Reach product lines.
+Affise is a performance marketing platform with a REST API for managing affiliate offers, publishers, conversions, payouts, and accessing detailed campaign analytics. The API supports both admin and affiliate panel operations using API key authentication with GET and POST methods across statistics, conversions, offers, partners, and billing endpoints.
 
-APIs.json: https://raw.githubusercontent.com/api-evangelist/affise/refs/heads/main/apis.yml
+**Areas:** Affiliate Marketing · Performance Marketing · Conversion · Publishers · Analytics · Attribution
 
-Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=affise-api-evangelist&utm_content=repo
+## Affise on APIs.io
 
-## Tags
+Everything profiled for Affise is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/affise/](https://apis.io/providers/affise/)** — or go straight to one of the APIs or properties below.
 
-- Affiliate Marketing
-- Performance Marketing
-- Conversions
-- Publishers
-- Analytics
-- Attribution
+### APIs (28)
 
-## APIs
+- [Affise MMP API](https://apis.io/apis/affise/affise-mmp-api/) — Mobile Measurement Partner API enabling mobile app attribution tracking, install measurement, event tracking, and audience analytics for iOS, Android, and…
+- [Affise Admin Adcosts API](https://apis.io/apis/affise/affise-admin-adcosts-api/) — Ad cost reporting
+- [Affise Admin Advertisers API](https://apis.io/apis/affise/affise-admin-advertisers-api/) — Admin operations on advertisers
+- [Affise Admin Affiliates API](https://apis.io/apis/affise/affise-admin-affiliates-api/) — Admin operations on affiliates (partners)
+- [Affise Admin Automation API](https://apis.io/apis/affise/affise-admin-automation-api/) — KPI and block-logs automation
+- [Affise Admin Billing API](https://apis.io/apis/affise/affise-admin-billing-api/) — Advertiser invoice management
+- [Affise Admin Conversions API](https://apis.io/apis/affise/affise-admin-conversions-api/) — Admin conversion editing and import
+- [Affise Admin Offers API](https://apis.io/apis/affise/affise-admin-offers-api/) — Admin offer management — create, edit, delete, mass-update, categories, sources, creatives
+- [Affise Admin Other API](https://apis.io/apis/affise/affise-admin-other-api/) — Other admin endpoints — domains, currencies, custom fields, payment systems
+- [Affise Admin Payments API](https://apis.io/apis/affise/affise-admin-payments-api/) — Affiliate payments API. Available for Expand, Custom and Trial plans.
+- [Affise Admin Presets API](https://apis.io/apis/affise/affise-admin-presets-api/) — Admin presets management
+- [Affise Admin Smartlinks API](https://apis.io/apis/affise/affise-admin-smartlinks-api/) — Admin smartlinks — categories management
+- [Affise Admin Stats API](https://apis.io/apis/affise/affise-admin-stats-api/) — Statistics endpoints available to admin (includes admin-only and multi-role)
+- [Affise Admin Tickets API](https://apis.io/apis/affise/affise-admin-tickets-api/) — Ticket management — list, view, approve/reject affiliate connections to offers and SmartLinks
+- [Affise Admin Users API](https://apis.io/apis/affise/affise-admin-users-api/) — Admin user management
+- [Affise Advertiser Auth API](https://apis.io/apis/affise/affise-advertiser-auth-api/) — Advertiser registration and login
+- [Affise Advertiser Offers API](https://apis.io/apis/affise/affise-advertiser-offers-api/) — Advertiser offer listing
+- [Affise Advertiser Stats API](https://apis.io/apis/affise/affise-advertiser-stats-api/) — Statistics endpoints available to advertiser (multi-role only)
+- [Affise Affiliate Conversions API](https://apis.io/apis/affise/affise-affiliate-conversions-api/) — Affiliate conversion import
+- [Affise Affiliate News API](https://apis.io/apis/affise/affise-affiliate-news-api/) — Affiliate news feed
+- [Affise Affiliate Offers API](https://apis.io/apis/affise/affise-affiliate-offers-api/) — Affiliate offer listing, live offers, activation
+- [Affise Affiliate Other API](https://apis.io/apis/affise/affise-affiliate-other-api/) — Affiliate balance, product feeds
+- [Affise Affiliate Pixels API](https://apis.io/apis/affise/affise-affiliate-pixels-api/) — Affiliate tracking pixels
+- [Affise Affiliate Postbacks API](https://apis.io/apis/affise/affise-affiliate-postbacks-api/) — Affiliate postback management
+- [Affise Affiliate Profile API](https://apis.io/apis/affise/affise-affiliate-profile-api/) — Affiliate profile, API key
+- [Affise Affiliate Smartlinks API](https://apis.io/apis/affise/affise-affiliate-smartlinks-api/) — Affiliate smartlinks, referrals
+- [Affise Affiliate Stats API](https://apis.io/apis/affise/affise-affiliate-stats-api/) — Statistics endpoints available to affiliate (multi-role + affiliate-only)
+- [Affise Resources API](https://apis.io/apis/affise/affise-resources-api/) — Public lookup data — countries, regions, ISPs, OSes, goals, browsers, cities, etc.
 
-- **Affise Performance API** — REST API for the Affise Performance platform enabling admins and affiliates to manage offers, track conversions, retrieve statistics, handle publisher payouts, and automate billing operations programmatically.
-- **Affise MMP API** — Mobile Measurement Partner API enabling mobile app attribution tracking, install measurement, event tracking, and audience analytics for iOS, Android, and cross-platform mobile applications.
+### Published properties
 
-## Plans / Rate Limits / FinOps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Plans**: [plans/affise-plans-pricing.yml](plans/affise-plans-pricing.yml) — Affise Performance (Beginner $625/mo, Core $888/mo, Expand $1,239/mo, Custom $2,499/mo) and Affise MMP (Scale $700/mo, Enterprise $1,500/mo, Custom) with ~20% annual billing discounts.
-- **Rate Limits**: [rate-limits/affise-rate-limits.yml](rate-limits/affise-rate-limits.yml) — Rate limits enforced per API key; specific numeric thresholds are not publicly documented and vary by plan tier. Authentication uses an API-Key header or query parameter.
-- **FinOps**: [finops/affise-finops.yml](finops/affise-finops.yml) — Cost drivers include monthly conversion volume, impression volume, tracking domain count, and billing cycle selection. Annual billing saves approximately 20% versus monthly.
+#### AsyncAPI (1)
 
-## Timestamps
+Event-driven and webhook contracts.
 
-- Created: 2026-06-13
-- Modified: 2026-06-13
+- [Affise Postbacks Webhooks](https://apis.io/asyncapis/affise/affise-postbacks-webhooks/)
 
-## Common
+#### MCP servers (1)
 
-| Type | URL |
-|------|-----|
-| Website | https://affise.com/ |
-| Documentation | https://help-center.affise.com/en/ |
-| GitHub Org | https://github.com/affise |
-| LinkedIn | https://www.linkedin.com/company/affise-com/ |
-| Blog | https://affise.com/blog/ |
-| Pricing | https://affise.com/pricing/ |
-| Status Page | https://status.affise.com/ |
-| X | https://twitter.com/GetAffise |
+Model Context Protocol servers that expose the API to agents.
 
-## Maintainers
+- [affise-mcp-server](https://apis.io/servers/affise/affise-mcp-server/)
 
-- **Kin Lane** — kin@apievangelist.com
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Affise Context](https://apis.io/jsonld/affise/affise-context/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [API Documentation](https://apis.io/collections/affise/open-affise/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Affise Openapi Overlay](https://apis.io/overlays/affise/affise-openapi-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Affise Authentication](https://apis.io/security/affise/affise-authentication/)
+- [Affise Domain Security](https://apis.io/security/affise/affise-domain-security/)
+- [Affise Vulnerability Disclosure](https://apis.io/security/affise/affise-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Affise Plans Pricing](https://apis.io/plans/affise/affise-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Affise Rate Limits](https://apis.io/rate-limits/affise/affise-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Affise Finops](https://apis.io/finops/affise/affise-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://affise.com/)
+- [Documentation](https://help-center.affise.com/en/)
+- [Getting started](https://help-center.affise.com/en/articles/6463675-start-with-api-admins)
+- [API reference](https://api.affise.com/docs3.2/)
+- [Pricing](https://affise.com/pricing/)
+- [Sign up](https://affise.com/signup/)
+- [Support](https://help-center.affise.com/en/)
+- [Blog](https://affise.com/blog/)
+- [Security](https://srs.s4e.io/affise.com/report)
+- [Compliance](https://affise.com/gdpr/)
+- [Terms of service](https://affise.com/terms/)
+- [Privacy policy](https://affise.com/privacy-policy/)
+- [Status](https://status.affise.com/)
+
+## API Evangelist rating
+
+**Kin Score 64.3** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 60.7 |
+| Contract governance | 18.2 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 78.0 |
+| Access clarity | 84.2 |
+
+**Agent readiness 36.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/affise/](https://apis.io/providers/affise/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Affise: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/affise/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
